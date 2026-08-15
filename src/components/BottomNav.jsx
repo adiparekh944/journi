@@ -1,9 +1,9 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Rss, List, Search, Map, User } from "lucide-react";
+import { Compass, List, Search, Map, User } from "lucide-react";
 
 const tabs = [
-  { to: "/", label: "Feed", icon: Rss, end: true },
+  { to: "/", label: "Feed", icon: Compass, end: true },
   { to: "/list", label: "Lists", icon: List },
   { to: "/search", label: "Search", icon: Search, center: true },
   { to: "/map", label: "Map", icon: Map },
