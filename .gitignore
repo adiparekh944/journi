@@ -52,3 +52,6 @@ base44/.app.jsonc
 # Test and build output
 coverage/
 .vite/
+
+# Edge Function secrets — never commit
+supabase/functions/.env

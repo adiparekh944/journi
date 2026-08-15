@@ -45,6 +45,91 @@ async function postIdForVisit(visitId) {
   return row?.id ?? null;
 }
 
+/**
+ * Translate the rating form's field names onto the schema's.
+ *
+ * The screens were written with their own vocabulary (`date_visited`, `paid`,
+ * `worth_it_rating`, `duration`). Passing those straight through silently drops
+ * every one of them, so the date, payment, value rating and time spent never
+ * reached the database.
+ */
+function visitPayload(source, { partial = false } = {}) {
+  const mapping = {
+    note: ["note"],
+    visited_on: ["visited_on", "date_visited"],
+    was_paid: ["was_paid", "paid"],
+    amount_paid_usd: ["amount_paid_usd", "amount_paid"],
+    value_rating: ["value_rating", "worth_it_rating"],
+    crowd_experienced: ["crowd_experienced", "crowd_level"],
+    time_spent_minutes: ["time_spent_minutes", "duration"],
+    companion: ["companion", "companions"],
+    would_return: ["would_return"],
+  };
+
+  const payload = {};
+  for (const [column, aliases] of Object.entries(mapping)) {
+    const key = aliases.find((alias) => alias in (source ?? {}));
+    if (key === undefined) {
+      if (!partial) payload[column] = null;
+      continue;
+    }
+    payload[column] = normalizeVisitField(column, source[key]);
+  }
+
+  // was_paid is not nullable; a create must send a concrete boolean.
+  if (!partial) payload.was_paid = Boolean(payload.was_paid);
+  return payload;
+}
+
+function normalizeVisitField(column, value) {
+  if (value === "" || value === undefined) return null;
+  if (column === "companion" && Array.isArray(value)) return value[0] ?? null;
+  if (
+    ["amount_paid_usd", "value_rating", "crowd_experienced", "time_spent_minutes"]
+      .includes(column)
+  ) {
+    const numeric = Number(value);
+    return Number.isFinite(numeric) ? numeric : null;
+  }
+  return value;
+}
+
+/**
+ * Write visit_photos rows for files already uploaded to the bucket.
+ *
+ * The schema caps a visit at six photos with a trigger, so the list is trimmed
+ * here rather than letting the seventh insert raise.
+ */
+async function attachPhotos(visit, photos) {
+  const userId = await currentUserId();
+  const rows = photos
+    .slice(0, 6)
+    .map((photo, index) => {
+      const path = typeof photo === "string" ? storagePathFromUrl(photo) : photo.storage_path;
+      if (!path) return null;
+      return {
+        visit_id: visit.id,
+        user_id: userId,
+        place_id: visit.place_id,
+        storage_path: path,
+        width: photo.width ?? 1200,
+        height: photo.height ?? 900,
+        sort_order: index,
+      };
+    })
+    .filter(Boolean);
+
+  if (rows.length === 0) return;
+  unwrap(await supabase.from("visit_photos").insert(rows));
+}
+
+/** Recover the object path from a public storage URL. */
+function storagePathFromUrl(url) {
+  const marker = "/visit-photos/";
+  const index = url.indexOf(marker);
+  return index === -1 ? null : url.slice(index + marker.length).split("?")[0];
+}
+
 const Place = {
   async list(order = "-created_date", limit = DEFAULT_LIMIT) {
     let query = supabase.from("places").select(PLACE_COLUMNS).limit(limit);
@@ -91,37 +176,21 @@ const Visit = {
         p_place_id: visit.place_id,
         p_bucket: dbBucket(visit.sentiment_bucket ?? visit.bucket),
         p_position: visit.rank_position ?? 0,
-        p_payload: {
-          note: visit.note ?? null,
-          visited_on: visit.visited_on ?? null,
-          was_paid: visit.was_paid ?? false,
-          amount_paid_usd: visit.amount_paid_usd ?? null,
-          value_rating: visit.value_rating ?? null,
-          crowd_experienced: visit.crowd_experienced ?? null,
-          time_spent_minutes: visit.time_spent_minutes ?? null,
-          companion: visit.companion ?? null,
-          would_return: visit.would_return ?? null,
-        },
+        p_payload: visitPayload(visit),
       }),
     );
-    return toVisit(created);
+    const stored = toVisit(created);
+    // Photos are uploaded to storage before the visit exists, so the rows that
+    // point at them can only be written now that we have a visit id.
+    if (Array.isArray(visit.photos) && visit.photos.length > 0) {
+      await attachPhotos(stored, visit.photos);
+      return Visit.get(stored.id);
+    }
+    return stored;
   },
   /** Metadata only. Scores are derived from rank and cannot be written. */
   async update(id, patch) {
-    const payload = {};
-    for (const field of [
-      "note",
-      "visited_on",
-      "was_paid",
-      "amount_paid_usd",
-      "value_rating",
-      "crowd_experienced",
-      "time_spent_minutes",
-      "companion",
-      "would_return",
-    ]) {
-      if (field in patch) payload[field] = patch[field];
-    }
+    const payload = visitPayload(patch, { partial: true });
     return toVisit(
       unwrap(
         await supabase.rpc("edit_visit_details", {

@@ -23,6 +23,7 @@ from pathlib import Path
 
 from place_expansion import EXPANSION_PLACES
 from place_facts import PLACE_FACTS
+from place_niche import NICHE_PLACES
 
 HTTP_OK = 200
 HTTP_REDIRECT = 300
@@ -53,11 +54,11 @@ TARGET_WIDTH = 1600
 MIN_TOKEN_LENGTH = 3
 
 # Both curated sets need a photograph.
-ALL_SLUGS = tuple(PLACE_FACTS) + tuple(EXPANSION_PLACES)
+ALL_SLUGS = tuple(PLACE_FACTS) + tuple(EXPANSION_PLACES) + tuple(NICHE_PLACES)
 
 # Neighbourhood per slug, used to disambiguate image search results.
 NEIGHBOURHOODS: dict[str, str] = {
-    slug: entry[3] for slug, entry in EXPANSION_PLACES.items()
+    slug: entry[3] for slug, entry in {**EXPANSION_PLACES, **NICHE_PLACES}.items()
 }
 
 # Where the place name does not match the Wikipedia article title, or matches an
@@ -467,7 +468,7 @@ def place_names() -> dict[str, str]:
         with csv_path.open(encoding="utf-8", newline="") as handle:
             names = {row["slug"]: row["name"] for row in csv.DictReader(handle)}
     # The expansion set is not in the CSV until the seed is rebuilt.
-    for slug, entry in EXPANSION_PLACES.items():
+    for slug, entry in {**EXPANSION_PLACES, **NICHE_PLACES}.items():
         names.setdefault(slug, entry[0])
     return names
 

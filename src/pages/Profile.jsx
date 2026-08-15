@@ -4,6 +4,7 @@ import { base44 } from "@/api/base44Client";
 import { useAuth } from "@/lib/AuthContext";
 import { useJourni } from "@/lib/JourniDataContext";
 import { Image } from "@/components/ui/image";
+import CategoryIcon from "@/components/CategoryIcon";
 import ScoreBadge from "@/components/ScoreBadge";
 import ProfileStats from "@/components/ProfileStats";
 import ActivityTiles from "@/components/ActivityTiles";
@@ -143,8 +144,16 @@ export default function Profile() {
             {topPicks.map((v, i) => (
               <button key={v.id} onClick={() => navigate(`/place/${v.place_id}`)} className="flex w-full items-center gap-3 rounded-2xl border border-border bg-card p-2.5 text-left">
                 <span className="w-4 text-center text-xs font-bold text-muted-foreground">{i + 1}</span>
-                <div className="h-11 w-11 overflow-hidden rounded-xl bg-stone-100">
-                  {v.photos?.[0] ? <Image src={v.photos[0]} alt="" fittingType="fill" className="h-full w-full" /> : null}
+                <div className="h-11 w-11 overflow-hidden rounded-xl bg-muted">
+                  {/* Fall back to the place photo: most visits carry no user
+                      upload, and an empty tile reads as a broken image. */}
+                  {(v.photos?.[0] || v.place_hero_image_url) ? (
+                    <Image src={v.photos?.[0] || v.place_hero_image_url} alt="" fittingType="fill" className="h-full w-full" />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center">
+                      <CategoryIcon category={v.place_category} className="h-5 w-5 text-muted-foreground" />
+                    </div>
+                  )}
                 </div>
                 <div className="flex-1"><div className="line-clamp-1 text-sm font-semibold text-foreground">{v.place_name}</div><div className="text-xs text-muted-foreground">{v.place_neighborhood}</div></div>
                 <ScoreBadge score={v.score} size="sm" />

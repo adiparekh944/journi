@@ -11,6 +11,7 @@ from pathlib import Path
 from place_expansion import EXPANSION_PLACES
 from place_facts import PLACE_FACTS
 from place_images import PLACE_IMAGES
+from place_niche import NICHE_PLACES
 from validate_places_seed import EXPECTED_COLUMNS, read_places, validate_dataset
 
 POPULAR_PLACE_END_INDEX = 25
@@ -339,7 +340,7 @@ def generate_places() -> list[GeneratedPlace]:
             generated.append(GeneratedPlace(values))
             global_index += 1
 
-    for slug, entry in EXPANSION_PLACES.items():
+    for slug, entry in {**EXPANSION_PLACES, **NICHE_PLACES}.items():
         name, category, borough, neighborhood, lat, lng, price, description = entry
         popularity_seed = popularity(global_index)
         tier = tier_from_price(price)

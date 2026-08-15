@@ -20,6 +20,20 @@ select = [
   "UP",
   "W",
 ]
+# Annotating `self` adds noise without catching anything; ruff deprecated it.
+ignore = ["ANN101"]
+
+[tool.ruff.lint.per-file-ignores]
+# Seed generators: SQL fragments run long, the scoring weights are the
+# specification's own constants, and the name pool is deliberately accented.
+"scripts/build_demo_seed.py" = ["E501", "PLR2004", "RUF001", "PLR0912", "PLR0913", "PLR0915"]
+"scripts/demo_sql.py" = ["E501", "PLR2004", "RUF001", "PLR0912", "PLR0913", "PLR0915"]
+"scripts/demo_people.py" = ["E501", "RUF001"]
+"scripts/place_niche.py" = ["E501", "RUF001"]
+"scripts/place_expansion.py" = ["E501", "RUF001"]
+"scripts/place_facts.py" = ["E501", "RUF001"]
+"scripts/build_places_seed.py" = ["PLR2004"]
+"scripts/fetch_place_images.py" = ["E501", "PLR2004", "RUF001"]
 
 [tool.ruff.format]
 quote-style = "double"
