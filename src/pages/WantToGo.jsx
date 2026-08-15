@@ -11,7 +11,7 @@ import "leaflet/dist/leaflet.css";
 const purpleIcon = (label) =>
   L.divIcon({
     className: "",
-    html: `<div class="pin-shadow flex h-7 min-w-7 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-white">${label}</div>`,
+    html: `<div class="pin-shadow flex h-7 min-w-7 items-center justify-center rounded-full bg-purple-600 px-1 text-[10px] font-bold text-white">${label}</div>`,
     iconSize: [28, 28],
     iconAnchor: [14, 14],
   });
@@ -60,7 +60,7 @@ export default function WantToGo() {
               key={p.id}
               place={p}
               footer={
-                <button onClick={(e) => { e.stopPropagation(); toggleWantToGo(p); }} className="w-full rounded-full bg-primary/20 py-1.5 text-xs font-medium text-primary">
+                <button onClick={(e) => { e.stopPropagation(); toggleWantToGo(p); }} className="w-full rounded-full bg-purple-500/20 py-1.5 text-xs font-medium text-purple-300">
                   Remove
                 </button>
               }
