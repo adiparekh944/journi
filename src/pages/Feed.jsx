@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import { useAuth } from "@/lib/AuthContext";
-import { Image } from "@/components/ui/image";
-import ScoreBadge from "@/components/ScoreBadge";
-import CategoryIcon, { CATEGORY_LABELS } from "@/components/CategoryIcon";
-import { Heart, MessageCircle, Bookmark, Send } from "lucide-react";
+import TopBar from "@/components/TopBar";
+import ActionChips from "@/components/ActionChips";
+import FeaturedLists from "@/components/FeaturedLists";
+import SearchBar from "@/components/SearchBar";
+import FeedVisitCard from "@/components/FeedVisitCard";
 
 export default function Feed() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [visits, setVisits] = useState([]);
+  const [places, setPlaces] = useState([]);
   const [loading, setLoading] = useState(true);
   const [likes, setLikes] = useState({});
   const [comments, setComments] = useState({});
@@ -20,11 +22,12 @@ export default function Feed() {
   useEffect(() => {
     (async () => {
       try {
-        // Feed = visits by people the user follows + own.
+        const allPlaces = await base44.entities.Place.list("-created_date", 500);
+        setPlaces(allPlaces || []);
+
         const following = await base44.entities.Follow.filter({ follower_id: user.id, status: "accepted" }, "-created_date", 500);
         const ids = [user.id, ...(following || []).map((f) => f.following_id)];
         if (!ids.length) { setLoading(false); return; }
-        // fetch visits in chunks
         const all = [];
         for (const uid of ids) {
           try {
@@ -35,7 +38,6 @@ export default function Feed() {
         all.sort((a, b) => new Date(b.created_date) - new Date(a.created_date));
         setVisits(all.slice(0, 60));
 
-        // load likes + comments
         const l = {}, c = {};
         for (const v of all.slice(0, 60)) {
           try {
@@ -82,77 +84,47 @@ export default function Feed() {
     alert("Saved to want-to-go!");
   };
 
-  if (loading) return <div className="px-4 pt-10 text-center text-sm text-stone-400">Loading feed…</div>;
+  if (loading) return <div className="px-4 pt-10 text-center text-sm text-stone-400">Loading…</div>;
 
   return (
     <div className="px-4 pt-5">
-      <h1 className="mb-3 text-xl font-semibold text-stone-900">Feed</h1>
-      {visits.length === 0 ? (
-        <div className="rounded-3xl border border-dashed border-stone-200 p-8 text-center text-sm text-stone-400">
-          Nothing here yet. Follow people to see their visits.
-        </div>
-      ) : (
-        <div className="space-y-4">
-          {visits.map((v) => {
-            const visitLikes = likes[v.id] || [];
-            const visitComments = comments[v.id] || [];
-            const liked = visitLikes.some((l) => l.user_id === user.id);
-            return (
-              <div key={v.id} className="overflow-hidden rounded-3xl border border-stone-200 bg-card">
-                <div className="flex items-center gap-2 p-3">
-                  <ScoreBadge score={v.score} size="sm" />
-                  <div className="flex-1">
-                    <div className="text-sm font-semibold text-stone-900" onClick={() => navigate(`/u/${v.user_id}`)}>{v.place_name}</div>
-                    <div className="text-xs text-stone-500">{v.place_neighborhood} · {new Date(v.created_date).toLocaleDateString()}</div>
-                  </div>
-                  <span className="text-[11px] uppercase tracking-wide text-stone-400">{CATEGORY_LABELS[v.place_category]}</span>
-                </div>
-                {v.photos?.[0] && (
-                  <button onClick={() => navigate(`/place/${v.place_id}`)} className="block w-full">
-                    <div className="aspect-square w-full overflow-hidden bg-stone-100">
-                      <Image src={v.photos[0]} alt="" fittingType="fill" className="h-full w-full" />
-                    </div>
-                  </button>
-                )}
-                <div className="p-3">
-                  <div className="flex gap-4">
-                    <button onClick={() => toggleLike(v)} className="tap-highlight flex items-center gap-1 text-sm">
-                      <Heart className={`h-5 w-5 ${liked ? "fill-red-500 text-red-500" : "text-stone-500"}`} />
-                      <span className="text-stone-500">{visitLikes.length}</span>
-                    </button>
-                    <button onClick={() => setShowComments((p) => ({ ...p, [v.id]: !p[v.id] }))} className="tap-highlight flex items-center gap-1 text-sm">
-                      <MessageCircle className="h-5 w-5 text-stone-500" />
-                      <span className="text-stone-500">{visitComments.length}</span>
-                    </button>
-                    <button onClick={() => savePlace(v)} className="tap-highlight ml-auto">
-                      <Bookmark className="h-5 w-5 text-stone-500" />
-                    </button>
-                  </div>
-                  {v.note && <p className="mt-2 text-sm text-stone-700">{v.note}</p>}
-                  {showComments[v.id] && (
-                    <div className="mt-3 space-y-2 border-t border-stone-100 pt-2">
-                      {visitComments.map((c) => (
-                        <div key={c.id} className="text-sm text-stone-600"><span className="font-medium text-stone-800">user</span> {c.text}</div>
-                      ))}
-                      <div className="flex gap-2">
-                        <input
-                          value={commentText[v.id] || ""}
-                          onChange={(e) => setCommentText((p) => ({ ...p, [v.id]: e.target.value }))}
-                          placeholder="Add a comment…"
-                          className="h-9 flex-1 rounded-full border border-stone-200 px-3 text-sm focus:outline-none"
-                        />
-                        <button onClick={() => postComment(v)} className="tap-highlight flex h-9 w-9 items-center justify-center rounded-full bg-primary text-white">
-                          <Send className="h-4 w-4" />
-                        </button>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
+      <TopBar />
+      <div className="mt-3">
+        <SearchBar value="" onChange={() => navigate("/search")} placeholder="Search places, members…" />
+      </div>
+      <div className="mt-3">
+        <ActionChips />
+      </div>
+      <div className="mt-5">
+        <FeaturedLists places={places} />
+      </div>
+      <section className="mt-6">
+        <h2 className="mb-3 text-xs font-bold uppercase tracking-wide text-stone-900">From your friends</h2>
+        {visits.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-stone-200 p-8 text-center text-sm text-stone-400">
+            Nothing here yet. Follow people to see their visits.
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {visits.map((v) => (
+              <FeedVisitCard
+                key={v.id}
+                visit={v}
+                likes={likes[v.id] || []}
+                comments={comments[v.id] || []}
+                liked={(likes[v.id] || []).some((l) => l.user_id === user.id)}
+                showComments={!!showComments[v.id]}
+                commentText={commentText[v.id] || ""}
+                onLike={() => toggleLike(v)}
+                onToggleComments={() => setShowComments((p) => ({ ...p, [v.id]: !p[v.id] }))}
+                onComment={() => postComment(v)}
+                onCommentChange={(text) => setCommentText((p) => ({ ...p, [v.id]: text }))}
+                onSave={() => savePlace(v)}
+              />
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   );
 }
