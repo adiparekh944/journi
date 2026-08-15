@@ -11,15 +11,17 @@ export default function CompareFlow({ existingSorted, newVisit, onComplete }) {
   const [lo, setLo] = useState(0);
   const [hi, setHi] = useState(existingSorted.length);
   const [done, setDone] = useState(null); // final index when converged
+  const [comparisons, setComparisons] = useState(0); // Part 5.3 caps this at 5
 
   const step = useMemo(() => {
     if (done != null) return { done: true, index: done };
     return nextCompareStep(
       existingSorted.map((v) => v.id),
       lo,
-      hi
+      hi,
+      comparisons
     );
-  }, [existingSorted, lo, hi, done]);
+  }, [existingSorted, lo, hi, done, comparisons]);
 
   const other = useMemo(() => {
     if (step.done) return null;
@@ -31,8 +33,10 @@ export default function CompareFlow({ existingSorted, newVisit, onComplete }) {
       existingSorted.map((v) => v.id),
       lo,
       hi,
-      result
+      result,
+      comparisons
     );
+    setComparisons(next.comparisons);
     if (next.done) {
       setDone(next.index);
       onComplete(next.index);

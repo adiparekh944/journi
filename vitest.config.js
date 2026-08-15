@@ -29,6 +29,7 @@ export default defineConfig({
     include: [
       "src/**/*.test.{js,jsx,ts,tsx}",
       "supabase/**/*.test.{js,jsx,ts,tsx}",
+      "base44/shared/**/*.test.{js,ts}",
     ],
     setupFiles: ["./src/test/setup.js"],
   },
