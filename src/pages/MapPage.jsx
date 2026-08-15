@@ -12,7 +12,7 @@ import { useAuth } from "@/lib/AuthContext";
 
 const pinIcon = (score, want) => {
   if (want) {
-    return L.divIcon({ className: "", html: `<div class="pin-shadow flex h-7 min-w-7 items-center justify-center rounded-full bg-secondary px-1 text-[10px] font-bold text-primary-foreground">★</div>`, iconSize: [28, 28], iconAnchor: [14, 14] });
+    return L.divIcon({ className: "", html: `<div class="pin-shadow flex h-7 min-w-7 items-center justify-center rounded-full bg-secondary px-1 text-[10px] font-bold text-secondary-foreground">★</div>`, iconSize: [28, 28], iconAnchor: [14, 14] });
   }
   const color = scoreColorHex(score);
   const label = score == null ? "–" : Number(score).toFixed(1);

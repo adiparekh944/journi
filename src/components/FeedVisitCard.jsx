@@ -11,7 +11,7 @@ export default function FeedVisitCard({
 }) {
   const navigate = useNavigate();
   return (
-    <div className="overflow-hidden rounded-2xl border border-border bg-card">
+    <div className="overflow-hidden rounded-[1.25rem] border border-border bg-card shadow-[0_14px_32px_-28px_rgba(20,51,42,0.65)]">
       <div className="flex items-center gap-2.5 p-3">
         <ScoreBadge score={visit.score} size="sm" />
         <div className="flex-1">

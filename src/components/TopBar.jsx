@@ -13,8 +13,11 @@ export default function TopBar({ title = "Journi" }) {
   return (
     <>
       <header className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">{title}</h1>
-        <div className="flex items-center gap-1">
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Your city journal</p>
+          <h1 className="font-display text-[2rem] font-semibold leading-none tracking-tight text-foreground">{title}</h1>
+        </div>
+        <div className="flex items-center gap-1.5">
           <button
             type="button"
             onClick={() => setActivityOpen(true)}
@@ -23,11 +26,11 @@ export default function TopBar({ title = "Journi" }) {
                 ? `Activity, ${notifications.unreadCount} unread`
                 : "Activity"
             }
-            className="tap-highlight relative p-2 text-muted-foreground"
+            className="tap-highlight relative flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-card text-muted-foreground"
           >
             <Bell className="h-5 w-5" />
             {notifications.unreadCount > 0 && (
-              <span className="absolute right-0.5 top-0.5 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-primary px-1 text-[10px] font-semibold tabular-nums text-primary-foreground ring-2 ring-card">
+              <span className="absolute -right-1 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full bg-secondary px-1 text-[10px] font-semibold tabular-nums text-secondary-foreground ring-2 ring-card">
                 {notifications.unreadCount > 9 ? "9+" : notifications.unreadCount}
               </span>
             )}
@@ -36,7 +39,7 @@ export default function TopBar({ title = "Journi" }) {
             type="button"
             onClick={() => setMenuOpen(true)}
             aria-label="Menu"
-            className="tap-highlight p-2 text-muted-foreground"
+            className="tap-highlight flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-card text-muted-foreground"
           >
             <Menu className="h-5 w-5" />
           </button>

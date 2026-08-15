@@ -23,7 +23,7 @@ export default function FeaturedLists({ places }) {
   return (
     <section>
       <div className="mb-2 flex items-center justify-between">
-        <h2 className="text-xs font-bold uppercase tracking-wide text-foreground">Featured Lists</h2>
+        <h2 className="font-display text-lg font-semibold text-foreground">Curated for the weekend</h2>
         <button onClick={() => navigate("/search")} className="text-xs font-medium text-primary">See all</button>
       </div>
       <div className="-mx-4 flex gap-3 overflow-x-auto no-scrollbar px-4 pb-1">
@@ -31,7 +31,7 @@ export default function FeaturedLists({ places }) {
           <button
             key={l.category}
             onClick={() => navigate(`/search?category=${l.category}`)}
-            className="relative h-32 w-44 shrink-0 overflow-hidden rounded-2xl active:scale-[0.98]"
+            className="relative h-36 w-48 shrink-0 overflow-hidden rounded-[1.25rem] border border-border active:scale-[0.98]"
           >
             {l.photo ? (
               <Image src={l.photo} alt="" fittingType="fill" className="h-full w-full" />
