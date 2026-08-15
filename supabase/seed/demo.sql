@@ -281,8 +281,9 @@ where person.username <> 'demo_traveler'
 limit 40;
 
 -- ------------------------------------------------------------------- follows
--- The primary demo user follows all five personas, and the personas follow
--- each other, so trailblazer and the friend leaderboard have real edges.
+-- Everyone follows everyone: the primary user sees a full feed, and also has
+-- followers of their own so the activity inbox has "started following you"
+-- entries alongside likes and comments.
 insert into public.follows (follower_id, followee_id, status, created_at)
 select
   follower.id,
@@ -292,10 +293,6 @@ select
 from demo_person as follower
 cross join demo_person as followee
 where follower.id <> followee.id
-  and (
-    follower.username = 'demo_traveler'
-    or followee.username <> 'demo_traveler'
-  )
 on conflict do nothing;
 
 -- ------------------------------------------------------- comments and likes
