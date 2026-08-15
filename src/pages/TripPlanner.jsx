@@ -206,9 +206,9 @@ export default function TripPlanner() {
             </div>
             <h2 className="max-w-[270px] font-display text-[1.8rem] font-semibold leading-[1.08]">Turn your saved places into a day-by-day plan.</h2>
           </div>
-          <span className="mb-1 shrink-0 rounded-lg border border-white/20 px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-white/70">
+          {/* <span className="mb-1 shrink-0 rounded-lg border border-white/20 px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-white/70">
             Demo planner
-          </span>
+          </span> */}
         </div>
 
         <div className="flex items-center gap-2 text-sm text-white/70">
@@ -227,7 +227,7 @@ export default function TripPlanner() {
               <p className="text-[11px] font-medium uppercase tracking-wide text-muted-foreground">Destination</p>
               <p className="text-sm font-semibold text-foreground">New York City, NY</p>
             </div>
-            <span className="rounded-full bg-card px-2.5 py-1 text-[10px] font-semibold text-muted-foreground shadow-sm">Fixed for demo</span>
+            {/* <span className="rounded-full bg-card px-2.5 py-1 text-[10px] font-semibold text-muted-foreground shadow-sm">Fixed for demo</span> */}
           </div>
 
           <div className="flex items-center justify-between gap-4">
