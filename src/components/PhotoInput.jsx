@@ -30,7 +30,7 @@ export default function PhotoInput({ photos, onChange, max = 6 }) {
     <div>
       <div className="grid grid-cols-3 gap-2">
         {photos.map((p, i) => (
-          <div key={i} className="relative aspect-square overflow-hidden rounded-2xl bg-stone-100">
+          <div key={i} className="relative aspect-square overflow-hidden rounded-2xl bg-muted">
             <Image src={p} alt="" fittingType="fill" className="h-full w-full" />
             <button
               type="button"
@@ -45,10 +45,10 @@ export default function PhotoInput({ photos, onChange, max = 6 }) {
           <button
             type="button"
             onClick={() => fileRef.current?.click()}
-            className="tap-highlight flex aspect-square flex-col items-center justify-center gap-1 rounded-2xl border border-dashed border-stone-300 bg-stone-50 text-stone-400"
+            className="tap-highlight flex aspect-square flex-col items-center justify-center gap-1 rounded-2xl border border-dashed border-border bg-muted text-muted-foreground"
           >
             {uploading ? (
-              <div className="h-5 w-5 animate-spin rounded-full border-2 border-stone-300 border-t-stone-600" />
+              <div className="h-5 w-5 animate-spin rounded-full border-2 border-border border-t-foreground" />
             ) : (
               <>
                 <Camera className="h-5 w-5" />

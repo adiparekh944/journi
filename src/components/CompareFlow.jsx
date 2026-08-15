@@ -52,7 +52,7 @@ export default function CompareFlow({ existingSorted, newVisit, onComplete }) {
   return (
     <div className="flex min-h-[60vh] flex-col">
       <div className="flex-1 px-4 pt-2">
-        <p className="text-center text-sm text-stone-500">Which did you like more?</p>
+        <p className="text-center text-sm text-muted-foreground">Which did you like more?</p>
         <div className="mt-4 grid grid-cols-2 gap-3">
           <CompareCard visit={newVisit} isNew />
           <CompareCard visit={other} />
@@ -63,20 +63,20 @@ export default function CompareFlow({ existingSorted, newVisit, onComplete }) {
         <div className="grid grid-cols-2 gap-3">
           <button
             onClick={() => handle("win")}
-            className="tap-highlight rounded-2xl bg-primary py-4 text-sm font-semibold text-white active:scale-95"
+            className="tap-highlight rounded-2xl bg-primary py-4 text-sm font-semibold text-primary-foreground active:scale-95"
           >
             {newVisit.place_name}
           </button>
           <button
             onClick={() => handle("lose")}
-            className="tap-highlight rounded-2xl border border-stone-300 bg-card py-4 text-sm font-semibold text-stone-800 active:scale-95"
+            className="tap-highlight rounded-2xl border border-border bg-card py-4 text-sm font-semibold text-foreground active:scale-95"
           >
             {other.place_name}
           </button>
         </div>
         <button
           onClick={() => handle("tie")}
-          className="tap-highlight mt-3 w-full rounded-2xl py-3 text-sm font-medium text-stone-500 active:scale-95"
+          className="tap-highlight mt-3 w-full rounded-2xl py-3 text-sm font-medium text-muted-foreground active:scale-95"
         >
           Too close to call
         </button>
@@ -88,25 +88,25 @@ export default function CompareFlow({ existingSorted, newVisit, onComplete }) {
 function CompareCard({ visit, isNew }) {
   const photo = visit.photos?.[0];
   return (
-    <div className="overflow-hidden rounded-3xl border border-stone-200 bg-card shadow-sm">
-      <div className="relative h-32 w-full bg-stone-100">
+    <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
+      <div className="relative h-32 w-full bg-muted">
         {photo ? (
           <Image src={photo} alt={visit.place_name} fittingType="fill" className="h-full w-full" />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-stone-100 to-stone-200">
-            <CategoryIcon category={visit.place_category} className="h-7 w-7 text-stone-400" />
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-muted to-muted">
+            <CategoryIcon category={visit.place_category} className="h-7 w-7 text-muted-foreground" />
           </div>
         )}
         {isNew && (
-          <span className="absolute left-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold text-white">
+          <span className="absolute left-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold text-primary-foreground">
             New
           </span>
         )}
       </div>
       <div className="p-2.5">
-        <div className="line-clamp-1 text-sm font-semibold text-stone-900">{visit.place_name}</div>
+        <div className="line-clamp-1 text-sm font-semibold text-foreground">{visit.place_name}</div>
         {visit.place_neighborhood && (
-          <div className="line-clamp-1 text-xs text-stone-500">{visit.place_neighborhood}</div>
+          <div className="line-clamp-1 text-xs text-muted-foreground">{visit.place_neighborhood}</div>
         )}
       </div>
     </div>

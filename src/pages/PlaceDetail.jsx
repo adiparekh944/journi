@@ -51,55 +51,55 @@ export default function PlaceDetail() {
       .slice(0, 4);
   }, [allPlaces, place]);
 
-  if (loading) return <div className="p-6 text-sm text-stone-400">Loading…</div>;
-  if (!place) return <div className="p-6 text-sm text-stone-400">Place not found.</div>;
+  if (loading) return <div className="p-6 text-sm text-muted-foreground">Loading…</div>;
+  if (!place) return <div className="p-6 text-sm text-muted-foreground">Place not found.</div>;
 
   const photos = place.official_photos || [];
 
   return (
     <div className="pb-28">
-      <div className="relative h-56 w-full overflow-hidden bg-stone-100">
+      <div className="relative h-56 w-full overflow-hidden bg-muted">
         {photos[0] ? (
           <Image src={photos[0]} alt={place.name} fittingType="fill" className="h-full w-full" />
         ) : (
-          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-stone-200 to-stone-300">
-            <CategoryIcon category={place.category} className="h-10 w-10 text-stone-400" />
+          <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-muted to-muted">
+            <CategoryIcon category={place.category} className="h-10 w-10 text-muted-foreground" />
           </div>
         )}
         <button
           onClick={() => navigate(-1)}
           className="absolute left-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-card/90 backdrop-blur tap-highlight"
         >
-          <ArrowLeft className="h-5 w-5 text-stone-800" />
+          <ArrowLeft className="h-5 w-5 text-foreground" />
         </button>
       </div>
 
       <div className="px-4 pt-4">
-        <div className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wide text-stone-500">
+        <div className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
           <CategoryIcon category={place.category} className="h-3.5 w-3.5" />
           {CATEGORY_LABELS[place.category]}
         </div>
-        <h1 className="mt-1 text-2xl font-semibold tracking-tight text-stone-900">{place.name}</h1>
-        <p className="mt-0.5 text-sm text-stone-500">
+        <h1 className="mt-1 text-2xl font-semibold tracking-tight text-foreground">{place.name}</h1>
+        <p className="mt-0.5 text-sm text-muted-foreground">
           {[place.neighborhood, place.borough].filter(Boolean).join(" · ")}
         </p>
 
         <div className="mt-4 grid grid-cols-2 gap-3">
-          <div className="rounded-2xl border border-stone-200 p-3">
-            <div className="text-xs text-stone-500">Your score</div>
+          <div className="rounded-2xl border border-border p-3">
+            <div className="text-xs text-muted-foreground">Your score</div>
             <div className="mt-1 flex items-center gap-2">
-              {myVisit ? <ScoreBadge score={myVisit.score} size="md" /> : <span className="text-stone-400 text-sm">Not logged</span>}
+              {myVisit ? <ScoreBadge score={myVisit.score} size="md" /> : <span className="text-muted-foreground text-sm">Not logged</span>}
             </div>
           </div>
-          <div className="rounded-2xl border border-stone-200 p-3">
-            <div className="text-xs text-stone-500">Community avg</div>
+          <div className="rounded-2xl border border-border p-3">
+            <div className="text-xs text-muted-foreground">Community avg</div>
             <div className="mt-1 flex items-center gap-2">
-              {communityAvg != null ? <ScoreBadge score={communityAvg} size="md" /> : <span className="text-stone-400 text-sm">No ratings</span>}
+              {communityAvg != null ? <ScoreBadge score={communityAvg} size="md" /> : <span className="text-muted-foreground text-sm">No ratings</span>}
             </div>
           </div>
         </div>
 
-        {place.description && <p className="mt-4 text-sm leading-relaxed text-stone-600">{place.description}</p>}
+        {place.description && <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{place.description}</p>}
 
         <div className="mt-4 space-y-2">
           {place.price_level && <InfoRow icon={<Wallet className="h-4 w-4" />} label="Price" value={place.price_level} />}
@@ -110,10 +110,10 @@ export default function PlaceDetail() {
 
         {allVisits.length > 0 && (
           <section className="mt-6">
-            <h2 className="mb-2 text-sm font-semibold text-stone-700">Community photos</h2>
+            <h2 className="mb-2 text-sm font-semibold text-foreground">Community photos</h2>
             <div className="grid grid-cols-3 gap-1.5">
               {allVisits.flatMap((v) => v.photos || []).slice(0, 9).map((ph, i) => (
-                <div key={i} className="aspect-square overflow-hidden rounded-xl bg-stone-100">
+                <div key={i} className="aspect-square overflow-hidden rounded-xl bg-muted">
                   <Image src={ph} alt="" fittingType="fill" className="h-full w-full" />
                 </div>
               ))}
@@ -121,9 +121,9 @@ export default function PlaceDetail() {
             {allVisits.length > 0 && (
               <div className="mt-3 space-y-2">
                 {allVisits.slice(0, 5).map((v) => (
-                  <div key={v.id} className="flex items-center gap-2 rounded-2xl border border-stone-200 p-2.5">
+                  <div key={v.id} className="flex items-center gap-2 rounded-2xl border border-border p-2.5">
                     <ScoreBadge score={v.score} size="sm" />
-                    <div className="text-xs text-stone-600 line-clamp-1">
+                    <div className="text-xs text-muted-foreground line-clamp-1">
                       {v.note || (v.would_return ? "Would return" : "One and done")}
                     </div>
                   </div>
@@ -135,7 +135,7 @@ export default function PlaceDetail() {
 
         {similar.length > 0 && (
           <section className="mt-6">
-            <h2 className="mb-3 text-sm font-semibold text-stone-700">Similar places</h2>
+            <h2 className="mb-3 text-sm font-semibold text-foreground">Similar places</h2>
             <div className="-mx-4 flex gap-3 overflow-x-auto no-scrollbar px-4">
               {similar.map((p) => <div key={p.id} className="w-44 shrink-0"><PlaceCard place={p} /></div>)}
             </div>
@@ -143,16 +143,16 @@ export default function PlaceDetail() {
         )}
       </div>
 
-      <div className="pb-safe fixed bottom-0 left-0 right-0 z-30 mx-auto flex max-w-md gap-2 border-t border-stone-200 bg-card/95 px-4 p-3 backdrop-blur">
+      <div className="pb-safe fixed bottom-0 left-0 right-0 z-30 mx-auto flex max-w-md gap-2 border-t border-border bg-card/95 px-4 p-3 backdrop-blur">
         <button
           onClick={() => toggleWantToGo(place)}
-          className={`flex items-center justify-center gap-1.5 rounded-full px-4 py-3 text-sm font-medium active:scale-95 ${saved ? "bg-purple-500/20 text-purple-300" : "border border-stone-200 text-stone-700"}`}
+          className={`flex items-center justify-center gap-1.5 rounded-full px-4 py-3 text-sm font-medium active:scale-95 ${saved ? "bg-secondary/20 text-secondary-foreground" : "border border-border text-foreground"}`}
         >
           {saved ? <><Check className="h-4 w-4" /> Saved</> : <><Bookmark className="h-4 w-4" /> Save</>}
         </button>
         <button
           onClick={() => navigate(`/log/${place.id}`)}
-          className="flex-1 rounded-full bg-primary py-3 text-sm font-semibold text-white active:scale-95"
+          className="flex-1 rounded-full bg-primary py-3 text-sm font-semibold text-primary-foreground active:scale-95"
         >
           {myVisit ? "Re-rank visit" : "Log a visit"}
         </button>
@@ -164,9 +164,9 @@ export default function PlaceDetail() {
 function InfoRow({ icon, label, value }) {
   return (
     <div className="flex items-center gap-2 text-sm">
-      <span className="text-stone-400">{icon}</span>
-      <span className="text-stone-500">{label}:</span>
-      <span className="font-medium text-stone-800">{value}</span>
+      <span className="text-muted-foreground">{icon}</span>
+      <span className="text-muted-foreground">{label}:</span>
+      <span className="font-medium text-foreground">{value}</span>
     </div>
   );
 }

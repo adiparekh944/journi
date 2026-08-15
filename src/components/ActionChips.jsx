@@ -17,7 +17,7 @@ export default function ActionChips() {
           <button
             key={c.label}
             onClick={() => navigate(c.to)}
-            className="flex shrink-0 items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-xs font-medium text-white active:scale-95"
+            className="flex shrink-0 items-center gap-1.5 rounded-full bg-primary px-4 py-2 text-xs font-medium text-primary-foreground active:scale-95"
           >
             <Icon className="h-3.5 w-3.5" /> {c.label}
           </button>

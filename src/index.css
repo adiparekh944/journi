@@ -1,85 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    --background: 105 55% 96%;
+    --foreground: 215 50% 23%;
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card-foreground: 215 50% 23%;
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.8% 90%;
-    --ring: 240 5.9% 10%;
-    --chart-1: 240 70% 50%;
-    --chart-2: 160 60% 45%;
+    --popover-foreground: 215 50% 23%;
+    --primary: 356 78% 56%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 203 39% 44%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 105 55% 96%;
+    --muted-foreground: 203 39% 44%;
+    --accent: 203 39% 44%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 356 78% 56%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 215 20% 90%;
+    --input: 215 20% 90%;
+    --ring: 356 78% 56%;
+    --chart-1: 356 78% 56%;
+    --chart-2: 203 39% 44%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
     --radius: 0.5rem;
-    --font-heading: ui-sans-serif, system-ui, sans-serif;
-    --font-body: ui-sans-serif, system-ui, sans-serif;
-    --font-display: ui-sans-serif, system-ui, sans-serif;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Montserrat', sans-serif;
+    --font-display: 'Playfair Display', serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 240 5.9% 90%;
-    --sidebar-ring: 240 5.9% 10%;
+    --sidebar-background: 105 55% 96%;
+    --sidebar-foreground: 215 50% 23%;
+    --sidebar-primary: 356 78% 56%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 203 39% 44%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 215 20% 90%;
+    --sidebar-ring: 356 78% 56%;
   }
 
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
+    --background: 215 50% 23%;
+    --foreground: 105 55% 96%;
+    --card: 215 50% 23%;
+    --card-foreground: 105 55% 96%;
+    --popover: 215 50% 23%;
+    --popover-foreground: 105 55% 96%;
+    --primary: 356 78% 56%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 203 39% 44%;
+    --secondary-foreground: 105 55% 96%;
+    --muted: 203 39% 44%;
+    --muted-foreground: 105 55% 96%;
+    --accent: 203 39% 44%;
+    --accent-foreground: 105 55% 96%;
+    --destructive: 356 78% 56%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 215 30% 35%;
+    --input: 215 30% 35%;
+    --ring: 356 78% 56%;
+    --chart-1: 356 78% 56%;
+    --chart-2: 203 39% 44%;
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-background: 215 50% 23%;
+    --sidebar-foreground: 105 55% 96%;
+    --sidebar-primary: 356 78% 56%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-accent: 203 39% 44%;
+    --sidebar-accent-foreground: 105 55% 96%;
+    --sidebar-border: 215 30% 35%;
+    --sidebar-ring: 356 78% 56%;
   }
 }
-
-
 
 @layer base {
   * {
@@ -88,6 +88,10 @@
 
   body {
     @apply bg-background text-foreground font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
   }
 }
 
@@ -104,9 +108,9 @@
 }
 
 /* Score badge bands — consistent everywhere */
-.score-green { background-color: #8DE0AD; color: #1c1917; }
+.score-green { background-color: #457B9D; color: #fff; }
 .score-yellow { background-color: #eab308; color: #3a2f00; }
-.score-red { background-color: #E0918D; color: #1c1917; }
+.score-red { background-color: #E63946; color: #fff; }
 .score-neutral { background-color: #a8a29e; color: #fff; }
 
 .pin-shadow { box-shadow: 0 2px 6px rgba(0,0,0,0.25); }

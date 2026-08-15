@@ -64,13 +64,13 @@ export default function Home() {
   return (
     <div className="px-4 pt-5">
       <header className="mb-4 flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight text-stone-900">Journi</h1>
-        <button onClick={() => navigate("/")} className="flex h-9 w-9 items-center justify-center rounded-full bg-stone-100 text-stone-600">
+        <h1 className="text-2xl font-bold tracking-tight text-foreground">Journi</h1>
+        <button onClick={() => navigate("/")} className="flex h-9 w-9 items-center justify-center rounded-full bg-muted text-muted-foreground">
           <X className="h-5 w-5" />
         </button>
       </header>
 
-      <div className="mb-3 flex gap-6 border-b border-stone-200">
+      <div className="mb-3 flex gap-6 border-b border-border">
         {[
           { key: "places", label: "Places" },
           { key: "members", label: "Members" },
@@ -78,7 +78,7 @@ export default function Home() {
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
-            className={`relative pb-2 text-sm font-medium ${tab === t.key ? "text-stone-900" : "text-stone-400"}`}
+            className={`relative pb-2 text-sm font-medium ${tab === t.key ? "text-foreground" : "text-muted-foreground"}`}
           >
             {t.label}
             {tab === t.key && <div className="absolute -bottom-px left-0 right-0 h-0.5 bg-primary" />}
@@ -90,10 +90,10 @@ export default function Home() {
         <>
           <SearchBar value={query} onChange={setQuery} placeholder="Search places, neighborhoods" />
 
-          <div className="mt-3 flex items-center gap-2 rounded-full border border-stone-200 bg-stone-50 px-3 py-2.5">
-            <MapPin className="h-4 w-4 text-stone-500" />
-            <span className="flex-1 text-sm text-stone-700">Current Location</span>
-            <span className="text-xs text-stone-400">New York, NY</span>
+          <div className="mt-3 flex items-center gap-2 rounded-full border border-border bg-stone-50 px-3 py-2.5">
+            <MapPin className="h-4 w-4 text-muted-foreground" />
+            <span className="flex-1 text-sm text-foreground">Current Location</span>
+            <span className="text-xs text-muted-foreground">New York, NY</span>
           </div>
 
           <div className="mt-3">
@@ -122,8 +122,8 @@ export default function Home() {
 
           {query.trim() === "" && category === "all" && borough === "all" && suggestions.length > 0 && (
             <section className="mt-5">
-              <div className="mb-2 flex items-center gap-1.5 text-sm font-semibold text-stone-700">
-                <Sparkles className="h-4 w-4 text-journi-mint" /> Suggested for you
+              <div className="mb-2 flex items-center gap-1.5 text-sm font-semibold text-foreground">
+                <Sparkles className="h-4 w-4 text-secondary" /> Suggested for you
               </div>
               <div className="-mx-4 flex gap-3 overflow-x-auto no-scrollbar px-4 pb-1">
                 {suggestions.map((s) => (
@@ -136,15 +136,15 @@ export default function Home() {
           )}
 
           <section className="mt-5">
-            <h2 className="mb-3 text-sm font-semibold text-stone-700">
+            <h2 className="mb-3 text-sm font-semibold text-foreground">
               {query.trim() ? `${filtered.length} results` : "All places"}
             </h2>
             {loading ? (
               <div className="grid grid-cols-2 gap-3">
-                {[0, 1, 2, 3].map((i) => <div key={i} className="h-56 animate-pulse rounded-2xl bg-stone-100" />)}
+                {[0, 1, 2, 3].map((i) => <div key={i} className="h-56 animate-pulse rounded-2xl bg-muted" />)}
               </div>
             ) : filtered.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-stone-200 p-8 text-center text-sm text-stone-400">No places found.</div>
+              <div className="rounded-2xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">No places found.</div>
             ) : (
               <div className="grid grid-cols-2 gap-3">
                 {filtered.map((p) => {
@@ -159,13 +159,13 @@ export default function Home() {
                         <div className="flex gap-2">
                           <button
                             onClick={(e) => { e.stopPropagation(); navigate(`/log/${p.id}`); }}
-                            className="flex-1 rounded-full bg-primary py-1.5 text-xs font-medium text-white active:scale-95"
+                            className="flex-1 rounded-full bg-primary py-1.5 text-xs font-medium text-primary-foreground active:scale-95"
                           >
                             {visit ? "Re-log" : "Log"}
                           </button>
                           <button
                             onClick={(e) => { e.stopPropagation(); toggleWantToGo(p); }}
-                            className={`flex-1 rounded-full py-1.5 text-xs font-medium ${saved ? "bg-journi-mint text-stone-900" : "border border-stone-200 text-stone-600"}`}
+                            className={`flex-1 rounded-full py-1.5 text-xs font-medium ${saved ? "bg-secondary text-secondary-foreground" : "border border-border text-muted-foreground"}`}
                           >
                             {saved ? "Saved" : "Save"}
                           </button>
@@ -179,7 +179,7 @@ export default function Home() {
           </section>
         </>
       ) : (
-        <div className="rounded-2xl border border-dashed border-stone-200 p-8 text-center text-sm text-stone-400">
+        <div className="rounded-2xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
           Member search coming soon.
         </div>
       )}
@@ -191,7 +191,7 @@ function Chip({ active, onClick, children }) {
   return (
     <button
       onClick={onClick}
-      className={`tap-highlight shrink-0 rounded-full border px-3 py-1.5 text-xs font-medium ${active ? "border-stone-900 bg-primary text-white" : "border-stone-200 bg-white text-stone-600"}`}
+      className={`tap-highlight shrink-0 rounded-full border px-3 py-1.5 text-xs font-medium ${active ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card text-muted-foreground"}`}
     >
       {children}
     </button>

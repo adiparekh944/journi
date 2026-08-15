@@ -12,7 +12,7 @@ const tabs = [
 
 export default function BottomNav() {
   return (
-    <nav className="pb-safe fixed bottom-0 left-0 right-0 z-40 border-t border-stone-200 bg-white/95 backdrop-blur-lg">
+    <nav className="pb-safe fixed bottom-0 left-0 right-0 z-40 border-t border-border bg-card/95 backdrop-blur-lg">
       <div className="mx-auto flex max-w-md items-end justify-around px-2 pt-1.5">
         {tabs.map((t) => {
           const Icon = t.icon;
@@ -30,9 +30,9 @@ export default function BottomNav() {
                       <Icon className="h-5 w-5" strokeWidth={2.5} />
                     </span>
                   ) : (
-                    <Icon className={`h-5 w-5 transition ${isActive ? "text-stone-900" : "text-stone-400"}`} strokeWidth={isActive ? 2.5 : 2} />
+                    <Icon className={`h-5 w-5 transition ${isActive ? "text-foreground" : "text-muted-foreground"}`} strokeWidth={isActive ? 2.5 : 2} />
                   )}
-                  <span className={`text-[10px] font-medium ${isActive ? "text-stone-900" : "text-stone-400"} ${t.center ? "-translate-y-1.5" : ""}`}>
+                  <span className={`text-[10px] font-medium ${isActive ? "text-foreground" : "text-muted-foreground"} ${t.center ? "-translate-y-1.5" : ""}`}>
                     {t.label}
                   </span>
                 </>
