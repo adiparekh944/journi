@@ -123,7 +123,7 @@ export default function Home() {
           {query.trim() === "" && category === "all" && borough === "all" && suggestions.length > 0 && (
             <section className="mt-5">
               <div className="mb-2 flex items-center gap-1.5 text-sm font-semibold text-stone-700">
-                <Sparkles className="h-4 w-4 text-amber-500" /> Suggested for you
+                <Sparkles className="h-4 w-4 text-journi-mint" /> Suggested for you
               </div>
               <div className="-mx-4 flex gap-3 overflow-x-auto no-scrollbar px-4 pb-1">
                 {suggestions.map((s) => (
@@ -165,7 +165,7 @@ export default function Home() {
                           </button>
                           <button
                             onClick={(e) => { e.stopPropagation(); toggleWantToGo(p); }}
-                            className={`flex-1 rounded-full py-1.5 text-xs font-medium ${saved ? "bg-stone-200 text-stone-700" : "border border-stone-200 text-stone-600"}`}
+                            className={`flex-1 rounded-full py-1.5 text-xs font-medium ${saved ? "bg-journi-mint text-stone-900" : "border border-stone-200 text-stone-600"}`}
                           >
                             {saved ? "Saved" : "Save"}
                           </button>

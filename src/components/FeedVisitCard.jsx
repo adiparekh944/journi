@@ -34,7 +34,7 @@ export default function FeedVisitCard({
       <div className="p-3">
         <div className="flex gap-5">
           <button onClick={onLike} className="tap-highlight flex items-center gap-1 text-sm">
-            <Heart className={`h-5 w-5 ${liked ? "fill-red-500 text-red-500" : "text-stone-600"}`} />
+            <Heart className={`h-5 w-5 ${liked ? "fill-journi-rose text-journi-rose" : "text-stone-600"}`} />
             <span className="text-stone-600">{likes.length}</span>
           </button>
           <button onClick={onToggleComments} className="tap-highlight flex items-center gap-1 text-sm">

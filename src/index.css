@@ -104,9 +104,9 @@
 }
 
 /* Score badge bands — consistent everywhere */
-.score-green { background-color: #16a34a; color: #fff; }
+.score-green { background-color: #8DE0AD; color: #1c1917; }
 .score-yellow { background-color: #eab308; color: #3a2f00; }
-.score-red { background-color: #dc2626; color: #fff; }
+.score-red { background-color: #E0918D; color: #1c1917; }
 .score-neutral { background-color: #a8a29e; color: #fff; }
 
 .pin-shadow { box-shadow: 0 2px 6px rgba(0,0,0,0.25); }

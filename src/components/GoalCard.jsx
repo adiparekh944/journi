@@ -7,8 +7,8 @@ export default function GoalCard() {
   return (
     <div className="rounded-2xl border border-stone-200 bg-stone-50 p-4">
       <div className="flex items-start gap-3">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-100">
-          <Trophy className="h-5 w-5 text-amber-600" />
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-journi-mint/20">
+          <Trophy className="h-5 w-5 text-journi-mint" />
         </div>
         <div className="flex-1">
           <h3 className="text-sm font-bold text-stone-900">Set your 2026 goal</h3>

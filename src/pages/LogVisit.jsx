@@ -245,7 +245,7 @@ export default function LogVisit() {
             <Field label="Worth it? (1–5)">
               <div className="flex gap-2">
                 {[1, 2, 3, 4, 5].map((n) => (
-                  <button key={n} onClick={() => setForm({ ...form, worth_it_rating: n })} className={`tap-highlight h-10 flex-1 rounded-xl text-sm font-semibold ${form.worth_it_rating >= n ? "bg-amber-400 text-amber-950" : "bg-stone-100 text-stone-400"}`}>{n}</button>
+                  <button key={n} onClick={() => setForm({ ...form, worth_it_rating: n })} className={`tap-highlight h-10 flex-1 rounded-xl text-sm font-semibold ${form.worth_it_rating >= n ? "bg-journi-mint text-stone-900" : "bg-stone-100 text-stone-400"}`}>{n}</button>
                 ))}
               </div>
             </Field>
@@ -348,7 +348,7 @@ export default function LogVisit() {
 
       {step === "result" && result && place && (
         <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
-          <Trophy className="h-10 w-10 text-amber-500" />
+          <Trophy className="h-10 w-10 text-journi-mint" />
           <p className="mt-3 text-sm text-stone-500">{place.name} landed at</p>
           <div className="my-2"><ScoreBadge score={result.score} size="lg" /></div>
           <p className="text-sm text-stone-500">

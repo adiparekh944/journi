@@ -60,7 +60,7 @@ export default function WantToGo() {
               key={p.id}
               place={p}
               footer={
-                <button onClick={(e) => { e.stopPropagation(); toggleWantToGo(p); }} className="w-full rounded-full bg-stone-200 py-1.5 text-xs font-medium text-stone-700">
+                <button onClick={(e) => { e.stopPropagation(); toggleWantToGo(p); }} className="w-full rounded-full bg-journi-rose/20 py-1.5 text-xs font-medium text-stone-700">
                   Remove
                 </button>
               }

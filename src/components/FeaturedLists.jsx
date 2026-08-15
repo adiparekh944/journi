@@ -24,7 +24,7 @@ export default function FeaturedLists({ places }) {
     <section>
       <div className="mb-2 flex items-center justify-between">
         <h2 className="text-xs font-bold uppercase tracking-wide text-stone-900">Featured Lists</h2>
-        <button onClick={() => navigate("/search")} className="text-xs font-medium text-stone-500">See all</button>
+        <button onClick={() => navigate("/search")} className="text-xs font-medium text-journi-rose">See all</button>
       </div>
       <div className="-mx-4 flex gap-3 overflow-x-auto no-scrollbar px-4 pb-1">
         {lists.map((l) => (
