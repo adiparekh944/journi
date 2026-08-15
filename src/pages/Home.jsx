@@ -54,7 +54,7 @@ export default function Home() {
   const wtgIds = new Set(wantToGo.map((w) => w.place_id));
 
   const suggestions = useMemo(() => {
-    const unseen = places.filter((p) => !visitedIds.has(p.id) && !wtgIds.has(p.id));
+    const unseen = places.filter((p) => !visitedIds.has(p.id) && !wtgIds.has(p.id) && p.category !== "restaurant" && p.category !== "bar");
     const seenCats = new Set(visits.map((v) => v.place_category));
     const novel = unseen.filter((p) => !seenCats.has(p.category));
     const pool = novel.length >= 3 ? novel : unseen;

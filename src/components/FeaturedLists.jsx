@@ -5,7 +5,7 @@ import CategoryIcon, { CATEGORY_LABELS } from "@/components/CategoryIcon";
 
 export default function FeaturedLists({ places }) {
   const navigate = useNavigate();
-  const cats = ["restaurant", "bar", "cafe", "museum", "park", "landmark"];
+  const cats = ["cafe", "museum", "park", "landmark", "viewpoint", "gallery"];
   const lists = cats
     .map((cat) => {
       const catPlaces = (places || []).filter((p) => p.category === cat);
