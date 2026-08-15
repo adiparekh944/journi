@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import { useJourni } from "@/lib/JourniDataContext";
 import PlaceCard from "@/components/PlaceCard";
-import { ArrowLeft, Map as MapIcon, List } from "lucide-react";
+import { ArrowLeft, Map as MapIcon, List, Sparkles } from "lucide-react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -46,6 +46,20 @@ export default function WantToGo() {
           <button onClick={() => setView("map")} className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-xs ${view === "map" ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}><MapIcon className="h-3.5 w-3.5" /> Map</button>
         </div>
       </header>
+
+      <button
+        onClick={() => navigate("/trip-planner")}
+        className="mb-4 flex w-full items-center gap-3 rounded-3xl bg-primary p-4 text-left text-primary-foreground shadow-sm active:scale-[0.99]"
+      >
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white/10">
+          <Sparkles className="h-5 w-5" />
+        </span>
+        <span className="min-w-0 flex-1">
+          <span className="block text-sm font-semibold">Plan your New York trip</span>
+          <span className="mt-0.5 block text-xs text-white/60">Turn saved places into a 1–7 day itinerary</span>
+        </span>
+        <span className="text-lg text-white/60">›</span>
+      </button>
 
       {loading ? (
         <div className="text-sm text-muted-foreground">Loading…</div>

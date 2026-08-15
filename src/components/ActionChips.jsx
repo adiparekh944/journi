@@ -1,13 +1,13 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, Bookmark, Navigation } from "lucide-react";
+import { Plus, Bookmark, Sparkles } from "lucide-react";
 
 export default function ActionChips() {
   const navigate = useNavigate();
   const chips = [
     { label: "Log visit", icon: Plus, to: "/log" },
     { label: "Want to go", icon: Bookmark, to: "/want-to-go" },
-    { label: "Recs nearby", icon: Navigation, to: "/search" },
+    { label: "Plan trip", icon: Sparkles, to: "/trip-planner" },
   ];
   return (
     <div className="flex gap-2 overflow-x-auto no-scrollbar">

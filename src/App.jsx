@@ -20,6 +20,7 @@ import Feed from '@/pages/Feed';
 import Profile from '@/pages/Profile';
 import MyList from '@/pages/MyList';
 import WantToGo from '@/pages/WantToGo';
+import TripPlanner from '@/pages/TripPlanner';
 import PlaceDetail from '@/pages/PlaceDetail';
 // Add page imports here
 
@@ -65,6 +66,7 @@ const AuthenticatedApp = () => {
           <Route path="/u/:userId" element={<Profile />} />
           <Route path="/list" element={<MyList />} />
           <Route path="/want-to-go" element={<WantToGo />} />
+          <Route path="/trip-planner" element={<TripPlanner />} />
           <Route path="/place/:id" element={<PlaceDetail />} />
         </Route>
       </Route>
