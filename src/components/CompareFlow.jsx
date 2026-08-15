@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Image } from "@/components/ui/image";
 import CategoryIcon from "@/components/CategoryIcon";
-import { nextCompareStep, applyCompareResult, BUCKETS } from "@/../base44/shared/scoring";
+import { nextCompareStep, applyCompareResult } from "@/../base44/shared/scoring";
 
 // Head-to-head binary search comparison flow.
 // existingSorted: user's visits in the chosen bucket, best -> worst (already scored).

@@ -30,3 +30,24 @@ dist-ssr
 .env
 .vite
 base44/.app.jsonc
+
+# Local Supabase CLI state — .temp holds generated service-role secrets
+supabase/.temp/
+supabase/.branches/
+.supabase/
+
+# Python tooling for the seed builder
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.venv/
+
+# Base44 CLI export, regenerated on demand
+.base44-export/
+base44/.app.jsonc
+
+# Test and build output
+coverage/
+.vite/

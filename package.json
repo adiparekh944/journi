@@ -1,5 +1,5 @@
 {
-  "name": "base44-app",
+  "name": "journi",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,7 +9,19 @@
     "lint": "eslint . --quiet",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc -p ./jsconfig.json",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:domain": "vitest run supabase/functions",
+    "seed:build": "python scripts/build_places_seed.py",
+    "seed:validate": "python scripts/validate_places_seed.py supabase/seed/places.csv",
+    "seed:images": "python scripts/fetch_place_images.py",
+    "db:reset": "supabase db reset",
+    "db:types": "supabase gen types typescript --local > src/lib/database.types.ts",
+    "db:test": "supabase test db",
+    "db:seed:demo": "node scripts/seed_demo.mjs",
+    "python:check": "py -m ruff check scripts && py -m ruff format --check scripts && py -m mypy scripts",
+    "backend:check": "npm run seed:validate && npm run db:test && npm run test:run"
   },
   "dependencies": {
     "@base44/sdk": "^0.8.41",
@@ -45,6 +57,7 @@
     "@radix-ui/react-tooltip": "^1.1.8",
     "@stripe/react-stripe-js": "^3.0.0",
     "@stripe/stripe-js": "^5.2.0",
+    "@supabase/supabase-js": "^2.110.0",
     "@tanstack/react-query": "^5.84.1",
     "canvas-confetti": "^1.9.4",
     "class-variance-authority": "^0.7.1",
@@ -56,6 +69,7 @@
     "html2canvas": "^1.4.1",
     "input-otp": "^1.4.2",
     "jspdf": "^4.2.1",
+    "leaflet": "^1.9.4",
     "lodash": "^4.17.21",
     "lucide-react": "^0.475.0",
     "moment": "^2.30.1",
@@ -84,6 +98,7 @@
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.3.4",
+    "@vitest/coverage-v8": "^4.1.0",
     "autoprefixer": "^10.4.20",
     "baseline-browser-mapping": "^2.8.32",
     "eslint": "^9.19.0",
@@ -92,9 +107,13 @@
     "eslint-plugin-react-refresh": "^0.4.18",
     "eslint-plugin-unused-imports": "^4.3.0",
     "globals": "^15.14.0",
+    "jsdom": "^26.0.0",
     "postcss": "^8.5.3",
+    "supabase": "^2.110.0",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.2",
-    "vite": "^6.1.0"
+    "vite": "^6.1.0",
+    "vitest": "^4.1.0",
+    "@testing-library/jest-dom": "^6.6.3"
   }
 }

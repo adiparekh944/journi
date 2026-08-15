@@ -6,7 +6,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { scoreColorHex } from "@/../base44/shared/scoring";
-import CategoryIcon, { CATEGORY_LABELS } from "@/components/CategoryIcon";
+import { CATEGORY_LABELS } from "@/components/CategoryIcon";
 import { Maximize2 } from "lucide-react";
 
 const pinIcon = (score, want) => {
@@ -21,13 +21,19 @@ const pinIcon = (score, want) => {
 function FitBounds({ pins, fitTrigger }) {
   const map = useMap();
   useEffect(() => {
-    if (pins.length) {
-      const bounds = L.latLngBounds(pins.map((p) => [p.lat, p.lng]));
-      map.fitBounds(bounds, { padding: [40, 40] });
-    }
+    if (!pins.length) return;
+    // A single pin with a missing coordinate used to throw out of Leaflet and
+    // unmount the whole app, so build the bounds defensively.
+    const bounds = L.latLngBounds(pins.map((p) => [p.lat, p.lng]));
+    if (!bounds.isValid()) return;
+    map.fitBounds(bounds, { padding: [40, 40] });
   }, [pins, map, fitTrigger]);
   return null;
 }
+
+/** Leaflet cannot plot a pin without a finite pair of coordinates. */
+const hasCoordinates = (pin) =>
+  Number.isFinite(Number(pin.lat)) && Number.isFinite(Number(pin.lng));
 
 const FILTERS = ["All", "Been", "Want to Go"];
 
@@ -58,7 +64,7 @@ export default function MapPage() {
       });
     }
     if (category !== "all") list = list.filter((p) => p.place.category === category);
-    return list;
+    return list.filter(hasCoordinates);
   }, [visits, wantToGo, places, filter, category]);
 
   const boroughProgress = useMemo(() => {

@@ -8,6 +8,10 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
+/** Leaflet cannot plot a pin without a finite pair of coordinates. */
+const hasCoordinates = (place) =>
+  Number.isFinite(Number(place.latitude)) && Number.isFinite(Number(place.longitude));
+
 const purpleIcon = (label) =>
   L.divIcon({
     className: "",
@@ -71,7 +75,7 @@ export default function WantToGo() {
         <div className="h-[70vh] overflow-hidden rounded-3xl border border-stone-200">
           <MapContainer center={[40.7128, -74.006]} zoom={12} className="h-full w-full">
             <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" attribution="&copy; OpenStreetMap" />
-            {savedPlaces.map((p) => (
+            {savedPlaces.filter(hasCoordinates).map((p) => (
               <Marker key={p.id} position={[p.latitude, p.longitude]} icon={purpleIcon("★")}>
                 <Popup>
                   <button onClick={() => navigate(`/place/${p.id}`)} className="font-semibold">{p.name}</button>

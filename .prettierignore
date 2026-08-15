@@ -1,0 +1,9 @@
+dist
+coverage
+node_modules
+package-lock.json
+src/lib/database.types.ts
+supabase/.temp
+supabase/seed/places.csv
+.base44-export
+base44
