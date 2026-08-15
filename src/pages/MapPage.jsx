@@ -11,7 +11,7 @@ import { Maximize2 } from "lucide-react";
 
 const pinIcon = (score, want) => {
   if (want) {
-    return L.divIcon({ className: "", html: `<div class="pin-shadow flex h-7 min-w-7 items-center justify-center rounded-full bg-purple-600 px-1 text-[10px] font-bold text-white">★</div>`, iconSize: [28, 28], iconAnchor: [14, 14] });
+    return L.divIcon({ className: "", html: `<div class="pin-shadow flex h-7 min-w-7 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-white">★</div>`, iconSize: [28, 28], iconAnchor: [14, 14] });
   }
   const color = scoreColorHex(score);
   const label = score == null ? "–" : Number(score).toFixed(1);
