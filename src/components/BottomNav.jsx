@@ -16,7 +16,7 @@ export default function BottomNav() {
       className="fixed bottom-0 left-0 right-0 z-40 px-3 pt-2"
       style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom, 0px))" }}
     >
-      <div className="mx-auto flex max-w-md items-center justify-around rounded-2xl border border-border bg-card/95 px-2 py-1.5 shadow-[0_18px_50px_-24px_rgba(20,51,42,0.55)] backdrop-blur-xl">
+      <div className="mx-auto flex max-w-md items-center justify-around rounded-2xl border border-border bg-card/95 px-2 py-1.5 shadow-[0_18px_50px_-24px_rgba(0,40,120,0.45)] backdrop-blur-xl">
         {tabs.map((t) => {
           const Icon = t.icon;
           return (
