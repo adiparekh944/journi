@@ -72,25 +72,25 @@ export default function Profile() {
     setEditing(false);
   };
 
-  if (!profile) return <div className="px-4 pt-10 text-center text-sm text-stone-400">Loading…</div>;
+  if (!profile) return <div className="px-4 pt-10 text-center text-sm text-muted-foreground">Loading…</div>;
 
   return (
     <div className="px-4 pt-5">
       <header className="mb-4 flex items-center justify-between">
-        <h1 className="text-lg font-bold text-stone-900">{isMe ? "Profile" : "User"}</h1>
+        <h1 className="text-lg font-bold text-foreground">{isMe ? "Profile" : "User"}</h1>
         <div className="flex items-center gap-1">
-          <button className="p-2 text-stone-600"><Share2 className="h-5 w-5" /></button>
-          {isMe && <button onClick={() => setEditing(true)} className="p-2 text-stone-600"><Settings className="h-5 w-5" /></button>}
+          <button className="p-2 text-muted-foreground"><Share2 className="h-5 w-5" /></button>
+          {isMe && <button onClick={() => setEditing(true)} className="p-2 text-muted-foreground"><Settings className="h-5 w-5" /></button>}
         </div>
       </header>
 
       <div className="flex flex-col items-center">
-        <div className="h-20 w-20 overflow-hidden rounded-full bg-stone-200">
-          {profile.avatar_url ? <Image src={profile.avatar_url} alt="" fittingType="fill" className="h-full w-full" /> : <div className="flex h-full w-full items-center justify-center text-2xl font-bold text-stone-500">{(profile.display_name || profile.username || "?")[0]}</div>}
+        <div className="h-20 w-20 overflow-hidden rounded-full bg-muted">
+          {profile.avatar_url ? <Image src={profile.avatar_url} alt="" fittingType="fill" className="h-full w-full" /> : <div className="flex h-full w-full items-center justify-center text-2xl font-bold text-muted-foreground">{(profile.display_name || profile.username || "?")[0]}</div>}
         </div>
-        <h2 className="mt-2 text-lg font-bold text-stone-900">{profile.display_name || profile.username}</h2>
-        <div className="text-sm text-stone-500">@{profile.username}</div>
-        <div className="mt-0.5 text-xs text-stone-400">Member since {new Date(profile.created_date || Date.now()).toLocaleDateString("en-US", { month: "long", year: "numeric" })}</div>
+        <h2 className="mt-2 text-lg font-bold text-foreground">{profile.display_name || profile.username}</h2>
+        <div className="text-sm text-muted-foreground">@{profile.username}</div>
+        <div className="mt-0.5 text-xs text-muted-foreground">Member since {new Date(profile.created_date || Date.now()).toLocaleDateString("en-US", { month: "long", year: "numeric" })}</div>
       </div>
 
       <div className="mt-4 flex justify-center">
@@ -99,17 +99,17 @@ export default function Profile() {
 
       {isMe ? (
         <div className="mt-4 flex gap-2">
-          <button onClick={() => setEditing(true)} className="flex-1 rounded-full border border-stone-300 py-2.5 text-sm font-medium text-stone-700">Edit profile</button>
-          <button onClick={() => navigate("/list")} className="flex-1 rounded-full border border-stone-300 py-2.5 text-sm font-medium text-stone-700">Share profile</button>
+          <button onClick={() => setEditing(true)} className="flex-1 rounded-full border border-border py-2.5 text-sm font-medium text-foreground">Edit profile</button>
+          <button onClick={() => navigate("/list")} className="flex-1 rounded-full border border-border py-2.5 text-sm font-medium text-foreground">Share profile</button>
         </div>
       ) : (
         <div className="mt-4">
           {followStatus === "accepted" ? (
-            <button onClick={unfollow} className="flex w-full items-center justify-center gap-1.5 rounded-full border border-stone-300 py-2.5 text-sm font-medium text-stone-700"><Check className="h-4 w-4" /> Following</button>
+            <button onClick={unfollow} className="flex w-full items-center justify-center gap-1.5 rounded-full border border-border py-2.5 text-sm font-medium text-foreground"><Check className="h-4 w-4" /> Following</button>
           ) : followStatus === "pending" ? (
-            <button disabled className="w-full rounded-full border border-stone-200 py-2.5 text-sm font-medium text-stone-400">Requested</button>
+            <button disabled className="w-full rounded-full border border-border py-2.5 text-sm font-medium text-muted-foreground">Requested</button>
           ) : (
-            <button onClick={follow} className="flex w-full items-center justify-center gap-1.5 rounded-full bg-stone-900 py-2.5 text-sm font-semibold text-white"><UserPlus className="h-4 w-4" /> Follow</button>
+            <button onClick={follow} className="flex w-full items-center justify-center gap-1.5 rounded-full bg-primary py-2.5 text-sm font-semibold text-primary-foreground"><UserPlus className="h-4 w-4" /> Follow</button>
           )}
         </div>
       )}
@@ -131,22 +131,22 @@ export default function Profile() {
       )}
 
       {isMe && (
-        <button onClick={() => logout()} className="mt-4 w-full rounded-full py-2.5 text-sm font-medium text-stone-400">Log out</button>
+        <button onClick={() => logout()} className="mt-4 w-full rounded-full py-2.5 text-sm font-medium text-muted-foreground">Log out</button>
       )}
 
       <section className="mt-6">
-        <h3 className="mb-2 text-sm font-semibold text-stone-700">Top picks</h3>
+        <h3 className="mb-2 text-sm font-semibold text-foreground">Top picks</h3>
         {topPicks.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-stone-200 p-6 text-center text-sm text-stone-400">No visits yet.</div>
+          <div className="rounded-2xl border border-dashed border-border p-6 text-center text-sm text-muted-foreground">No visits yet.</div>
         ) : (
           <div className="space-y-2">
             {topPicks.map((v, i) => (
-              <button key={v.id} onClick={() => navigate(`/place/${v.place_id}`)} className="flex w-full items-center gap-3 rounded-2xl border border-stone-200 bg-white p-2.5 text-left">
-                <span className="w-4 text-center text-xs font-bold text-stone-400">{i + 1}</span>
+              <button key={v.id} onClick={() => navigate(`/place/${v.place_id}`)} className="flex w-full items-center gap-3 rounded-2xl border border-border bg-card p-2.5 text-left">
+                <span className="w-4 text-center text-xs font-bold text-muted-foreground">{i + 1}</span>
                 <div className="h-11 w-11 overflow-hidden rounded-xl bg-stone-100">
                   {v.photos?.[0] ? <Image src={v.photos[0]} alt="" fittingType="fill" className="h-full w-full" /> : null}
                 </div>
-                <div className="flex-1"><div className="line-clamp-1 text-sm font-semibold text-stone-900">{v.place_name}</div><div className="text-xs text-stone-500">{v.place_neighborhood}</div></div>
+                <div className="flex-1"><div className="line-clamp-1 text-sm font-semibold text-foreground">{v.place_name}</div><div className="text-xs text-muted-foreground">{v.place_neighborhood}</div></div>
                 <ScoreBadge score={v.score} size="sm" />
               </button>
             ))}
@@ -161,11 +161,11 @@ export default function Profile() {
 
 function NavRow({ icon: Icon, label, count, onClick }) {
   return (
-    <button onClick={onClick} className="flex w-full items-center gap-3 border-b border-stone-100 py-3 text-left">
-      <Icon className="h-5 w-5 text-stone-600" />
-      <span className="flex-1 text-sm font-medium text-stone-900">{label}</span>
-      {count != null && <span className="text-sm text-stone-400">{count}</span>}
-      <MoreHorizontal className="h-4 w-4 text-stone-400" />
+    <button onClick={onClick} className="flex w-full items-center gap-3 border-b border-border py-3 text-left">
+      <Icon className="h-5 w-5 text-muted-foreground" />
+      <span className="flex-1 text-sm font-medium text-foreground">{label}</span>
+      {count != null && <span className="text-sm text-muted-foreground">{count}</span>}
+      <MoreHorizontal className="h-4 w-4 text-muted-foreground" />
     </button>
   );
 }
@@ -180,20 +180,20 @@ function EditProfileModal({ profile, onSave, onClose }) {
   });
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40" onClick={onClose}>
-      <div className="w-full max-w-md rounded-t-3xl bg-white p-5 pb-safe" onClick={(e) => e.stopPropagation()}>
+      <div className="w-full max-w-md rounded-t-3xl bg-card p-5 pb-safe" onClick={(e) => e.stopPropagation()}>
         <div className="mb-3 flex items-center justify-between">
           <h2 className="text-lg font-semibold">Edit profile</h2>
-          <button onClick={onClose} className="text-sm text-stone-500">Cancel</button>
+          <button onClick={onClose} className="text-sm text-muted-foreground">Cancel</button>
         </div>
         <div className="space-y-3">
           <Input label="Display name" value={form.display_name} onChange={(v) => setForm({ ...form, display_name: v })} />
           <Input label="Username" value={form.username} onChange={(v) => setForm({ ...form, username: v })} />
           <Input label="Bio" value={form.bio} onChange={(v) => setForm({ ...form, bio: v })} />
-          <button onClick={() => setForm({ ...form, is_private: !form.is_private })} className="flex w-full items-center justify-between rounded-2xl border border-stone-200 p-3">
-            <span className="text-sm font-medium text-stone-700">Private account</span>
-            <span className={`flex h-6 w-11 items-center rounded-full p-0.5 ${form.is_private ? "bg-stone-900" : "bg-stone-200"}`}><span className={`h-5 w-5 rounded-full bg-white transition ${form.is_private ? "translate-x-5" : ""}`} /></span>
+          <button onClick={() => setForm({ ...form, is_private: !form.is_private })} className="flex w-full items-center justify-between rounded-2xl border border-border p-3">
+            <span className="text-sm font-medium text-foreground">Private account</span>
+            <span className={`flex h-6 w-11 items-center rounded-full p-0.5 ${form.is_private ? "bg-primary" : "bg-muted"}`}><span className={`h-5 w-5 rounded-full bg-card transition ${form.is_private ? "translate-x-5" : ""}`} /></span>
           </button>
-          <button onClick={() => onSave(form)} className="w-full rounded-full bg-stone-900 py-3 text-sm font-semibold text-white">Save</button>
+          <button onClick={() => onSave(form)} className="w-full rounded-full bg-primary py-3 text-sm font-semibold text-primary-foreground">Save</button>
         </div>
       </div>
     </div>
@@ -203,8 +203,8 @@ function EditProfileModal({ profile, onSave, onClose }) {
 function Input({ label, value, onChange }) {
   return (
     <div>
-      <div className="mb-1 text-xs font-medium text-stone-500">{label}</div>
-      <input value={value} onChange={(e) => onChange(e.target.value)} className="h-11 w-full rounded-2xl border border-stone-200 bg-stone-50 px-3 text-sm focus:outline-none" />
+      <div className="mb-1 text-xs font-medium text-muted-foreground">{label}</div>
+      <input value={value} onChange={(e) => onChange(e.target.value)} className="h-11 w-full rounded-2xl border border-border bg-stone-50 px-3 text-sm focus:outline-none" />
     </div>
   );
 }

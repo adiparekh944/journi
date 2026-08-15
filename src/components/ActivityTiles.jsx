@@ -7,15 +7,15 @@ export default function ActivityTiles({ visits }) {
 
   return (
     <div className="grid grid-cols-2 gap-3">
-      <div className="rounded-2xl border border-stone-200 p-4">
-        <Trophy className="h-5 w-5 text-amber-500" />
-        <div className="mt-2 text-lg font-bold text-stone-900">{topScore}</div>
-        <div className="text-xs text-stone-500">Top score</div>
+      <div className="rounded-2xl border border-border p-4">
+        <Trophy className="h-5 w-5 text-secondary" />
+        <div className="mt-2 text-lg font-bold text-foreground">{topScore}</div>
+        <div className="text-xs text-muted-foreground">Top score</div>
       </div>
-      <div className="rounded-2xl border border-stone-200 p-4">
-        <Flame className="h-5 w-5 text-orange-500" />
-        <div className="mt-2 text-lg font-bold text-stone-900">{categories}</div>
-        <div className="text-xs text-stone-500">Categories</div>
+      <div className="rounded-2xl border border-border p-4">
+        <Flame className="h-5 w-5 text-primary" />
+        <div className="mt-2 text-lg font-bold text-foreground">{categories}</div>
+        <div className="text-xs text-muted-foreground">Categories</div>
       </div>
     </div>
   );

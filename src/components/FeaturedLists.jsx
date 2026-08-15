@@ -23,8 +23,8 @@ export default function FeaturedLists({ places }) {
   return (
     <section>
       <div className="mb-2 flex items-center justify-between">
-        <h2 className="text-xs font-bold uppercase tracking-wide text-stone-900">Featured Lists</h2>
-        <button onClick={() => navigate("/search")} className="text-xs font-medium text-stone-500">See all</button>
+        <h2 className="text-xs font-bold uppercase tracking-wide text-foreground">Featured Lists</h2>
+        <button onClick={() => navigate("/search")} className="text-xs font-medium text-primary">See all</button>
       </div>
       <div className="-mx-4 flex gap-3 overflow-x-auto no-scrollbar px-4 pb-1">
         {lists.map((l) => (
@@ -36,8 +36,8 @@ export default function FeaturedLists({ places }) {
             {l.photo ? (
               <Image src={l.photo} alt="" fittingType="fill" className="h-full w-full" />
             ) : (
-              <div className="flex h-full w-full items-center justify-center bg-stone-200">
-                <CategoryIcon category={l.category} className="h-8 w-8 text-stone-400" />
+              <div className="flex h-full w-full items-center justify-center bg-muted">
+                <CategoryIcon category={l.category} className="h-8 w-8 text-muted-foreground" />
               </div>
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />

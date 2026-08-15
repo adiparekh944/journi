@@ -84,7 +84,7 @@ export default function Feed() {
     alert("Saved to want-to-go!");
   };
 
-  if (loading) return <div className="px-4 pt-10 text-center text-sm text-stone-400">Loading…</div>;
+  if (loading) return <div className="px-4 pt-10 text-center text-sm text-muted-foreground">Loading…</div>;
 
   return (
     <div className="px-4 pt-5">
@@ -99,9 +99,9 @@ export default function Feed() {
         <FeaturedLists places={places} />
       </div>
       <section className="mt-6">
-        <h2 className="mb-3 text-xs font-bold uppercase tracking-wide text-stone-900">From your friends</h2>
+        <h2 className="mb-3 text-xs font-bold uppercase tracking-wide text-foreground">From your friends</h2>
         {visits.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-stone-200 p-8 text-center text-sm text-stone-400">
+          <div className="rounded-2xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
             Nothing here yet. Follow people to see their visits.
           </div>
         ) : (

@@ -71,6 +71,10 @@ module.exports = {
   				700: '#44403c',
   				800: '#292524',
   				900: '#1c1917'
+  			},
+  			journi: {
+  				rose: '#E0918D',
+  				mint: '#8DE0AD'
   			}
   		},
   		fontFamily: {
