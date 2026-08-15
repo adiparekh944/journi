@@ -1,0 +1,16 @@
+{
+  "name": "WantToGo",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string"
+    },
+    "place_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_id",
+    "place_id"
+  ]
+}

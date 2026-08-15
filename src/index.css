@@ -87,6 +87,26 @@
   }
 
   body {
-    @apply bg-background text-foreground font-body;
+    @apply bg-background text-foreground font-body antialiased;
   }
 }
+
+@layer utilities {
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .tap-highlight { -webkit-tap-highlight-color: transparent; }
+}
+
+/* Score badge bands — consistent everywhere */
+.score-green { background-color: #16a34a; color: #fff; }
+.score-yellow { background-color: #eab308; color: #3a2f00; }
+.score-red { background-color: #dc2626; color: #fff; }
+.score-neutral { background-color: #cbd5e1; color: #475569; }
+
+.pin-shadow { box-shadow: 0 2px 6px rgba(0,0,0,0.25); }

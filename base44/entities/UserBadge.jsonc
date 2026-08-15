@@ -1,0 +1,16 @@
+{
+  "name": "UserBadge",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string"
+    },
+    "badge_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_id",
+    "badge_id"
+  ]
+}

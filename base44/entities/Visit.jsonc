@@ -1,0 +1,93 @@
+{
+  "name": "Visit",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string"
+    },
+    "place_id": {
+      "type": "string"
+    },
+    "place_name": {
+      "type": "string"
+    },
+    "place_category": {
+      "type": "string"
+    },
+    "place_neighborhood": {
+      "type": "string"
+    },
+    "place_borough": {
+      "type": "string"
+    },
+    "place_latitude": {
+      "type": "number"
+    },
+    "place_longitude": {
+      "type": "number"
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "note": {
+      "type": "string"
+    },
+    "date_visited": {
+      "type": "string",
+      "format": "date"
+    },
+    "paid": {
+      "type": "boolean",
+      "default": false
+    },
+    "amount_paid": {
+      "type": "number"
+    },
+    "worth_it_rating": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "crowd_level": {
+      "type": "string",
+      "enum": [
+        "Empty",
+        "Calm",
+        "Moderate",
+        "Busy",
+        "Packed"
+      ]
+    },
+    "duration": {
+      "type": "string"
+    },
+    "companions": {
+      "type": "string"
+    },
+    "would_return": {
+      "type": "boolean"
+    },
+    "sentiment_bucket": {
+      "type": "string",
+      "enum": [
+        "loved",
+        "fine",
+        "no"
+      ]
+    },
+    "score": {
+      "type": "number"
+    },
+    "rank": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "user_id",
+    "place_id",
+    "sentiment_bucket"
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "name": "Place",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "restaurant",
+        "bar",
+        "museum",
+        "park",
+        "viewpoint",
+        "cafe",
+        "shop",
+        "gallery",
+        "theater",
+        "market",
+        "landmark",
+        "other"
+      ]
+    },
+    "neighborhood": {
+      "type": "string"
+    },
+    "borough": {
+      "type": "string",
+      "enum": [
+        "Manhattan",
+        "Brooklyn",
+        "Queens",
+        "The Bronx",
+        "Staten Island"
+      ]
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "description": {
+      "type": "string"
+    },
+    "price_level": {
+      "type": "string",
+      "enum": [
+        "$",
+        "$$",
+        "$$$",
+        "$$$$"
+      ]
+    },
+    "avg_duration": {
+      "type": "string"
+    },
+    "best_time_to_go": {
+      "type": "string"
+    },
+    "indoor_or_outdoor": {
+      "type": "string",
+      "enum": [
+        "Indoor",
+        "Outdoor",
+        "Both"
+      ]
+    },
+    "official_photos": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "name",
+    "category",
+    "borough",
+    "latitude",
+    "longitude"
+  ]
+}
