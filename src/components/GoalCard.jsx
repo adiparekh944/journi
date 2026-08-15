@@ -18,7 +18,7 @@ export default function GoalCard() {
               <button
                 key={n}
                 onClick={() => setGoal(n)}
-                className={`rounded-full px-4 py-1.5 text-xs font-medium ${goal === n ? "bg-stone-900 text-white" : "border border-stone-300 text-stone-600"}`}
+                className={`rounded-full px-4 py-1.5 text-xs font-medium ${goal === n ? "bg-primary text-white" : "border border-stone-300 text-stone-600"}`}
               >
                 {n}
               </button>

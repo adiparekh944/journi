@@ -81,7 +81,7 @@ export default function Home() {
             className={`relative pb-2 text-sm font-medium ${tab === t.key ? "text-stone-900" : "text-stone-400"}`}
           >
             {t.label}
-            {tab === t.key && <div className="absolute -bottom-px left-0 right-0 h-0.5 bg-stone-900" />}
+            {tab === t.key && <div className="absolute -bottom-px left-0 right-0 h-0.5 bg-primary" />}
           </button>
         ))}
       </div>
@@ -159,7 +159,7 @@ export default function Home() {
                         <div className="flex gap-2">
                           <button
                             onClick={(e) => { e.stopPropagation(); navigate(`/log/${p.id}`); }}
-                            className="flex-1 rounded-full bg-stone-900 py-1.5 text-xs font-medium text-white active:scale-95"
+                            className="flex-1 rounded-full bg-primary py-1.5 text-xs font-medium text-white active:scale-95"
                           >
                             {visit ? "Re-log" : "Log"}
                           </button>
@@ -191,7 +191,7 @@ function Chip({ active, onClick, children }) {
   return (
     <button
       onClick={onClick}
-      className={`tap-highlight shrink-0 rounded-full border px-3 py-1.5 text-xs font-medium ${active ? "border-stone-900 bg-stone-900 text-white" : "border-stone-200 bg-white text-stone-600"}`}
+      className={`tap-highlight shrink-0 rounded-full border px-3 py-1.5 text-xs font-medium ${active ? "border-stone-900 bg-primary text-white" : "border-stone-200 bg-white text-stone-600"}`}
     >
       {children}
     </button>

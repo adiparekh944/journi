@@ -26,7 +26,7 @@ export default function BottomNav() {
               {({ isActive }) => (
                 <>
                   {t.center ? (
-                    <span className="flex h-11 w-11 -translate-y-2 items-center justify-center rounded-full bg-stone-900 text-white shadow-lg active:scale-95">
+                    <span className="flex h-11 w-11 -translate-y-2 items-center justify-center rounded-full bg-primary text-white shadow-lg active:scale-95">
                       <Icon className="h-5 w-5" strokeWidth={2.5} />
                     </span>
                   ) : (

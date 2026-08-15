@@ -72,7 +72,7 @@ export default function MyList() {
             className={`relative pb-2 text-sm font-medium ${tab === t.key ? "text-stone-900" : "text-stone-400"}`}
           >
             {t.label} <span className="text-xs">({t.count})</span>
-            {tab === t.key && <div className="absolute -bottom-px left-0 right-0 h-0.5 bg-stone-900" />}
+            {tab === t.key && <div className="absolute -bottom-px left-0 right-0 h-0.5 bg-primary" />}
           </button>
         ))}
       </div>
@@ -148,7 +148,7 @@ export default function MyList() {
                 <div className="bg-stone-50 px-3 pb-3">
                   {v.note && <p className="mb-2 text-sm text-stone-600">{v.note}</p>}
                   <div className="flex gap-2">
-                    <button onClick={() => navigate(`/log/${v.place_id}?rerank=1`)} className="flex flex-1 items-center justify-center gap-1.5 rounded-full bg-stone-900 py-2 text-xs font-medium text-white">
+                    <button onClick={() => navigate(`/log/${v.place_id}?rerank=1`)} className="flex flex-1 items-center justify-center gap-1.5 rounded-full bg-primary py-2 text-xs font-medium text-white">
                       <RotateCw className="h-3.5 w-3.5" /> Re-rank
                     </button>
                     <button
@@ -172,7 +172,7 @@ export default function MyList() {
 
       <button
         onClick={() => navigate("/map")}
-        className="fixed bottom-24 right-4 z-30 flex items-center gap-1.5 rounded-full bg-stone-900 px-4 py-2.5 text-sm font-medium text-white shadow-lg active:scale-95"
+        className="fixed bottom-24 right-4 z-30 flex items-center gap-1.5 rounded-full bg-primary px-4 py-2.5 text-sm font-medium text-white shadow-lg active:scale-95"
       >
         <Map className="h-4 w-4" /> View Map
       </button>

@@ -60,7 +60,7 @@ export default function FeedVisitCard({
                 placeholder="Add a comment…"
                 className="h-9 flex-1 rounded-full border border-stone-200 px-3 text-sm focus:outline-none"
               />
-              <button onClick={onComment} className="tap-highlight flex h-9 w-9 items-center justify-center rounded-full bg-stone-900 text-white">
+              <button onClick={onComment} className="tap-highlight flex h-9 w-9 items-center justify-center rounded-full bg-primary text-white">
                 <Send className="h-4 w-4" />
               </button>
             </div>

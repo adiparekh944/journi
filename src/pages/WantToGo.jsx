@@ -11,7 +11,7 @@ import "leaflet/dist/leaflet.css";
 const purpleIcon = (label) =>
   L.divIcon({
     className: "",
-    html: `<div class="pin-shadow flex h-7 min-w-7 items-center justify-center rounded-full bg-stone-900 px-1 text-[10px] font-bold text-white">${label}</div>`,
+    html: `<div class="pin-shadow flex h-7 min-w-7 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-bold text-white">${label}</div>`,
     iconSize: [28, 28],
     iconAnchor: [14, 14],
   });
@@ -42,8 +42,8 @@ export default function WantToGo() {
         </button>
         <h1 className="flex-1 text-xl font-semibold text-stone-900">Want to go</h1>
         <div className="flex rounded-full border border-stone-200 p-0.5">
-          <button onClick={() => setView("list")} className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-xs ${view === "list" ? "bg-stone-900 text-white" : "text-stone-500"}`}><List className="h-3.5 w-3.5" /> List</button>
-          <button onClick={() => setView("map")} className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-xs ${view === "map" ? "bg-stone-900 text-white" : "text-stone-500"}`}><MapIcon className="h-3.5 w-3.5" /> Map</button>
+          <button onClick={() => setView("list")} className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-xs ${view === "list" ? "bg-primary text-white" : "text-stone-500"}`}><List className="h-3.5 w-3.5" /> List</button>
+          <button onClick={() => setView("map")} className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-xs ${view === "map" ? "bg-primary text-white" : "text-stone-500"}`}><MapIcon className="h-3.5 w-3.5" /> Map</button>
         </div>
       </header>
 
