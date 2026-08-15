@@ -8,8 +8,6 @@
     "category": {
       "type": "string",
       "enum": [
-        "restaurant",
-        "bar",
         "museum",
         "park",
         "viewpoint",

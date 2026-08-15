@@ -1,12 +1,10 @@
 import React from "react";
 import {
-  UtensilsCrossed, Wine, Landmark, Trees, Mountain, Coffee, ShoppingBag,
+  Landmark, Trees, Mountain, Coffee, ShoppingBag,
   Palette, Drama, Store, Building2, Sparkles, MapPin
 } from "lucide-react";
 
 const MAP = {
-  restaurant: UtensilsCrossed,
-  bar: Wine,
   museum: Landmark,
   park: Trees,
   viewpoint: Mountain,
@@ -25,7 +23,7 @@ export default function CategoryIcon({ category, className = "h-4 w-4" }) {
 }
 
 export const CATEGORY_LABELS = {
-  restaurant: "Restaurant", bar: "Bar", museum: "Museum", park: "Park",
+  museum: "Museum", park: "Park",
   viewpoint: "Viewpoint", cafe: "Cafe", shop: "Shop", gallery: "Gallery",
   theater: "Theater", market: "Market", landmark: "Landmark", other: "Place",
 };
