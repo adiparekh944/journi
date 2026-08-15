@@ -1,0 +1,21 @@
+{
+  // Edge Functions run on Deno, which resolves explicit .ts import specifiers
+  // and provides its own globals. Without this, an editor using the Node
+  // TypeScript service reports phantom errors on every relative import here.
+  // Nothing compiles against this file; it exists so tooling reads the folder
+  // correctly. The authoritative runtime config is deno.json.
+  "compilerOptions": {
+    "target": "esnext",
+    "lib": ["esnext", "dom"],
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "skipLibCheck": true,
+    "types": []
+  },
+  "include": ["./**/*.ts"]
+}

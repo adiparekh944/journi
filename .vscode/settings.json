@@ -1,0 +1,30 @@
+{
+  // The repo is a Node/Vite app with one Deno subtree. Scope the Deno language
+  // server to that subtree only, so Edge Functions stop being typechecked by
+  // the Node service (which flags every .ts import specifier) and the React app
+  // is not typechecked by Deno.
+  "deno.enable": false,
+  "deno.enablePaths": ["./supabase/functions"],
+  "deno.lint": true,
+  "deno.unstable": false,
+
+  // These are generated or vendored; hiding them keeps the Problems panel and
+  // search focused on code that is actually authored here.
+  "files.exclude": {
+    "**/.base44-export": true,
+    "**/__pycache__": true,
+    "**/.mypy_cache": true,
+    "**/.ruff_cache": true,
+    "supabase/.temp": true,
+    "supabase/.branches": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "supabase/seed/seed.sql": true,
+    "scripts/place_images.py": true
+  },
+
+  "javascript.preferences.importModuleSpecifierEnding": "minimal",
+  "editor.formatOnSave": false
+}
