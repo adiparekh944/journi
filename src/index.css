@@ -4,24 +4,24 @@
 
 @layer base {
   :root {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 95%;
-    --card: 0 0% 7%;
-    --card-foreground: 0 0% 95%;
-    --popover: 0 0% 7%;
-    --popover-foreground: 0 0% 95%;
+    --background: 18 10% 5%;
+    --foreground: 30 18% 94%;
+    --card: 18 8% 8%;
+    --card-foreground: 30 18% 94%;
+    --popover: 18 8% 8%;
+    --popover-foreground: 30 18% 94%;
     --primary: 7 100% 68%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 0 0% 95%;
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 58%;
+    --secondary: 18 6% 12%;
+    --secondary-foreground: 30 18% 94%;
+    --muted: 18 6% 12%;
+    --muted-foreground: 20 10% 58%;
     --accent: 7 100% 68%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 62% 45%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
+    --border: 18 6% 17%;
+    --input: 18 6% 17%;
     --ring: 7 100% 68%;
     --chart-1: 7 100% 68%;
     --chart-2: 173 58% 39%;
@@ -33,13 +33,13 @@
     --font-body: ui-sans-serif, system-ui, sans-serif;
     --font-display: ui-sans-serif, system-ui, sans-serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    --sidebar-background: 0 0% 7%;
-    --sidebar-foreground: 0 0% 95%;
+    --sidebar-background: 18 8% 8%;
+    --sidebar-foreground: 30 18% 94%;
     --sidebar-primary: 7 100% 68%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 10%;
-    --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 0 0% 15%;
+    --sidebar-accent: 18 6% 12%;
+    --sidebar-accent-foreground: 30 18% 94%;
+    --sidebar-border: 18 6% 17%;
     --sidebar-ring: 7 100% 68%;
   }
 
@@ -107,6 +107,6 @@
 .score-green { background-color: #16a34a; color: #fff; }
 .score-yellow { background-color: #eab308; color: #3a2f00; }
 .score-red { background-color: #dc2626; color: #fff; }
-.score-neutral { background-color: #52525b; color: #d4d4d8; }
+.score-neutral { background-color: #443932; color: #9A8B80; }
 
 .pin-shadow { box-shadow: 0 2px 6px rgba(0,0,0,0.25); }
