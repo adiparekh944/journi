@@ -34,7 +34,14 @@ export default function PhotoInput({ photos, onChange, max = 6 }) {
             <Image src={p} alt="" fittingType="fill" className="h-full w-full" />
             <button
               type="button"
-              onClick={() => onChange(photos.filter((_, idx) => idx !== i))}
+              onClick={async () => {
+                onChange(photos.filter((_, idx) => idx !== i));
+                // Drop the uploaded file too, so discarding a photo does not
+                // leave it sitting in the bucket forever.
+                const path = base44.storage.pathFromUrl(p);
+                if (path) await base44.storage.removePhotos([path]);
+              }}
+              aria-label="Remove photo"
               className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-full bg-black/60 text-white"
             >
               <X className="h-3.5 w-3.5" />

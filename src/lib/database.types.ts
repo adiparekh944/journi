@@ -392,6 +392,8 @@ export type Database = {
           crowd_tolerance: number
           display_name: string
           home_city: string | null
+          home_lat: number | null
+          home_lng: number | null
           id: string
           is_private: boolean
           onboarding_complete: boolean
@@ -411,6 +413,8 @@ export type Database = {
           crowd_tolerance?: number
           display_name: string
           home_city?: string | null
+          home_lat?: number | null
+          home_lng?: number | null
           id: string
           is_private?: boolean
           onboarding_complete?: boolean
@@ -430,6 +434,8 @@ export type Database = {
           crowd_tolerance?: number
           display_name?: string
           home_city?: string | null
+          home_lat?: number | null
+          home_lng?: number | null
           id?: string
           is_private?: boolean
           onboarding_complete?: boolean

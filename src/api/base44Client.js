@@ -130,6 +130,85 @@ function storagePathFromUrl(url) {
   return index === -1 ? null : url.slice(index + marker.length).split("?")[0];
 }
 
+/**
+ * Make the stored photos for a visit match the list the user is looking at.
+ *
+ * Removing a photo has to delete the row and the object: leaving the file in
+ * the bucket orphans it forever, and leaving the row means the photo comes
+ * straight back on the next load.
+ */
+async function syncPhotos(visitId, photos) {
+  const userId = await currentUserId();
+  const wanted = photos
+    .slice(0, 6)
+    .map((photo) =>
+      typeof photo === "string" ? storagePathFromUrl(photo) : photo?.storage_path,
+    )
+    .filter(Boolean);
+
+  // check_photo_limit() requires the row's place to match the visit's.
+  const visitRow = unwrap(
+    await supabase.from("visits").select("place_id").eq("id", visitId).single(),
+  );
+
+  const existing = unwrap(
+    await supabase
+      .from("visit_photos")
+      .select("id, storage_path")
+      .eq("visit_id", visitId),
+  );
+
+  const keep = new Set(wanted);
+  const removed = (existing ?? []).filter((row) => !keep.has(row.storage_path));
+  if (removed.length > 0) {
+    unwrap(
+      await supabase
+        .from("visit_photos")
+        .delete()
+        .in("id", removed.map((row) => row.id)),
+    );
+    await removeStoredPhotos(removed.map((row) => row.storage_path));
+  }
+
+  const present = new Set((existing ?? []).map((row) => row.storage_path));
+  const added = wanted
+    .map((path, index) => ({ path, index }))
+    .filter(({ path }) => !present.has(path));
+  if (added.length > 0) {
+    unwrap(
+      await supabase.from("visit_photos").insert(
+        added.map(({ path, index }) => ({
+          visit_id: visitId,
+          user_id: userId,
+          place_id: visitRow.place_id,
+          storage_path: path,
+          width: 1200,
+          height: 900,
+          sort_order: index,
+        })),
+      ),
+    );
+  }
+
+  // Keep the display order in step with the list.
+  for (const [index, path] of wanted.entries()) {
+    await supabase
+      .from("visit_photos")
+      .update({ sort_order: index })
+      .eq("visit_id", visitId)
+      .eq("storage_path", path);
+  }
+}
+
+/** Delete objects from the visit-photos bucket, ignoring already-gone files. */
+async function removeStoredPhotos(paths) {
+  if (!paths.length) return;
+  const { error } = await supabase.storage.from("visit-photos").remove(paths);
+  if (error) {
+    console.warn("Could not remove photo files:", error.message);
+  }
+}
+
 const Place = {
   async list(order = "-created_date", limit = DEFAULT_LIMIT) {
     let query = supabase.from("places").select(PLACE_COLUMNS).limit(limit);
@@ -190,6 +269,9 @@ const Visit = {
   },
   /** Metadata only. Scores are derived from rank and cannot be written. */
   async update(id, patch) {
+    if (Array.isArray(patch.photos)) {
+      await syncPhotos(id, patch.photos);
+    }
     const payload = visitPayload(patch, { partial: true });
     return toVisit(
       unwrap(
@@ -462,6 +544,9 @@ const auth = {
     for (const field of ["username", "bio", "home_city", "avatar_url", "is_private"]) {
       if (field in patch) payload[field] = patch[field];
     }
+    if ("home_latitude" in patch) payload.home_lat = patch.home_latitude;
+    if ("home_longitude" in patch) payload.home_lng = patch.home_longitude;
+    if ("home_radius_miles" in patch) payload.home_radius_miles = patch.home_radius_miles;
     return toProfile(
       unwrap(
         await supabase
@@ -533,6 +618,7 @@ const rpc = {
 
 export const base44 = {
   entities: { Place, Visit, WantToGo, Follow, Like, Comment, User },
+  storage: { removePhotos: removeStoredPhotos, pathFromUrl: storagePathFromUrl },
   auth,
   integrations,
   rpc,

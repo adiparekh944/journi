@@ -32,6 +32,54 @@ PLACES_CSV = ROOT / "supabase" / "seed" / "places.csv"
 OUTPUT_SQL = ROOT / "supabase" / "seed" / "demo.sql"
 
 PASSWORD = "journi-demo"
+
+# Where specific accounts are based. Everyone else gets their borough centre.
+HOME_LOCATIONS: dict[str, tuple[float, float, str]] = {
+    "shivam": (40.7420, -74.0110, "Little Island, Manhattan"),
+    "aditya": (40.7549, -73.9840, "Midtown, Manhattan"),
+    "vikhyat": (40.7081, -73.9571, "Williamsburg, Brooklyn"),
+    "mehtab": (40.7644, -73.9235, "Astoria, Queens"),
+}
+
+# How far each person is willing to roam, in miles.
+HOME_RADIUS: dict[str, float] = {
+    "shivam": 1.5,
+    "aditya": 3.0,
+    "vikhyat": 2.0,
+    "mehtab": 5.0,
+}
+
+
+def radius_for(username: str) -> float:
+    """A pre-set search radius, varied so the map does not look uniform."""
+
+    if username in HOME_RADIUS:
+        return HOME_RADIUS[username]
+    return [0.5, 1.0, 1.5, 2.0, 3.0, 5.0][stable_int(username, "radius") % 6]
+
+
+BOROUGH_CENTRES: dict[str, tuple[float, float]] = {
+    "Manhattan, NY": (40.7549, -73.9840),
+    "Brooklyn, NY": (40.6782, -73.9442),
+    "Queens, NY": (40.7282, -73.7949),
+    "Bronx, NY": (40.8448, -73.8648),
+    "Staten Island, NY": (40.5795, -74.1502),
+    "New York, NY": (40.7549, -73.9840),
+    "Jersey City, NJ": (40.7128, -74.0400),
+    "Hoboken, NJ": (40.7439, -74.0324),
+    "Yonkers, NY": (40.9100, -73.8500),
+}
+
+
+def home_for(username: str, home_city: str) -> tuple[float, float, str]:
+    """Coordinates and label for a person's home base."""
+
+    if username in HOME_LOCATIONS:
+        return HOME_LOCATIONS[username]
+    latitude, longitude = BOROUGH_CENTRES.get(home_city, (40.7549, -73.9840))
+    return latitude, longitude, home_city
+
+
 TEAM_PASSWORD = "Hello@123"
 RECOMMENDATIONS_PER_USER = 20
 

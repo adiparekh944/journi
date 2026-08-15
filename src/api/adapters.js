@@ -103,6 +103,9 @@ export function toProfile(row) {
     ...row,
     full_name: row.display_name,
     avatar: row.avatar_url,
+    home_latitude: row.home_lat ?? null,
+    home_longitude: row.home_lng ?? null,
+    home_radius_miles: row.home_radius_miles ?? 2,
     created_date: row.created_at,
   };
 }

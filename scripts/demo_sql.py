@@ -21,7 +21,9 @@ from build_demo_seed import (
     bucket_for,
     choose_visits,
     cosine,
+    home_for,
     pick,
+    radius_for,
     score_for,
     sql_text,
     stable_int,
@@ -175,13 +177,17 @@ def emit(people: list[Person], places: list[Place]) -> str:
     add("-- handle_new_user() created a bare profile for each account.")
     for person in people:
         avatar = f"https://i.pravatar.cc/256?u={person.username}"
+        home_lat, home_lng, home_label = home_for(person.username, person.home_city)
         vector = "{" + ",".join(str(value) for value in person.taste) + "}"
         add(
             "update public.profiles set "
             f"username = {sql_text(person.username)}, "
             f"display_name = {sql_text(person.display_name)}, "
             f"bio = {sql_text(person.bio)}, "
-            f"home_city = {sql_text(person.home_city)}, "
+            f"home_city = {sql_text(home_label)}, "
+            f"home_lat = {home_lat}, "
+            f"home_lng = {home_lng}, "
+            f"home_radius_miles = {radius_for(person.username)}, "
             f"avatar_url = {sql_text(avatar)}, "
             f"is_private = {'true' if person.private else 'false'}, "
             f"taste_vector = '{vector}', "

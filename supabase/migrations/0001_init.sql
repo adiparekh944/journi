@@ -11,6 +11,13 @@ create table public.profiles (
   avatar_url text,
   bio text check (char_length(bio) <= 160),
   home_city text,
+  -- Where the person is based, so the map and "near you" can open somewhere
+  -- meaningful. Same NYC bounds the places table enforces.
+  home_lat double precision check (home_lat between 40.4774 and 40.9176),
+  home_lng double precision check (home_lng between -74.2591 and -73.7002),
+  -- How far out the map ring reaches, in miles.
+  home_radius_miles real not null default 2
+    check (home_radius_miles between 0.25 and 25),
   is_private boolean not null default false,
   theme text not null default 'system'
     check (theme in ('light', 'dark', 'system')),
