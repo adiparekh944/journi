@@ -62,15 +62,18 @@ export default function Home() {
   }, [places, visitedIds, wtgIds, visits]);
 
   return (
-    <div className="px-4 pt-5">
-      <header className="mb-4 flex items-center justify-between">
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">Journi</h1>
-        <button onClick={() => navigate("/")} className="flex h-9 w-9 items-center justify-center rounded-full bg-muted text-muted-foreground">
+    <div className="px-5 pt-6">
+      <header className="mb-5 flex items-end justify-between">
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-muted-foreground">Explore New York</p>
+          <h1 className="font-display text-[2.35rem] font-semibold leading-none tracking-tight text-foreground">Discover</h1>
+        </div>
+        <button onClick={() => navigate("/")} aria-label="Close search" className="flex h-10 w-10 items-center justify-center rounded-xl border border-border bg-card text-muted-foreground">
           <X className="h-5 w-5" />
         </button>
       </header>
 
-      <div className="mb-3 flex gap-6 border-b border-border">
+      <div className="mb-4 flex gap-6 border-b border-border">
         {[
           { key: "places", label: "Places" },
           { key: "members", label: "Members" },
@@ -78,10 +81,10 @@ export default function Home() {
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
-            className={`relative pb-2 text-sm font-medium ${tab === t.key ? "text-foreground" : "text-muted-foreground"}`}
+            className={`relative pb-2.5 text-sm font-semibold ${tab === t.key ? "text-primary" : "text-muted-foreground"}`}
           >
             {t.label}
-            {tab === t.key && <div className="absolute -bottom-px left-0 right-0 h-0.5 bg-primary" />}
+            {tab === t.key && <div className="absolute -bottom-px left-0 right-0 h-0.5 bg-secondary" />}
           </button>
         ))}
       </div>
@@ -90,8 +93,8 @@ export default function Home() {
         <>
           <SearchBar value={query} onChange={setQuery} placeholder="Search places, neighborhoods" />
 
-          <div className="mt-3 flex items-center gap-2 rounded-full border border-border bg-stone-50 px-3 py-2.5">
-            <MapPin className="h-4 w-4 text-muted-foreground" />
+          <div className="mt-3 flex items-center gap-3 rounded-2xl border border-border bg-card px-3 py-2.5">
+            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-secondary/35 text-primary"><MapPin className="h-4 w-4" /></span>
             <span className="flex-1 text-sm text-foreground">Current Location</span>
             <span className="text-xs text-muted-foreground">New York, NY</span>
           </div>
@@ -123,7 +126,7 @@ export default function Home() {
           {query.trim() === "" && category === "all" && borough === "all" && suggestions.length > 0 && (
             <section className="mt-5">
               <div className="mb-2 flex items-center gap-1.5 text-sm font-semibold text-foreground">
-                <Sparkles className="h-4 w-4 text-secondary" /> Suggested for you
+                <Sparkles className="h-4 w-4 text-primary" /> Suggested for you
               </div>
               <div className="-mx-4 flex gap-3 overflow-x-auto no-scrollbar px-4 pb-1">
                 {suggestions.map((s) => (
@@ -136,7 +139,7 @@ export default function Home() {
           )}
 
           <section className="mt-5">
-            <h2 className="mb-3 text-sm font-semibold text-foreground">
+            <h2 className="mb-3 font-display text-lg font-semibold text-foreground">
               {query.trim() ? `${filtered.length} results` : "All places"}
             </h2>
             {loading ? (
@@ -144,7 +147,11 @@ export default function Home() {
                 {[0, 1, 2, 3].map((i) => <div key={i} className="h-56 animate-pulse rounded-2xl bg-muted" />)}
               </div>
             ) : filtered.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">No places found.</div>
+              <div className="rounded-2xl border border-dashed border-border bg-card/50 p-8 text-center">
+                <span className="mx-auto flex h-11 w-11 items-center justify-center rounded-2xl bg-secondary/30 text-primary"><MapPin className="h-5 w-5" /></span>
+                <p className="mt-3 text-sm font-semibold text-foreground">No places match that search</p>
+                <p className="mt-1 text-xs text-muted-foreground">Try a neighborhood or clear a filter.</p>
+              </div>
             ) : (
               <div className="grid grid-cols-2 gap-3">
                 {filtered.map((p) => {
@@ -191,7 +198,7 @@ function Chip({ active, onClick, children }) {
   return (
     <button
       onClick={onClick}
-      className={`tap-highlight shrink-0 rounded-full border px-3 py-1.5 text-xs font-medium ${active ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card text-muted-foreground"}`}
+      className={`tap-highlight shrink-0 rounded-xl border px-3 py-1.5 text-xs font-semibold transition ${active ? "border-primary bg-primary text-primary-foreground" : "border-border bg-card text-muted-foreground"}`}
     >
       {children}
     </button>

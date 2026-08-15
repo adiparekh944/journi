@@ -4,34 +4,34 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.8% 90%;
-    --ring: 240 5.9% 10%;
-    --chart-1: 240 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
-    --radius: 0.5rem;
-    --font-heading: ui-sans-serif, system-ui, sans-serif;
-    --font-body: ui-sans-serif, system-ui, sans-serif;
-    --font-display: ui-sans-serif, system-ui, sans-serif;
+    --background: 40 36% 96%;
+    --foreground: 166 27% 16%;
+    --card: 42 44% 99%;
+    --card-foreground: 166 27% 16%;
+    --popover: 42 44% 99%;
+    --popover-foreground: 166 27% 16%;
+    --primary: 166 36% 23%;
+    --primary-foreground: 42 44% 97%;
+    --secondary: 16 68% 72%;
+    --secondary-foreground: 166 30% 16%;
+    --muted: 38 25% 90%;
+    --muted-foreground: 163 9% 43%;
+    --accent: 44 82% 74%;
+    --accent-foreground: 166 30% 16%;
+    --destructive: 5 60% 52%;
+    --destructive-foreground: 42 44% 98%;
+    --border: 37 22% 82%;
+    --input: 37 22% 82%;
+    --ring: 16 60% 60%;
+    --chart-1: 166 36% 32%;
+    --chart-2: 16 64% 67%;
+    --chart-3: 44 73% 60%;
+    --chart-4: 199 32% 52%;
+    --chart-5: 342 37% 59%;
+    --radius: 0.9rem;
+    --font-heading: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+    --font-body: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+    --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
@@ -86,6 +86,19 @@
 
   body {
     @apply bg-background text-foreground font-body antialiased;
+    letter-spacing: -0.01em;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  ::selection {
+    background: hsl(var(--secondary) / 0.55);
+    color: hsl(var(--foreground));
   }
 }
 
@@ -102,9 +115,9 @@
 }
 
 /* Score badge bands — consistent everywhere */
-.score-green { background-color: #8DE0AD; color: #1c1917; }
-.score-yellow { background-color: #eab308; color: #3a2f00; }
-.score-red { background-color: #E0918D; color: #1c1917; }
-.score-neutral { background-color: #a8a29e; color: #fff; }
+.score-green { background-color: #92bca9; color: #17372f; }
+.score-yellow { background-color: #e9c76e; color: #46380c; }
+.score-red { background-color: #d98473; color: #3f1e19; }
+.score-neutral { background-color: #75827d; color: #fffdf7; }
 
 .pin-shadow { box-shadow: 0 2px 6px rgba(0,0,0,0.25); }

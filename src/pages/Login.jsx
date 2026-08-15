@@ -10,7 +10,7 @@ import GoogleIcon from "@/components/GoogleIcon";
 import { safeReturnTo } from "@/lib/authReturnTo";
 
 const DEV_CREDENTIALS = import.meta.env.DEV
-  ? { email: "dev@journi.test", password: "password123" }
+  ? { email: "test@journi.dev", password: "password123" }
   : null;
 
 export default function Login() {

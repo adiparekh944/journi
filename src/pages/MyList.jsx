@@ -52,16 +52,19 @@ export default function MyList() {
   ];
 
   return (
-    <div className="px-4 pt-5">
+    <div className="px-5 pt-6">
       <header className="mb-4 flex items-center justify-between">
-        <button className="p-1 text-muted-foreground"><Share2 className="h-5 w-5" /></button>
-        <h1 className="text-sm font-bold uppercase tracking-wide text-foreground">My Lists</h1>
-        <button className="p-1 text-muted-foreground"><MoreHorizontal className="h-5 w-5" /></button>
+        <button className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-card text-muted-foreground"><Share2 className="h-4 w-4" /></button>
+        <div className="text-center">
+          <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Your collection</p>
+          <h1 className="font-display text-2xl font-semibold leading-none text-foreground">My lists</h1>
+        </div>
+        <button className="flex h-9 w-9 items-center justify-center rounded-xl border border-border bg-card text-muted-foreground"><MoreHorizontal className="h-4 w-4" /></button>
       </header>
 
       <div className="mb-3 flex items-center gap-1">
         <ChevronDown className="h-4 w-4 text-foreground" />
-        <h2 className="text-lg font-bold text-foreground">Places</h2>
+        <h2 className="text-sm font-semibold text-foreground">Places</h2>
       </div>
 
       <div className="mb-4 flex gap-4 border-b border-border">
@@ -72,15 +75,15 @@ export default function MyList() {
             className={`relative pb-2 text-sm font-medium ${tab === t.key ? "text-foreground" : "text-muted-foreground"}`}
           >
             {t.label} <span className="text-xs">({t.count})</span>
-            {tab === t.key && <div className="absolute -bottom-px left-0 right-0 h-0.5 bg-primary" />}
+            {tab === t.key && <div className="absolute -bottom-px left-0 right-0 h-0.5 bg-secondary" />}
           </button>
         ))}
       </div>
 
       <div className="mb-3 flex items-center justify-between">
         <div className="flex gap-2">
-          <button className="flex items-center gap-1 rounded-full border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground"><SlidersHorizontal className="h-3 w-3" /> Borough</button>
-          <button className="rounded-full border border-border px-3 py-1.5 text-xs font-medium text-muted-foreground">Category</button>
+          <button className="flex items-center gap-1 rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-medium text-muted-foreground"><SlidersHorizontal className="h-3 w-3" /> Borough</button>
+          <button className="rounded-xl border border-border bg-card px-3 py-1.5 text-xs font-medium text-muted-foreground">Category</button>
         </div>
         <button className="text-muted-foreground"><Search className="h-4 w-4" /></button>
       </div>
@@ -172,7 +175,7 @@ export default function MyList() {
 
       <button
         onClick={() => navigate("/map")}
-        className="fixed bottom-24 right-4 z-30 flex items-center gap-1.5 rounded-full bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground shadow-lg active:scale-95"
+        className="fixed bottom-28 right-5 z-30 flex items-center gap-1.5 rounded-xl bg-secondary px-4 py-2.5 text-sm font-semibold text-secondary-foreground shadow-[0_12px_28px_-18px_rgba(20,51,42,0.65)] active:scale-95"
       >
         <Map className="h-4 w-4" /> View Map
       </button>

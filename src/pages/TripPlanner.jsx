@@ -183,8 +183,8 @@ export default function TripPlanner() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50 pb-6">
-      <div className="bg-primary px-4 pb-7 pt-5 text-primary-foreground">
+    <div className="min-h-screen bg-background pb-6">
+      <div className="border-b-4 border-secondary bg-primary px-5 pb-8 pt-6 text-primary-foreground">
         <header className="mb-7 flex items-center gap-3">
           <button
             onClick={() => navigate(-1)}
@@ -195,18 +195,18 @@ export default function TripPlanner() {
           </button>
           <div>
             <p className="text-xs text-white/60">New York City</p>
-            <h1 className="text-xl font-semibold">Plan your trip</h1>
+            <h1 className="font-display text-2xl font-semibold">Plan your trip</h1>
           </div>
         </header>
 
         <div className="mb-5 flex items-end justify-between gap-4">
           <div>
-            <div className="mb-2 flex h-10 w-10 items-center justify-center rounded-2xl bg-white/10">
+            <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-accent text-accent-foreground">
               <Sparkles className="h-5 w-5" />
             </div>
-            <h2 className="max-w-[250px] text-2xl font-semibold leading-tight">Turn your saved places into a day-by-day plan.</h2>
+            <h2 className="max-w-[270px] font-display text-[1.8rem] font-semibold leading-[1.08]">Turn your saved places into a day-by-day plan.</h2>
           </div>
-          <span className="mb-1 shrink-0 rounded-full bg-white/10 px-3 py-1.5 text-xs font-medium">
+          <span className="mb-1 shrink-0 rounded-lg border border-white/20 px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wide text-white/70">
             Demo planner
           </span>
         </div>
@@ -217,9 +217,9 @@ export default function TripPlanner() {
         </div>
       </div>
 
-      <div className="-mt-3 px-4">
-        <section className="rounded-3xl border border-black/5 bg-card p-4 shadow-sm">
-          <div className="mb-4 flex items-center gap-3 rounded-2xl bg-stone-100 p-3">
+      <div className="-mt-3 px-5">
+        <section className="rounded-2xl border border-border bg-card p-4 shadow-[0_18px_40px_-30px_rgba(20,51,42,0.7)]">
+          <div className="mb-4 flex items-center gap-3 rounded-xl bg-muted/65 p-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-card shadow-sm">
               <MapPin className="h-5 w-5 text-foreground" />
             </div>
@@ -262,7 +262,7 @@ export default function TripPlanner() {
           <button
             onClick={makePlan}
             disabled={isLoading}
-            className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-3.5 text-sm font-semibold text-primary-foreground shadow-sm active:scale-[0.99] disabled:opacity-50"
+            className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-secondary py-3.5 text-sm font-semibold text-secondary-foreground active:scale-[0.99] disabled:opacity-50"
           >
             <Sparkles className="h-4 w-4" />
             {plannedDays ? "Update my plan" : "Plan my trip"}
@@ -270,7 +270,7 @@ export default function TripPlanner() {
         </section>
 
         {!plannedDays && (
-          <div className="mt-5 rounded-3xl border border-dashed border-border bg-white/60 p-5 text-center">
+          <div className="mt-5 rounded-2xl border border-dashed border-border bg-card/55 p-5 text-center">
             <CalendarDays className="mx-auto h-7 w-7 text-muted-foreground" />
             <p className="mt-2 text-sm font-semibold text-foreground">Your itinerary will appear here</p>
             <p className="mx-auto mt-1 max-w-[280px] text-xs leading-relaxed text-muted-foreground">
@@ -284,7 +284,7 @@ export default function TripPlanner() {
             <div className="mb-4 flex items-end justify-between gap-3">
               <div>
                 <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Your itinerary</p>
-                <h2 className="mt-0.5 text-xl font-bold text-foreground">{plannedDays} days in New York</h2>
+                <h2 className="mt-0.5 font-display text-2xl font-semibold text-foreground">{plannedDays} days in New York</h2>
               </div>
               <div className="text-right">
                 <p className="text-sm font-semibold text-foreground">{plannedDays * 3} stops</p>
@@ -293,7 +293,7 @@ export default function TripPlanner() {
             </div>
 
             {savedPlaces.length === 0 && (
-              <div className="mb-4 flex items-start gap-3 rounded-2xl bg-amber-50 p-3 text-amber-950">
+              <div className="mb-4 flex items-start gap-3 rounded-xl bg-accent/35 p-3 text-accent-foreground">
                 <Sparkles className="mt-0.5 h-4 w-4 shrink-0" />
                 <p className="text-xs leading-relaxed">
                   This demo plan uses curated NYC picks. Save places you love and update the plan to personalize it.
@@ -303,9 +303,9 @@ export default function TripPlanner() {
 
             <div className="space-y-4">
               {itinerary.map((day, dayIndex) => (
-                <article key={`${day.title}-${dayIndex}`} className="overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
-                  <div className="flex items-center gap-3 border-b border-border bg-stone-100/80 px-4 py-3.5">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-primary text-sm font-bold text-primary-foreground">
+                <article key={`${day.title}-${dayIndex}`} className="overflow-hidden rounded-2xl border border-border bg-card shadow-[0_14px_32px_-28px_rgba(20,51,42,0.65)]">
+                  <div className="flex items-center gap-3 border-b border-border bg-muted/55 px-4 py-3.5">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-secondary text-sm font-bold text-secondary-foreground">
                       {dayIndex + 1}
                     </div>
                     <div className="min-w-0 flex-1">
@@ -354,7 +354,7 @@ export default function TripPlanner() {
                     ))}
                   </div>
 
-                  <div className="flex items-center gap-2 border-t border-border bg-stone-50 px-4 py-3 text-[10px] text-muted-foreground">
+                  <div className="flex items-center gap-2 border-t border-border bg-muted/35 px-4 py-3 text-[10px] text-muted-foreground">
                     <MapPin className="h-3.5 w-3.5" />
                     {day.travel}
                   </div>

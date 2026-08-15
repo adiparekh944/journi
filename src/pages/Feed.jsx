@@ -87,7 +87,7 @@ export default function Feed() {
   if (loading) return <div className="px-4 pt-10 text-center text-sm text-muted-foreground">Loading…</div>;
 
   return (
-    <div className="px-4 pt-5">
+    <div className="px-5 pt-6">
       <TopBar />
       <div className="mt-3">
         <SearchBar value="" onChange={() => navigate("/search")} placeholder="Search places, members…" />
@@ -99,7 +99,10 @@ export default function Feed() {
         <FeaturedLists places={places} />
       </div>
       <section className="mt-6">
-        <h2 className="mb-3 text-xs font-bold uppercase tracking-wide text-foreground">From your friends</h2>
+        <div className="mb-3 flex items-end justify-between border-b border-border pb-2">
+          <h2 className="font-display text-lg font-semibold text-foreground">From your friends</h2>
+          <span className="text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">Recent</span>
+        </div>
         {visits.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
             Nothing here yet. Follow people to see their visits.

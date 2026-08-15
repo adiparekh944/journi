@@ -75,9 +75,12 @@ export default function Profile() {
   if (!profile) return <div className="px-4 pt-10 text-center text-sm text-muted-foreground">Loading…</div>;
 
   return (
-    <div className="px-4 pt-5">
+    <div className="px-5 pt-6">
       <header className="mb-4 flex items-center justify-between">
-        <h1 className="text-lg font-bold text-foreground">{isMe ? "Profile" : "User"}</h1>
+        <div>
+          <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">Journi member</p>
+          <h1 className="font-display text-2xl font-semibold leading-none text-foreground">{isMe ? "Profile" : "User"}</h1>
+        </div>
         <div className="flex items-center gap-1">
           <button className="p-2 text-muted-foreground"><Share2 className="h-5 w-5" /></button>
           {isMe && <button onClick={() => setEditing(true)} className="p-2 text-muted-foreground"><Settings className="h-5 w-5" /></button>}
@@ -85,10 +88,10 @@ export default function Profile() {
       </header>
 
       <div className="flex flex-col items-center">
-        <div className="h-20 w-20 overflow-hidden rounded-full bg-muted">
+        <div className="h-20 w-20 overflow-hidden rounded-full bg-muted ring-4 ring-secondary/35">
           {profile.avatar_url ? <Image src={profile.avatar_url} alt="" fittingType="fill" className="h-full w-full" /> : <div className="flex h-full w-full items-center justify-center text-2xl font-bold text-muted-foreground">{(profile.display_name || profile.username || "?")[0]}</div>}
         </div>
-        <h2 className="mt-2 text-lg font-bold text-foreground">{profile.display_name || profile.username}</h2>
+        <h2 className="mt-3 font-display text-xl font-semibold text-foreground">{profile.display_name || profile.username}</h2>
         <div className="text-sm text-muted-foreground">@{profile.username}</div>
         <div className="mt-0.5 text-xs text-muted-foreground">Member since {new Date(profile.created_date || Date.now()).toLocaleDateString("en-US", { month: "long", year: "numeric" })}</div>
       </div>
@@ -99,8 +102,8 @@ export default function Profile() {
 
       {isMe ? (
         <div className="mt-4 flex gap-2">
-          <button onClick={() => setEditing(true)} className="flex-1 rounded-full border border-border py-2.5 text-sm font-medium text-foreground">Edit profile</button>
-          <button onClick={() => navigate("/list")} className="flex-1 rounded-full border border-border py-2.5 text-sm font-medium text-foreground">Share profile</button>
+          <button onClick={() => setEditing(true)} className="flex-1 rounded-xl border border-border bg-card py-2.5 text-sm font-medium text-foreground">Edit profile</button>
+          <button onClick={() => navigate("/list")} className="flex-1 rounded-xl bg-secondary py-2.5 text-sm font-semibold text-secondary-foreground">Share profile</button>
         </div>
       ) : (
         <div className="mt-4">

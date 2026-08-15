@@ -35,12 +35,12 @@ export default function WantToGo() {
   );
 
   return (
-    <div className="px-4 pt-5">
+    <div className="px-5 pt-6">
       <header className="mb-3 flex items-center gap-3">
         <button onClick={() => navigate(-1)} className="tap-highlight -ml-1 p-1 text-muted-foreground">
           <ArrowLeft className="h-5 w-5" />
         </button>
-        <h1 className="flex-1 text-xl font-semibold text-foreground">Want to go</h1>
+        <h1 className="flex-1 font-display text-2xl font-semibold text-foreground">Want to go</h1>
         <div className="flex rounded-full border border-border p-0.5">
           <button onClick={() => setView("list")} className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-xs ${view === "list" ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}><List className="h-3.5 w-3.5" /> List</button>
           <button onClick={() => setView("map")} className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-xs ${view === "map" ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}><MapIcon className="h-3.5 w-3.5" /> Map</button>
@@ -49,16 +49,16 @@ export default function WantToGo() {
 
       <button
         onClick={() => navigate("/trip-planner")}
-        className="mb-4 flex w-full items-center gap-3 rounded-3xl bg-primary p-4 text-left text-primary-foreground shadow-sm active:scale-[0.99]"
+        className="mb-4 flex w-full items-center gap-3 rounded-2xl border border-secondary bg-secondary p-4 text-left text-secondary-foreground active:scale-[0.99]"
       >
-        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl bg-white/10">
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-card/50">
           <Sparkles className="h-5 w-5" />
         </span>
         <span className="min-w-0 flex-1">
           <span className="block text-sm font-semibold">Plan your New York trip</span>
-          <span className="mt-0.5 block text-xs text-white/60">Turn saved places into a 1–7 day itinerary</span>
+          <span className="mt-0.5 block text-xs text-secondary-foreground/65">Turn saved places into a 1–7 day itinerary</span>
         </span>
-        <span className="text-lg text-white/60">›</span>
+        <span className="text-lg text-secondary-foreground/55">›</span>
       </button>
 
       {loading ? (
