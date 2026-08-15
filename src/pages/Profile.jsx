@@ -159,7 +159,7 @@ function EditProfileModal({ profile, onSave, onClose }) {
           <Input label="Bio" value={form.bio} onChange={(v) => setForm({ ...form, bio: v })} />
           <button onClick={() => setForm({ ...form, is_private: !form.is_private })} className="tap-highlight flex w-full items-center justify-between rounded-2xl border border-stone-200 p-3">
             <span className="text-sm font-medium text-stone-700">Private account</span>
-            <span className={`flex h-6 w-11 items-center rounded-full p-0.5 ${form.is_private ? "bg-primary" : "bg-stone-200"}`}><span className={`h-5 w-5 rounded-full bg-foreground transition ${form.is_private ? "translate-x-5" : ""}`} /></span>
+            <span className={`flex h-6 w-11 items-center rounded-full p-0.5 ${form.is_private ? "bg-primary" : "bg-stone-200"}`}><span className={`h-5 w-5 rounded-full bg-white transition ${form.is_private ? "translate-x-5" : ""}`} /></span>
           </button>
           <button onClick={() => onSave(form)} className="tap-highlight w-full rounded-full bg-primary py-3 text-sm font-semibold text-white">Save</button>
         </div>

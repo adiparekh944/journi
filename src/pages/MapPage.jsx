@@ -90,7 +90,7 @@ export default function MapPage() {
       <div className="mt-3 flex-1 px-4">
         <div className="relative h-full overflow-hidden rounded-3xl border border-stone-200">
           <MapContainer center={[40.7128, -74.006]} zoom={12} className="h-full w-full">
-            <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" attribution="&copy; OpenStreetMap" />
+            <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" attribution="&copy; OpenStreetMap" />
             {pins.map((p) => (
               <Marker key={`${p.id}-${p.want}`} position={[p.lat, p.lng]} icon={pinIcon(p.score, p.want)}>
                 <Popup>

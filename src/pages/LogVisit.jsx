@@ -263,7 +263,7 @@ export default function LogVisit() {
             <button onClick={() => setForm({ ...form, paid: !form.paid })} className="tap-highlight flex w-full items-center justify-between rounded-2xl border border-stone-200 bg-card p-3">
               <span className="text-sm font-medium text-stone-700">Did you pay?</span>
               <span className={`flex h-6 w-11 items-center rounded-full p-0.5 transition ${form.paid ? "bg-primary" : "bg-stone-200"}`}>
-                <span className={`h-5 w-5 rounded-full bg-foreground transition ${form.paid ? "translate-x-5" : ""}`} />
+                <span className={`h-5 w-5 rounded-full bg-white transition ${form.paid ? "translate-x-5" : ""}`} />
               </span>
             </button>
             {form.paid && (
@@ -274,7 +274,7 @@ export default function LogVisit() {
             <button onClick={() => setForm({ ...form, would_return: !form.would_return })} className="tap-highlight flex w-full items-center justify-between rounded-2xl border border-stone-200 bg-card p-3">
               <span className="text-sm font-medium text-stone-700">Would you return?</span>
               <span className={`flex h-6 w-11 items-center rounded-full p-0.5 transition ${form.would_return ? "bg-primary" : "bg-stone-200"}`}>
-                <span className={`h-5 w-5 rounded-full bg-foreground transition ${form.would_return ? "translate-x-5" : ""}`} />
+                <span className={`h-5 w-5 rounded-full bg-white transition ${form.would_return ? "translate-x-5" : ""}`} />
               </span>
             </button>
           </div>

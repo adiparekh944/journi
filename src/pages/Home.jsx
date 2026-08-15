@@ -147,7 +147,7 @@ export default function Home() {
                       </button>
                       <button
                         onClick={(e) => { e.stopPropagation(); toggleWantToGo(p); }}
-                        className={`flex-1 rounded-full py-1.5 text-xs font-medium active:scale-95 ${saved ? "bg-purple-500/20 text-purple-300" : "border border-stone-200 text-stone-600"}`}
+                        className={`flex-1 rounded-full py-1.5 text-xs font-medium active:scale-95 ${saved ? "bg-purple-100 text-purple-700" : "border border-stone-200 text-stone-600"}`}
                       >
                         {saved ? "Saved" : "Save"}
                       </button>

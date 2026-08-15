@@ -60,7 +60,7 @@ export default function WantToGo() {
               key={p.id}
               place={p}
               footer={
-                <button onClick={(e) => { e.stopPropagation(); toggleWantToGo(p); }} className="w-full rounded-full bg-purple-500/20 py-1.5 text-xs font-medium text-purple-300">
+                <button onClick={(e) => { e.stopPropagation(); toggleWantToGo(p); }} className="w-full rounded-full bg-purple-100 py-1.5 text-xs font-medium text-purple-700">
                   Remove
                 </button>
               }
@@ -70,7 +70,7 @@ export default function WantToGo() {
       ) : (
         <div className="h-[70vh] overflow-hidden rounded-3xl border border-stone-200">
           <MapContainer center={[40.7128, -74.006]} zoom={12} className="h-full w-full">
-            <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" attribution="&copy; OpenStreetMap" />
+            <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" attribution="&copy; OpenStreetMap" />
             {savedPlaces.map((p) => (
               <Marker key={p.id} position={[p.latitude, p.longitude]} icon={purpleIcon("★")}>
                 <Popup>
