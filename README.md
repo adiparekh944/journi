@@ -1,77 +1,37 @@
-# Base44 Project
+# Journi
 
-Use this repository to run and edit the app locally, then publish changes back through Base44.
+Journi is a social ranking app for tourism. It helps people remember where they have been, decide how they actually feel about those places, and share that taste with friends.
 
-Any change pushed to the repo will also be reflected in the Base44 Builder.
+v1 is New York City only: a curated set of attractions, neighborhoods, restaurants, and bars you can search, map, log, and rank.
 
-## Prerequisites
+## What it does
 
-1. Clone the repository using the project's Git URL.
-2. Navigate to the project directory.
-3. Install dependencies: `npm install`.
-4. Install the Base44 CLI: `npm install -g base44@latest`.
+**Log visits, don’t rate with stars.** After you visit a place you pick a sentiment bucket (loved / fine / no), then compare it against places you already ranked. Your score is derived from that ordered list — there is no slider or star input. The 0.0–10.0 number is personal preference only. Price, crowd, and “worth it” are recorded for context and never enter the score.
 
-See the [Base44 CLI docs](https://docs.base44.com/developers/references/cli/get-started/overview) if you want to run Base44 commands directly.
+**Keep a personal list.** Your ranked visits live on My List. Places you have not been yet go on Want to Go. Place pages show your score, community average (once enough people have rated), and photos from visits.
 
-## Run Locally
+**See the city on a map.** Visits and saved places plot on a map so you can see where you have been and what is nearby.
 
-Run the full local development environment from the project root:
+**Follow friends.** The feed shows visits from people you follow. You can like and comment, tag companions when you log, and open public profiles.
 
-```bash
-base44 dev
-```
+**Get suggestions that explain themselves.** Home search and recommendations surface places you have not logged yet, with a reason you can read — not a black-box score.
 
-`base44 dev` starts the local Base44 development backend and, when this app is configured for it, also starts the frontend dev server for you. Use the frontend URL printed by the command.
+**Collect, don’t grind.** There is no XP or levels. Progress is visits, streaks, badges, and how your list compares with friends.
 
-For example, when the Base44 project config includes a `serveCommand`, `base44 dev` can launch the frontend too:
+## App surfaces
 
-```json5
-{
-  "site": {
-    "serveCommand": "npm run dev"
-  }
-}
-```
+| Tab / route | Purpose |
+| --- | --- |
+| Feed | Activity from people you follow |
+| Search | Browse and filter NYC places and members |
+| Map | Plot visits and saved places |
+| Log | Search a place, add photos/notes, rank by comparison |
+| Profile | Your stats, badges, and public page (`/u/:userId`) |
+| My List | Your ordered rankings |
+| Want to Go | Saved places you have not visited |
 
-In a Base44 project this lives in `base44/config.jsonc`.
+## Stack
 
-## Run Only The Frontend
-
-If you only want to work on the frontend against the hosted Base44 backend, run:
-
-```bash
-npm run dev
-```
-
-Open the local URL printed by Vite.
-
-## Use The Hosted Backend
-
-For frontend-only development, create or update `.env.local` in the project root:
-
-```bash
-VITE_BASE44_APP_ID=your_app_id
-VITE_BASE44_APP_BASE_URL=https://your-app.base44.app
-```
-
-`VITE_BASE44_APP_ID` identifies the Base44 app.
-
-`VITE_BASE44_APP_BASE_URL` tells the Base44 Vite plugin where to send local `/api` requests. Point it at your deployed Base44 app URL when you want the local frontend to use the hosted backend.
-
-When you use `base44 dev`, the command injects the local Base44 values for you, so `.env.local` is mainly needed for frontend-only workflows.
-
-## Publish Your Changes
-
-After pushing your changes to git, open the Base44 dashboard and publish the app:
-
-```bash
-base44 dashboard open
-```
-
-## Docs & Support
-
-Documentation: [https://docs.base44.com/Integrations/Using-GitHub](https://docs.base44.com/Integrations/Using-GitHub)
-
-Base44 CLI command reference: [https://docs.base44.com/developers/references/cli/commands/introduction](https://docs.base44.com/developers/references/cli/commands/introduction)
-
-Support: [https://app.base44.com/support](https://app.base44.com/support)
+- **Frontend host:** Base44 (React, Vite, Tailwind, shadcn/ui)
+- **Data & auth (target):** Supabase — Postgres, Auth, Storage, Edge Functions
+- This repo is the application source. Changes pushed here show up in the Base44 Builder.
