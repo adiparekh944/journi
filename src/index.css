@@ -18,8 +18,8 @@
     --muted-foreground: 240 3.8% 46.1%;
     --accent: 240 4.8% 95.9%;
     --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 357 91% 55%;
+    --destructive-foreground: 0 0% 100%;
     --border: 240 5.9% 90%;
     --input: 240 5.8% 90%;
     --ring: 240 5.9% 10%;
@@ -29,6 +29,11 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
     --radius: 0.5rem;
+    --score-high: 142 72% 36%;
+    --score-positive: 88 62% 40%;
+    --score-neutral: 38 95% 48%;
+    --score-low: 357 91% 55%;
+    --score-want: 258 90% 62%;
     --font-heading: ui-sans-serif, system-ui, sans-serif;
     --font-body: ui-sans-serif, system-ui, sans-serif;
     --font-display: ui-sans-serif, system-ui, sans-serif;
@@ -58,8 +63,8 @@
     --muted-foreground: 0 0% 63.9%;
     --accent: 0 0% 14.9%;
     --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 357 95% 64%;
+    --destructive-foreground: 0 0% 100%;
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
     --ring: 0 0% 83.1%;
@@ -75,6 +80,11 @@
     --sidebar-accent: 240 3.7% 15.9%;
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
+    --score-high: 142 66% 48%;
+    --score-positive: 88 58% 52%;
+    --score-neutral: 38 95% 58%;
+    --score-low: 357 95% 66%;
+    --score-want: 258 90% 72%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
@@ -102,9 +112,12 @@
 }
 
 /* Score badge bands — consistent everywhere */
-.score-green { background-color: #8DE0AD; color: #1c1917; }
-.score-yellow { background-color: #eab308; color: #3a2f00; }
-.score-red { background-color: #E0918D; color: #1c1917; }
-.score-neutral { background-color: #a8a29e; color: #fff; }
+/* Part 0.3 score bands at full chroma so they separate at a glance. */
+.score-high     { background-color: hsl(var(--score-high));     color: #fff; }
+.score-positive { background-color: hsl(var(--score-positive)); color: #fff; }
+.score-neutral  { background-color: hsl(var(--score-neutral));  color: #422006; }
+.score-low      { background-color: hsl(var(--score-low));      color: #fff; }
+.score-want     { background-color: hsl(var(--score-want));     color: #fff; }
+.score-none     { background-color: hsl(var(--muted));          color: hsl(var(--muted-foreground)); }
 
 .pin-shadow { box-shadow: 0 2px 6px rgba(0,0,0,0.25); }

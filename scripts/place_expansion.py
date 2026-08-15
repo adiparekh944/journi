@@ -1,0 +1,1113 @@
+"""Second wave of curated NYC places.
+
+Kept separate from place_facts.py so the original 150 stay reviewable as their
+own set. Each entry carries everything the seed needs that cannot be derived:
+the real coordinates, a specific description, and the typical admission price in
+US dollars (None where entry is free).
+
+Format: slug -> (name, category, borough, neighborhood, lat, lng, price_usd,
+                 description)
+"""
+
+from __future__ import annotations
+
+from typing import Final
+
+ExpansionPlace = tuple[str, str, str, str, float, float, float | None, str]
+
+EXPANSION_PLACES: Final[dict[str, ExpansionPlace]] = {
+    # ------------------------------------------------------------- Manhattan
+    "the-frick-collection": (
+        "The Frick Collection",
+        "museum",
+        "manhattan",
+        "Upper East Side",
+        40.7712,
+        -73.9673,
+        30.0,
+        "Old Master paintings hung in Henry Clay Frick's Fifth Avenue mansion, "
+        "arranged as a home rather than a gallery.",
+    ),
+    "morgan-library-and-museum": (
+        "Morgan Library & Museum",
+        "museum",
+        "manhattan",
+        "Murray Hill",
+        40.7492,
+        -73.9814,
+        25.0,
+        "J. P. Morgan's private library, its three tiers of walnut shelves "
+        "holding Gutenberg Bibles and illuminated manuscripts.",
+    ),
+    "new-museum": (
+        "New Museum",
+        "museum",
+        "manhattan",
+        "Bowery",
+        40.7223,
+        -73.9928,
+        22.0,
+        "Stacked white boxes on the Bowery showing only living artists, with a "
+        "sky room looking over the Lower East Side.",
+    ),
+    "museum-of-the-city-of-new-york": (
+        "Museum of the City of New York",
+        "museum",
+        "manhattan",
+        "East Harlem",
+        40.7926,
+        -73.9518,
+        20.0,
+        "The city's own biography, from Dutch trading post to the present, on "
+        "upper Fifth Avenue beside Central Park.",
+    ),
+    "cooper-hewitt": (
+        "Cooper Hewitt, Smithsonian Design Museum",
+        "museum",
+        "manhattan",
+        "Upper East Side",
+        40.7845,
+        -73.9580,
+        22.0,
+        "The Smithsonian's design museum in the Carnegie Mansion, where visitors "
+        "draw on the walls with an interactive pen.",
+    ),
+    "el-museo-del-barrio": (
+        "El Museo del Barrio",
+        "museum",
+        "manhattan",
+        "East Harlem",
+        40.7935,
+        -73.9513,
+        9.0,
+        "The leading Latino cultural institution in the country, founded in East "
+        "Harlem in 1969 by Puerto Rican artists and educators.",
+    ),
+    "rubin-museum": (
+        "Rubin Museum of Himalayan Art",
+        "gallery",
+        "manhattan",
+        "Chelsea",
+        40.7401,
+        -73.9977,
+        19.0,
+        "Himalayan art across six spiral floors, including a Tibetan Buddhist "
+        "shrine room reconstructed in full.",
+    ),
+    "museum-of-jewish-heritage": (
+        "Museum of Jewish Heritage",
+        "museum",
+        "manhattan",
+        "Battery Park City",
+        40.7057,
+        -74.0186,
+        18.0,
+        "A living memorial to the Holocaust in a six-sided building on the "
+        "harbour, its shape recalling the Star of David.",
+    ),
+    "st-patricks-cathedral": (
+        "St. Patrick's Cathedral",
+        "historic_site",
+        "manhattan",
+        "Midtown",
+        40.7585,
+        -73.9760,
+        None,
+        "The Gothic Revival cathedral facing Rockefeller Center, its white "
+        "marble spires rising 330 feet over Fifth Avenue.",
+    ),
+    "cathedral-of-st-john-the-divine": (
+        "Cathedral of St. John the Divine",
+        "historic_site",
+        "manhattan",
+        "Morningside Heights",
+        40.8038,
+        -73.9620,
+        None,
+        "One of the largest cathedrals anywhere, begun in 1892 and still "
+        "unfinished, with peacocks in the close.",
+    ),
+    "trinity-church": (
+        "Trinity Church",
+        "historic_site",
+        "manhattan",
+        "Financial District",
+        40.7081,
+        -74.0122,
+        None,
+        "The 1846 Gothic Revival church closing the head of Wall Street, with "
+        "Alexander Hamilton buried in the yard.",
+    ),
+    "fraunces-tavern": (
+        "Fraunces Tavern",
+        "historic_site",
+        "manhattan",
+        "Financial District",
+        40.7033,
+        -74.0113,
+        7.0,
+        "Where Washington said goodbye to his officers in 1783, still serving "
+        "food downstairs and running a museum above.",
+    ),
+    "african-burial-ground": (
+        "African Burial Ground National Monument",
+        "historic_site",
+        "manhattan",
+        "Civic Center",
+        40.7145,
+        -74.0043,
+        None,
+        "The rediscovered graves of more than fifteen thousand free and enslaved "
+        "Africans, marked by a granite memorial.",
+    ),
+    "chrysler-building": (
+        "Chrysler Building",
+        "landmark",
+        "manhattan",
+        "Midtown",
+        40.7516,
+        -73.9755,
+        None,
+        "The 1930 Art Deco spire of stainless steel arches and eagle gargoyles, "
+        "with a lobby of red marble and inlaid wood.",
+    ),
+    "woolworth-building": (
+        "Woolworth Building",
+        "landmark",
+        "manhattan",
+        "Civic Center",
+        40.7123,
+        -74.0083,
+        25.0,
+        "The 1913 Cathedral of Commerce, briefly the tallest building on earth, "
+        "with a mosaic-vaulted lobby open by tour.",
+    ),
+    "new-york-public-library": (
+        "New York Public Library Main Branch",
+        "landmark",
+        "manhattan",
+        "Midtown",
+        40.7532,
+        -73.9822,
+        None,
+        "Patience and Fortitude guard the steps; the Rose Main Reading Room runs "
+        "nearly two blocks under painted clouds.",
+    ),
+    "charging-bull": (
+        "Charging Bull",
+        "landmark",
+        "manhattan",
+        "Financial District",
+        40.7056,
+        -74.0134,
+        None,
+        "Arturo Di Modica's 7,100-pound bronze bull, installed without "
+        "permission in 1989 and never removed.",
+    ),
+    "vessel-hudson-yards": (
+        "Vessel",
+        "viewpoint",
+        "manhattan",
+        "Hudson Yards",
+        40.7538,
+        -74.0021,
+        10.0,
+        "A climbable lattice of 154 interconnecting staircases at the centre of "
+        "the Hudson Yards plaza.",
+    ),
+    "governors-island": (
+        "Governors Island",
+        "tour_experience",
+        "manhattan",
+        "Governors Island",
+        40.6895,
+        -74.0166,
+        4.0,
+        "A car-free island in the harbour, reached by ferry, with hammock groves, "
+        "old fortifications and hills built from rubble.",
+    ),
+    "fdr-four-freedoms-park": (
+        "FDR Four Freedoms Park",
+        "park",
+        "manhattan",
+        "Roosevelt Island",
+        40.7499,
+        -73.9587,
+        None,
+        "Louis Kahn's granite memorial at the southern tip of Roosevelt Island, "
+        "framing the skyline between rows of lindens.",
+    ),
+    "tompkins-square-park": (
+        "Tompkins Square Park",
+        "park",
+        "manhattan",
+        "East Village",
+        40.7265,
+        -73.9815,
+        None,
+        "The East Village's living room, with the Hare Krishna tree, a dog run "
+        "and a long history of protest.",
+    ),
+    "inwood-hill-park": (
+        "Inwood Hill Park",
+        "park",
+        "manhattan",
+        "Inwood",
+        40.8712,
+        -73.9257,
+        None,
+        "The last natural forest and salt marsh left on Manhattan, with caves "
+        "once used by the Lenape.",
+    ),
+    "gramercy-park": (
+        "Gramercy Park",
+        "neighborhood",
+        "manhattan",
+        "Gramercy",
+        40.7376,
+        -73.9860,
+        None,
+        "The only private park in the city, locked to all but keyholders, "
+        "ringed by 1840s townhouses.",
+    ),
+    "tribeca": (
+        "Tribeca",
+        "neighborhood",
+        "manhattan",
+        "Tribeca",
+        40.7163,
+        -74.0086,
+        None,
+        "Cast-iron warehouses turned lofts on cobbled streets, quiet by day and "
+        "home to the film festival each spring.",
+    ),
+    "koreatown": (
+        "Koreatown",
+        "neighborhood",
+        "manhattan",
+        "Koreatown",
+        40.7478,
+        -73.9866,
+        None,
+        "One block of 32nd Street stacked vertically with barbecue, karaoke and "
+        "bakeries, busy until the early hours.",
+    ),
+    "eataly-nyc-flatiron": (
+        "Eataly NYC Flatiron",
+        "market",
+        "manhattan",
+        "Flatiron District",
+        40.7421,
+        -73.9897,
+        25.0,
+        "An Italian market hall of counters, pasta bars and a rooftop brewery "
+        "across from the Flatiron Building.",
+    ),
+    "hells-kitchen-flea-market": (
+        "Hell's Kitchen Flea Market",
+        "market",
+        "manhattan",
+        "Hell's Kitchen",
+        40.7607,
+        -73.9938,
+        None,
+        "Weekend stalls of furniture, jewellery and ephemera filling West 25th "
+        "Street's old parking lots.",
+    ),
+    "village-vanguard": (
+        "Village Vanguard",
+        "venue",
+        "manhattan",
+        "Greenwich Village",
+        40.7359,
+        -74.0015,
+        40.0,
+        "A basement wedge open since 1935, where Coltrane and Evans recorded and "
+        "the Monday big band still plays.",
+    ),
+    "comedy-cellar": (
+        "Comedy Cellar",
+        "venue",
+        "manhattan",
+        "Greenwich Village",
+        40.7301,
+        -74.0003,
+        24.0,
+        "The MacDougal Street basement where major comedians drop in unannounced "
+        "between arena dates.",
+    ),
+    "bowery-ballroom": (
+        "Bowery Ballroom",
+        "venue",
+        "manhattan",
+        "Lower East Side",
+        40.7204,
+        -73.9934,
+        35.0,
+        "A 575-capacity room in a 1929 building, widely considered the best "
+        "sounding mid-size venue in the city.",
+    ),
+    "beacon-theatre": (
+        "Beacon Theatre",
+        "theater",
+        "manhattan",
+        "Upper West Side",
+        40.7802,
+        -73.9816,
+        60.0,
+        "A 1929 movie palace on Broadway restored to its gilded interior, now a "
+        "concert hall with famous residencies.",
+    ),
+    "the-public-theater": (
+        "The Public Theater",
+        "theater",
+        "manhattan",
+        "NoHo",
+        40.7288,
+        -73.9920,
+        45.0,
+        "Where A Chorus Line and Hamilton began, and the home of free "
+        "Shakespeare in the Park each summer.",
+    ),
+    "columbia-university": (
+        "Columbia University",
+        "landmark",
+        "manhattan",
+        "Morningside Heights",
+        40.8075,
+        -73.9626,
+        None,
+        "McKim, Mead & White's Beaux-Arts campus around Low Library's steps and "
+        "the Alma Mater statue.",
+    ),
+    "stone-street": (
+        "Stone Street",
+        "neighborhood",
+        "manhattan",
+        "Financial District",
+        40.7040,
+        -74.0110,
+        None,
+        "A cobbled pedestrian lane of 19th-century buildings, filled end to end "
+        "with outdoor tables in summer.",
+    ),
+    "grants-tomb": (
+        "General Grant National Memorial",
+        "historic_site",
+        "manhattan",
+        "Morningside Heights",
+        40.8133,
+        -73.9630,
+        None,
+        "The largest mausoleum in North America, holding Ulysses S. Grant and "
+        "his wife above Riverside Park.",
+    ),
+    "harlem-apollo-walk-of-fame": (
+        "125th Street",
+        "neighborhood",
+        "manhattan",
+        "Harlem",
+        40.8090,
+        -73.9455,
+        None,
+        "Harlem's main commercial spine, from the Apollo to the Studio Museum, "
+        "busy with street vendors and music.",
+    ),
+    "randalls-island-park": (
+        "Randall's Island Park",
+        "park",
+        "manhattan",
+        "Randall's Island",
+        40.7935,
+        -73.9210,
+        None,
+        "Sports fields, salt marsh and a waterfront path under three bridges, "
+        "reached on foot from East Harlem.",
+    ),
+    "the-vessel-plaza-shops": (
+        "The Shops at Hudson Yards",
+        "market",
+        "manhattan",
+        "Hudson Yards",
+        40.7540,
+        -74.0016,
+        20.0,
+        "Seven floors of retail and restaurants wrapped around an atrium, with "
+        "a food hall from José Andrés on the ground level.",
+    ),
+    "st-marks-place": (
+        "St. Marks Place",
+        "neighborhood",
+        "manhattan",
+        "East Village",
+        40.7288,
+        -73.9877,
+        None,
+        "Three blocks of tattoo parlours, record shops and late-night noodles "
+        "that have anchored downtown counterculture for decades.",
+    ),
+    "washington-heights": (
+        "Washington Heights",
+        "neighborhood",
+        "manhattan",
+        "Washington Heights",
+        40.8417,
+        -73.9394,
+        None,
+        "A Dominican heart of the city above 155th Street, with cuchifritos "
+        "counters and the Little Red Lighthouse below the bridge.",
+    ),
+    # -------------------------------------------------------------- Brooklyn
+    "new-york-aquarium": (
+        "New York Aquarium",
+        "tour_experience",
+        "brooklyn",
+        "Coney Island",
+        40.5741,
+        -73.9752,
+        30.0,
+        "The oldest continuously operating aquarium in the country, on the "
+        "Coney Island boardwalk, with a shark tunnel.",
+    ),
+    "luna-park": (
+        "Luna Park",
+        "tour_experience",
+        "brooklyn",
+        "Coney Island",
+        40.5745,
+        -73.9782,
+        45.0,
+        "The amusement park carrying the 1903 name, home to the Cyclone wooden "
+        "coaster and the Thunderbolt.",
+    ),
+    "denos-wonder-wheel-park": (
+        "Deno's Wonder Wheel Amusement Park",
+        "tour_experience",
+        "brooklyn",
+        "Coney Island",
+        40.5735,
+        -73.9787,
+        35.0,
+        "The 1920 Wonder Wheel still turns, half its cars swinging on rails as "
+        "the wheel rotates.",
+    ),
+    "brighton-beach": (
+        "Brighton Beach",
+        "neighborhood",
+        "brooklyn",
+        "Brighton Beach",
+        40.5776,
+        -73.9614,
+        None,
+        "Little Odessa: Russian and Ukrainian bakeries and banya under the "
+        "elevated tracks, with the beach a block away.",
+    ),
+    "jane-s-carousel": (
+        "Jane's Carousel",
+        "tour_experience",
+        "brooklyn",
+        "DUMBO",
+        40.7033,
+        -73.9950,
+        2.0,
+        "A restored 1922 carousel in a glass pavilion on the Brooklyn Bridge "
+        "Park waterfront, lit up after dark.",
+    ),
+    "brooklyn-public-library": (
+        "Brooklyn Public Library Central",
+        "landmark",
+        "brooklyn",
+        "Prospect Heights",
+        40.6725,
+        -73.9682,
+        None,
+        "A 1941 Art Deco building shaped like an open book, its gilded entrance "
+        "facing Grand Army Plaza.",
+    ),
+    "grand-army-plaza": (
+        "Grand Army Plaza",
+        "landmark",
+        "brooklyn",
+        "Prospect Heights",
+        40.6740,
+        -73.9702,
+        None,
+        "The Soldiers' and Sailors' Memorial Arch presiding over the oval at "
+        "Prospect Park's main entrance.",
+    ),
+    "dyker-heights": (
+        "Dyker Heights",
+        "neighborhood",
+        "brooklyn",
+        "Dyker Heights",
+        40.6214,
+        -74.0135,
+        None,
+        "Ordinary streets that mount an extraordinary Christmas lights display "
+        "every December, drawing bus tours.",
+    ),
+    "brooklyn-navy-yard": (
+        "Brooklyn Navy Yard",
+        "historic_site",
+        "brooklyn",
+        "Wallabout",
+        40.7017,
+        -73.9700,
+        10.0,
+        "Three hundred acres of former shipyard, now a manufacturing campus with "
+        "a museum in the old surgeon's house.",
+    ),
+    "bushwick-collective": (
+        "The Bushwick Collective",
+        "gallery",
+        "brooklyn",
+        "Bushwick",
+        40.7069,
+        -73.9235,
+        None,
+        "An open-air street art gallery filling the warehouse walls around "
+        "Troutman Street, repainted every year.",
+    ),
+    "gowanus": (
+        "Gowanus",
+        "neighborhood",
+        "brooklyn",
+        "Gowanus",
+        40.6743,
+        -73.9905,
+        None,
+        "Low industrial blocks along a notorious canal, now full of studios, "
+        "climbing gyms and breweries.",
+    ),
+    "carroll-gardens": (
+        "Carroll Gardens",
+        "neighborhood",
+        "brooklyn",
+        "Carroll Gardens",
+        40.6795,
+        -73.9993,
+        None,
+        "Deep front gardens on brownstone blocks, with old Italian bakeries "
+        "beside newer restaurants on Smith Street.",
+    ),
+    "cobble-hill": (
+        "Cobble Hill",
+        "neighborhood",
+        "brooklyn",
+        "Cobble Hill",
+        40.6866,
+        -73.9962,
+        None,
+        "A small, quiet historic district of 19th-century row houses between "
+        "Brooklyn Heights and Carroll Gardens.",
+    ),
+    "greenpoint": (
+        "Greenpoint",
+        "neighborhood",
+        "brooklyn",
+        "Greenpoint",
+        40.7304,
+        -73.9512,
+        None,
+        "The city's Polish centre at the top of Brooklyn, with waterfront views "
+        "straight down at midtown.",
+    ),
+    "bedford-stuyvesant": (
+        "Bedford-Stuyvesant",
+        "neighborhood",
+        "brooklyn",
+        "Bedford-Stuyvesant",
+        40.6872,
+        -73.9418,
+        None,
+        "One of the largest collections of intact Victorian architecture "
+        "anywhere, and a centre of Black culture in the city.",
+    ),
+    "sheepshead-bay": (
+        "Sheepshead Bay",
+        "waterfront",
+        "brooklyn",
+        "Sheepshead Bay",
+        40.5862,
+        -73.9440,
+        None,
+        "A working fishing harbour with party boats tied along Emmons Avenue and "
+        "a footbridge to Manhattan Beach.",
+    ),
+    "manhattan-beach": (
+        "Manhattan Beach",
+        "waterfront",
+        "brooklyn",
+        "Manhattan Beach",
+        40.5779,
+        -73.9390,
+        None,
+        "A calm, tidy beach at Brooklyn's southern edge, quieter than Coney "
+        "Island a mile west.",
+    ),
+    "williamsburg-bridge": (
+        "Williamsburg Bridge",
+        "bridge",
+        "brooklyn",
+        "Williamsburg",
+        40.7132,
+        -73.9724,
+        None,
+        "The 1903 crossing to the Lower East Side, with separate walking and "
+        "cycling paths and constant subway rumble.",
+    ),
+    "prospect-park-zoo": (
+        "Prospect Park Zoo",
+        "tour_experience",
+        "brooklyn",
+        "Prospect Park",
+        40.6647,
+        -73.9656,
+        10.0,
+        "A small, walkable zoo inside Prospect Park, built around a sea lion "
+        "pool and a children's discovery trail.",
+    ),
+    "brooklyn-grange": (
+        "Brooklyn Grange Navy Yard Farm",
+        "garden",
+        "brooklyn",
+        "Wallabout",
+        40.6995,
+        -73.9709,
+        20.0,
+        "Rooftop soil farm above the Navy Yard, growing vegetables with the "
+        "Manhattan skyline directly behind.",
+    ),
+    "music-hall-of-williamsburg": (
+        "Music Hall of Williamsburg",
+        "venue",
+        "brooklyn",
+        "Williamsburg",
+        40.7191,
+        -73.9576,
+        35.0,
+        "A three-level, 550-capacity room on North 6th Street that catches bands "
+        "just before they outgrow it.",
+    ),
+    "house-of-yes": (
+        "House of Yes",
+        "venue",
+        "brooklyn",
+        "Bushwick",
+        40.7069,
+        -73.9231,
+        30.0,
+        "Circus, cabaret and late-night dancing in a Bushwick warehouse, with a "
+        "costume policy taken seriously.",
+    ),
+    "nitehawk-cinema": (
+        "Nitehawk Cinema",
+        "theater",
+        "brooklyn",
+        "Williamsburg",
+        40.7146,
+        -73.9615,
+        18.0,
+        "A dine-in independent cinema on Metropolitan Avenue that runs midnight "
+        "repertory alongside new releases.",
+    ),
+    "kings-county-distillery": (
+        "Kings County Distillery",
+        "tour_experience",
+        "brooklyn",
+        "Wallabout",
+        40.7009,
+        -73.9723,
+        20.0,
+        "New York's oldest operating whiskey distillery since Prohibition, in "
+        "the Navy Yard's 1899 paymaster building.",
+    ),
+    "fort-hamilton": (
+        "Fort Hamilton",
+        "historic_site",
+        "brooklyn",
+        "Bay Ridge",
+        40.6068,
+        -74.0300,
+        None,
+        "An active army post since 1831 at the Brooklyn foot of the Verrazzano, "
+        "with a harbour defense museum.",
+    ),
+    "owls-head-park": (
+        "Owl's Head Park",
+        "park",
+        "brooklyn",
+        "Bay Ridge",
+        40.6389,
+        -74.0332,
+        None,
+        "A steep hill park above the Narrows with one of the best sunset views "
+        "in Brooklyn and a busy skate bowl.",
+    ),
+    # ---------------------------------------------------------------- Queens
+    "citi-field": (
+        "Citi Field",
+        "sports_venue",
+        "queens",
+        "Flushing Meadows",
+        40.7571,
+        -73.8458,
+        45.0,
+        "The Mets' ballpark, its brick facade echoing Ebbets Field, with the "
+        "Shea Bridge over right-centre.",
+    ),
+    "queens-zoo": (
+        "Queens Zoo",
+        "tour_experience",
+        "queens",
+        "Flushing Meadows",
+        40.7440,
+        -73.8478,
+        10.0,
+        "An eleven-acre zoo of North American species inside the World's Fair "
+        "grounds, using the old Geodesic Dome as an aviary.",
+    ),
+    "alley-pond-park": (
+        "Alley Pond Park",
+        "park",
+        "queens",
+        "Bayside",
+        40.7434,
+        -73.7434,
+        None,
+        "Glacial kettle ponds, salt marsh and the Queens Giant, thought to be "
+        "the oldest living thing in the city.",
+    ),
+    "fort-totten-park": (
+        "Fort Totten Park",
+        "historic_site",
+        "queens",
+        "Bayside",
+        40.7907,
+        -73.7770,
+        None,
+        "A Civil War-era battery on a promontory in the Long Island Sound, with "
+        "views to the Throgs Neck Bridge.",
+    ),
+    "jacob-riis-park": (
+        "Jacob Riis Park",
+        "waterfront",
+        "queens",
+        "Rockaway",
+        40.5665,
+        -73.8760,
+        None,
+        "A wide Atlantic beach behind a 1930s bathhouse, part of the Gateway "
+        "National Recreation Area.",
+    ),
+    "kissena-park": (
+        "Kissena Park",
+        "park",
+        "queens",
+        "Flushing",
+        40.7470,
+        -73.8055,
+        None,
+        "A lake, a historic tree grove from a 19th-century nursery, and the "
+        "city's only outdoor velodrome.",
+    ),
+    "sunnyside-gardens": (
+        "Sunnyside Gardens",
+        "neighborhood",
+        "queens",
+        "Sunnyside",
+        40.7443,
+        -73.9200,
+        None,
+        "A 1920s planned garden community of low brick blocks around shared "
+        "interior courts, now a historic district.",
+    ),
+    "woodside": (
+        "Woodside",
+        "neighborhood",
+        "queens",
+        "Woodside",
+        40.7454,
+        -73.9051,
+        None,
+        "Irish pubs beside Thai and Filipino kitchens under the 7 train, one of "
+        "the most mixed stretches in Queens.",
+    ),
+    "elmhurst": (
+        "Elmhurst",
+        "neighborhood",
+        "queens",
+        "Elmhurst",
+        40.7362,
+        -73.8800,
+        None,
+        "Thai, Indonesian and Chinese restaurants along Broadway, anchored by "
+        "one of the oldest churches in the city.",
+    ),
+    "jamaica": (
+        "Jamaica",
+        "neighborhood",
+        "queens",
+        "Jamaica",
+        40.7020,
+        -73.7890,
+        None,
+        "A transit hub and commercial centre with the Jamaica Performing Arts "
+        "Center in a restored 1859 church.",
+    ),
+    "far-rockaway": (
+        "Far Rockaway",
+        "waterfront",
+        "queens",
+        "Far Rockaway",
+        40.6046,
+        -73.7551,
+        None,
+        "The eastern end of the peninsula, quieter surf and a long boardwalk "
+        "rebuilt after Hurricane Sandy.",
+    ),
+    "resorts-world-nyc": (
+        "Resorts World New York City",
+        "venue",
+        "queens",
+        "South Ozone Park",
+        40.6714,
+        -73.8300,
+        20.0,
+        "A casino and events complex at Aqueduct Racetrack, the city's largest "
+        "gaming floor.",
+    ),
+    "court-square": (
+        "Court Square",
+        "neighborhood",
+        "queens",
+        "Long Island City",
+        40.7470,
+        -73.9450,
+        None,
+        "Glass towers around the One Court Square clocktower, with galleries "
+        "and studios in the older low-rises.",
+    ),
+    "astoria-beer-garden": (
+        "Bohemian Hall Beer Garden",
+        "venue",
+        "queens",
+        "Astoria",
+        40.7686,
+        -73.9163,
+        25.0,
+        "The city's oldest beer garden, run by a Czech benevolent society since "
+        "1910, with long tables under the trees.",
+    ),
+    "steinway-street": (
+        "Steinway Street",
+        "market",
+        "queens",
+        "Astoria",
+        40.7620,
+        -73.9200,
+        None,
+        "A long commercial strip with Little Egypt at its northern end, hookah "
+        "cafes and Middle Eastern bakeries.",
+    ),
+    # ----------------------------------------------------------------- Bronx
+    "hall-of-fame-for-great-americans": (
+        "Hall of Fame for Great Americans",
+        "historic_site",
+        "bronx",
+        "University Heights",
+        40.8600,
+        -73.9120,
+        None,
+        "An open-air colonnade of bronze busts on a bluff above the Harlem "
+        "River, the first hall of fame in the country.",
+    ),
+    "grand-concourse": (
+        "Grand Concourse",
+        "neighborhood",
+        "bronx",
+        "Concourse",
+        40.8300,
+        -73.9180,
+        None,
+        "A four-mile boulevard modelled on the Champs-Élysées, lined with one of "
+        "the largest Art Deco collections anywhere.",
+    ),
+    "riverdale": (
+        "Riverdale",
+        "neighborhood",
+        "bronx",
+        "Riverdale",
+        40.8900,
+        -73.9080,
+        None,
+        "Hilly, leafy and residential above the Hudson, with estates and "
+        "parkland at the city's northwestern edge.",
+    ),
+    "bronx-river-greenway": (
+        "Bronx River Greenway",
+        "waterfront",
+        "bronx",
+        "West Farms",
+        40.8420,
+        -73.8790,
+        None,
+        "A path along the only freshwater river in the city, restored enough "
+        "that beavers returned after two centuries.",
+    ),
+    "hunts-point-market": (
+        "Hunts Point Produce Market",
+        "market",
+        "bronx",
+        "Hunts Point",
+        40.8070,
+        -73.8790,
+        None,
+        "The largest produce market in the world by volume, moving most of the "
+        "region's fruit and vegetables overnight.",
+    ),
+    "throgs-neck": (
+        "Throgs Neck",
+        "neighborhood",
+        "bronx",
+        "Throgs Neck",
+        40.8180,
+        -73.8180,
+        None,
+        "A peninsula of small houses and boatyards between the East River and "
+        "Eastchester Bay.",
+    ),
+    "bronx-terminal-market": (
+        "Bronx Terminal Market",
+        "market",
+        "bronx",
+        "Concourse",
+        40.8258,
+        -73.9290,
+        None,
+        "A retail centre beside Yankee Stadium on the site of the old wholesale "
+        "market, busy on game days.",
+    ),
+    "st-marys-park-bronx": (
+        "St. Mary's Park",
+        "park",
+        "bronx",
+        "Mott Haven",
+        40.8104,
+        -73.9110,
+        None,
+        "The largest park in the South Bronx, on rolling ground that was once a "
+        "colonial farm.",
+    ),
+    "crotona-park": (
+        "Crotona Park",
+        "park",
+        "bronx",
+        "Crotona Park East",
+        40.8395,
+        -73.8960,
+        None,
+        "A 127-acre park around Indian Lake, with a public pool and tennis "
+        "courts that produced several professionals.",
+    ),
+    "wave-hill-pergola": (
+        "Riverdale Park",
+        "park",
+        "bronx",
+        "Riverdale",
+        40.8880,
+        -73.9190,
+        None,
+        "A narrow strip of old-growth woodland running along the Hudson below "
+        "the Riverdale ridge.",
+    ),
+    # --------------------------------------------------------- Staten Island
+    "historic-richmond-town": (
+        "Historic Richmond Town",
+        "historic_site",
+        "staten_island",
+        "Richmondtown",
+        40.5700,
+        -74.1460,
+        10.0,
+        "A living history village of restored buildings from three centuries, "
+        "including the oldest schoolhouse in the country.",
+    ),
+    "staten-island-zoo": (
+        "Staten Island Zoo",
+        "tour_experience",
+        "staten_island",
+        "West Brighton",
+        40.6250,
+        -74.1150,
+        10.0,
+        "A compact zoo known for its reptile collection and for Staten Island "
+        "Chuck's Groundhog Day forecast.",
+    ),
+    "clove-lakes-park": (
+        "Clove Lakes Park",
+        "park",
+        "staten_island",
+        "Sunnyside",
+        40.6155,
+        -74.1050,
+        None,
+        "Connected lakes, stone bridges and the borough's oldest living thing, a "
+        "tulip tree over three centuries old.",
+    ),
+    "great-kills-park": (
+        "Great Kills Park",
+        "waterfront",
+        "staten_island",
+        "Great Kills",
+        40.5480,
+        -74.1300,
+        None,
+        "Beach, marina and marsh trails on a harbour peninsula, part of the "
+        "Gateway National Recreation Area.",
+    ),
+    "wolfes-pond-park": (
+        "Wolfe's Pond Park",
+        "park",
+        "staten_island",
+        "Prince's Bay",
+        40.5200,
+        -74.1900,
+        None,
+        "A freshwater pond separated from the beach by a narrow bar, with woods "
+        "and a large dog run behind.",
+    ),
+    "empire-outlets": (
+        "Empire Outlets",
+        "market",
+        "staten_island",
+        "St. George",
+        40.6432,
+        -74.0745,
+        None,
+        "The city's only outlet mall, beside the ferry terminal with harbour "
+        "views from its upper terrace.",
+    ),
+    "jacques-marchais-museum": (
+        "Jacques Marchais Museum of Tibetan Art",
+        "museum",
+        "staten_island",
+        "Lighthouse Hill",
+        40.5760,
+        -74.1400,
+        10.0,
+        "A hillside museum built as a Himalayan temple, holding one of the "
+        "largest private Tibetan collections in the West.",
+    ),
+    "silver-lake-park": (
+        "Silver Lake Park",
+        "park",
+        "staten_island",
+        "Silver Lake",
+        40.6250,
+        -74.0930,
+        None,
+        "A reservoir ringed by a walking loop and a public golf course on the "
+        "island's northern ridge.",
+    ),
+}

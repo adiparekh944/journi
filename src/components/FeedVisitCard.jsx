@@ -34,15 +34,15 @@ export default function FeedVisitCard({
       <div className="p-3">
         <div className="flex gap-5">
           <button onClick={onLike} className="tap-highlight flex items-center gap-1 text-sm">
-            <Heart className={`h-5 w-5 ${liked ? "fill-primary text-primary" : "text-muted-foreground"}`} />
+            <Heart className={`h-5 w-5 transition ${liked ? "fill-score-low text-score-low scale-110" : "text-muted-foreground"}`} />
             <span className="text-muted-foreground">{likes.length}</span>
           </button>
           <button onClick={onToggleComments} className="tap-highlight flex items-center gap-1 text-sm">
-            <MessageCircle className="h-5 w-5 text-muted-foreground" />
+            <MessageCircle className="h-5 w-5 text-sky-500" />
             <span className="text-muted-foreground">{comments.length}</span>
           </button>
           <button onClick={onSave} className="tap-highlight ml-auto">
-            <Bookmark className="h-5 w-5 text-muted-foreground" />
+            <Bookmark className="h-5 w-5 text-score-want" />
           </button>
         </div>
         {visit.note && <p className="mt-2 text-sm text-foreground">{visit.note}</p>}

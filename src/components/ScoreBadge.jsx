@@ -12,7 +12,7 @@ export default function ScoreBadge({ score, size = "md", className = "" }) {
   const label = score == null ? "–" : Number(score).toFixed(1);
   return (
     <span
-      className={`inline-flex items-center justify-center rounded-full font-semibold tabular-nums score-${band} ${sizes[size]} ${className}`}
+      className={`inline-flex items-center justify-center rounded-full font-bold tabular-nums shadow-sm score-${band} ${sizes[size]} ${className}`}
     >
       {label}
     </span>

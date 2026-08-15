@@ -132,7 +132,7 @@ export default function MyList() {
                 {sort === "score" && <span className="w-5 text-center text-sm font-bold text-muted-foreground">{i + 1}</span>}
                 <button onClick={() => navigate(`/place/${v.place_id}`)} className="flex flex-1 items-center gap-3 text-left">
                   <div className="h-12 w-12 overflow-hidden rounded-xl bg-muted">
-                    {v.photos?.[0] ? <Image src={v.photos[0]} alt="" fittingType="fill" className="h-full w-full" /> : <div className="flex h-full w-full items-center justify-center"><CategoryIcon category={v.place_category} className="h-5 w-5 text-muted-foreground" /></div>}
+                    {(v.photos?.[0] || v.place_hero_image_url) ? <Image src={v.photos?.[0] || v.place_hero_image_url} alt="" fittingType="fill" className="h-full w-full" /> : <div className="flex h-full w-full items-center justify-center"><CategoryIcon category={v.place_category} className="h-5 w-5 text-muted-foreground" /></div>}
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="line-clamp-1 text-sm font-semibold text-foreground">{v.place_name}</div>
@@ -145,10 +145,34 @@ export default function MyList() {
                 </button>
               </div>
               {openId === v.id && (
-                <div className="bg-muted px-3 pb-3">
-                  {v.note && <p className="mb-2 text-sm text-muted-foreground">{v.note}</p>}
+                <div className="mb-3 rounded-2xl border border-border bg-muted/60 p-3">
+                  {v.note && (
+                    // The note is the user's own words: quote it and give it
+                    // full-contrast text rather than the muted body colour.
+                    <p className="mb-3 border-l-2 border-border pl-3 text-sm italic leading-relaxed text-foreground">
+                      {v.note}
+                    </p>
+                  )}
+                  <dl className="mb-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                    {v.visited_on && (
+                      <div><dt className="inline font-medium text-foreground">Visited</dt>{" "}
+                        <dd className="inline">{v.visited_on}</dd></div>
+                    )}
+                    {v.time_spent_minutes && (
+                      <div><dt className="inline font-medium text-foreground">Time</dt>{" "}
+                        <dd className="inline">{v.time_spent_minutes} min</dd></div>
+                    )}
+                    {v.was_paid && v.amount_paid_usd != null && (
+                      <div><dt className="inline font-medium text-foreground">Paid</dt>{" "}
+                        <dd className="inline">${Number(v.amount_paid_usd).toFixed(0)}</dd></div>
+                    )}
+                    {v.companion && (
+                      <div><dt className="inline font-medium text-foreground">With</dt>{" "}
+                        <dd className="inline capitalize">{v.companion.replace("_", " ")}</dd></div>
+                    )}
+                  </dl>
                   <div className="flex gap-2">
-                    <button onClick={() => navigate(`/log/${v.place_id}?rerank=1`)} className="flex flex-1 items-center justify-center gap-1.5 rounded-full bg-primary py-2 text-xs font-medium text-primary-foreground">
+                    <button onClick={() => navigate(`/log/${v.place_id}?rerank=1`)} className="tap-highlight flex flex-1 items-center justify-center gap-1.5 rounded-full bg-primary py-2.5 text-xs font-semibold text-primary-foreground active:scale-[0.98]">
                       <RotateCw className="h-3.5 w-3.5" /> Re-rank
                     </button>
                     <button
@@ -158,7 +182,7 @@ export default function MyList() {
                         removeVisit(v.id);
                         setOpenId(null);
                       }}
-                      className="flex flex-1 items-center justify-center gap-1.5 rounded-full border border-border py-2 text-xs font-medium text-destructive"
+                      className="tap-highlight flex flex-1 items-center justify-center gap-1.5 rounded-full border border-destructive/30 bg-destructive/10 py-2.5 text-xs font-semibold text-destructive active:scale-[0.98]"
                     >
                       <Trash2 className="h-3.5 w-3.5" /> Delete
                     </button>

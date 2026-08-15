@@ -10,6 +10,13 @@ module.exports = {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
+        score: {
+          high: "hsl(var(--score-high))",
+          positive: "hsl(var(--score-positive))",
+          neutral: "hsl(var(--score-neutral))",
+          low: "hsl(var(--score-low))",
+          want: "hsl(var(--score-want))",
+        },
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

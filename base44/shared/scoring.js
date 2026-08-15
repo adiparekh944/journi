@@ -22,19 +22,40 @@ export function bucketRange(bucket) {
 }
 
 // 0-10 -> color band used consistently across list, pins, place page, feed.
+// Part 0.3 defines four score bands, not three. Anything unrated is grey.
 export function scoreColor(score) {
-  if (score == null) return "neutral";
-  if (score >= 8) return "green";
-  if (score >= 5) return "yellow";
-  return "red";
+  if (score == null) return "none";
+  if (score >= 8.0) return "high";
+  if (score >= 6.0) return "positive";
+  if (score >= 4.0) return "neutral";
+  return "low";
 }
 
+// Full-chroma versions of the Part 0.3 band colours, so a pin or chip reads
+// at a glance against a photograph.
+export const SCORE_HEX = {
+  high: "#16A34A",
+  positive: "#77B816",
+  neutral: "#F59E0B",
+  low: "#F5222D",
+  none: "#94A3B8",
+  want: "#8B5CF6",
+};
+
 export function scoreColorHex(score) {
-  const c = scoreColor(score);
-  if (c === "green") return "#16a34a";
-  if (c === "yellow") return "#eab308";
-  if (c === "red") return "#dc2626";
-  return "#94a3b8";
+  return SCORE_HEX[scoreColor(score)] ?? SCORE_HEX.none;
+}
+
+/** Tailwind classes for a filled score chip. */
+export function scoreChipClass(score) {
+  const band = scoreColor(score);
+  return {
+    high: "bg-score-high text-white",
+    positive: "bg-score-positive text-white",
+    neutral: "bg-score-neutral text-white",
+    low: "bg-score-low text-white",
+    none: "bg-muted text-muted-foreground",
+  }[band];
 }
 
 // Recompute scores for every visit in a bucket so they spread evenly across the
