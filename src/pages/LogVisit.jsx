@@ -185,7 +185,7 @@ export default function LogVisit() {
         )}
         <div className="flex-1">
           <h1 className="text-lg font-semibold text-foreground">
-            {step === "place" ? "Log a visit" : step === "details" ? "Visit details" : step === "bucket" ? "How was it?" : step === "compare" ? "Head-to-head" : "Done!"}
+            {step === "place" ? "Log a place" : step === "details" ? "How was the visit?" : step === "bucket" ? "How did it land?" : step === "compare" ? "Which did you prefer?" : "Added to your list"}
           </h1>
           <StepDots step={step} />
         </div>
@@ -222,57 +222,59 @@ export default function LogVisit() {
         <div className="flex-1 overflow-y-auto px-4 pt-4">
           <PlaceHeader place={place} />
           <div className="mt-4 space-y-4">
-            <Field label="Photos (up to 6)">
+            <Field label="Your photos" hint="Up to 6">
               <PhotoInput photos={form.photos} onChange={(p) => setForm({ ...form, photos: p })} />
             </Field>
-            <Field label="Note">
+            <Field label="What do you want to remember?">
               <textarea
                 value={form.note}
                 onChange={(e) => setForm({ ...form, note: e.target.value })}
                 rows={3}
-                placeholder="What stood out?"
+                placeholder="The thing you'd tell a friend about this place"
                 className="w-full rounded-2xl border border-border bg-muted p-3 text-sm focus:border-border focus:bg-card focus:outline-none"
               />
             </Field>
             <div className="grid grid-cols-2 gap-3">
-              <Field label="Date visited">
+              <Field label="When you went">
                 <input type="date" value={form.date_visited} onChange={(e) => setForm({ ...form, date_visited: e.target.value })} className="h-11 w-full rounded-2xl border border-border bg-muted px-3 text-sm focus:outline-none" />
               </Field>
-              <Field label="How long?">
-                <input value={form.duration} onChange={(e) => setForm({ ...form, duration: e.target.value })} placeholder="2 hrs" className="h-11 w-full rounded-2xl border border-border bg-muted px-3 text-sm focus:outline-none" />
+              <Field label="How long you stayed">
+                <input value={form.duration} onChange={(e) => setForm({ ...form, duration: e.target.value })} placeholder="About 2 hours" className="h-11 w-full rounded-2xl border border-border bg-muted px-3 text-sm focus:outline-none" />
               </Field>
             </div>
-            <Field label="Worth it? (1–5)">
-              <div className="flex gap-2">
-                {[1, 2, 3, 4, 5].map((n) => (
-                  <button key={n} onClick={() => setForm({ ...form, worth_it_rating: n })} className={`tap-highlight h-10 flex-1 rounded-xl text-sm font-semibold ${form.worth_it_rating >= n ? "bg-secondary text-secondary-foreground" : "bg-muted text-muted-foreground"}`}>{n}</button>
-                ))}
-              </div>
-            </Field>
-            <Field label="Crowd level">
+            <Field label="How busy was it?">
               <div className="flex gap-2">
                 {CROWD.map((c) => (
                   <button key={c} onClick={() => setForm({ ...form, crowd_level: c })} className={`tap-highlight h-9 flex-1 rounded-xl text-[11px] font-medium ${form.crowd_level === c ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}>{c}</button>
                 ))}
               </div>
             </Field>
-            <Field label="Who did you go with?">
+            <Field label="Who you went with">
               <FriendTagger taggedIds={form.tagged_user_ids} onChange={(ids) => setForm({ ...form, tagged_user_ids: ids })} />
-              <input value={form.companions} onChange={(e) => setForm({ ...form, companions: e.target.value })} placeholder="Or type names (solo, partner, etc.)" className="mt-2 h-11 w-full rounded-2xl border border-border bg-muted px-3 text-sm focus:outline-none" />
+              <input value={form.companions} onChange={(e) => setForm({ ...form, companions: e.target.value })} placeholder="Or just type it: solo, partner, friends" className="mt-2 h-11 w-full rounded-2xl border border-border bg-muted px-3 text-sm focus:outline-none" />
             </Field>
             <button onClick={() => setForm({ ...form, paid: !form.paid })} className="tap-highlight flex w-full items-center justify-between rounded-2xl border border-border bg-card p-3">
-              <span className="text-sm font-medium text-foreground">Did you pay?</span>
+              <span className="text-sm font-medium text-foreground">Did you pay to get in?</span>
               <span className={`flex h-6 w-11 items-center rounded-full p-0.5 transition ${form.paid ? "bg-primary" : "bg-stone-200"}`}>
                 <span className={`h-5 w-5 rounded-full bg-card transition ${form.paid ? "translate-x-5" : ""}`} />
               </span>
             </button>
             {form.paid && (
-              <Field label="Amount paid ($)">
-                <input type="number" value={form.amount_paid} onChange={(e) => setForm({ ...form, amount_paid: e.target.value })} className="h-11 w-full rounded-2xl border border-border bg-muted px-3 text-sm focus:outline-none" />
-              </Field>
+              <>
+                <Field label="How much, per person" hint="US dollars">
+                  <input type="number" inputMode="decimal" value={form.amount_paid} onChange={(e) => setForm({ ...form, amount_paid: e.target.value })} placeholder="0" className="h-11 w-full rounded-2xl border border-border bg-muted px-3 text-sm focus:outline-none" />
+                </Field>
+                <Field label="Was it worth the money?" hint="1 = not really, 5 = absolutely">
+                  <div className="flex gap-2">
+                    {[1, 2, 3, 4, 5].map((n) => (
+                      <button key={n} onClick={() => setForm({ ...form, worth_it_rating: n })} className={`tap-highlight h-10 flex-1 rounded-xl text-sm font-semibold ${form.worth_it_rating >= n ? "bg-secondary text-secondary-foreground" : "bg-muted text-muted-foreground"}`}>{n}</button>
+                    ))}
+                  </div>
+                </Field>
+              </>
             )}
             <button onClick={() => setForm({ ...form, would_return: !form.would_return })} className="tap-highlight flex w-full items-center justify-between rounded-2xl border border-border bg-card p-3">
-              <span className="text-sm font-medium text-foreground">Would you return?</span>
+              <span className="text-sm font-medium text-foreground">Would you go back?</span>
               <span className={`flex h-6 w-11 items-center rounded-full p-0.5 transition ${form.would_return ? "bg-primary" : "bg-stone-200"}`}>
                 <span className={`h-5 w-5 rounded-full bg-card transition ${form.would_return ? "translate-x-5" : ""}`} />
               </span>
@@ -280,7 +282,7 @@ export default function LogVisit() {
           </div>
           <div className="pb-28 pt-6 space-y-2">
             <button onClick={() => setStep("bucket")} className="tap-highlight flex w-full items-center justify-center gap-2 rounded-full bg-primary py-4 text-sm font-semibold text-primary-foreground active:scale-95">
-              Continue <ArrowRight className="h-4 w-4" />
+              Next: how did it land? <ArrowRight className="h-4 w-4" />
             </button>
             {isRerank && (
               <button
@@ -295,7 +297,7 @@ export default function LogVisit() {
                 }}
                 className="tap-highlight w-full rounded-full py-3 text-sm font-medium text-destructive"
               >
-                Delete visit
+                Remove from my list
               </button>
             )}
           </div>
@@ -305,7 +307,7 @@ export default function LogVisit() {
       {step === "bucket" && place && (
         <div className="flex flex-1 flex-col px-4 pt-4">
           <PlaceHeader place={place} />
-          <p className="mt-4 text-sm text-muted-foreground">Pick the bucket that fits. We'll find your precise score from there.</p>
+          <p className="mt-4 text-sm text-muted-foreground">Pick the one that fits. A few quick head-to-heads will place it exactly, so you never type a number.</p>
           <div className="mt-4 space-y-3">
             {BUCKET_ORDER.map((b) => (
               <button
@@ -315,7 +317,7 @@ export default function LogVisit() {
               >
                 <div className="text-base font-semibold text-foreground">{BUCKETS[b].label}</div>
                 <div className="text-sm text-muted-foreground">{BUCKETS[b].blurb}</div>
-                <div className="mt-1 text-xs text-muted-foreground">{bucketCountFor(b, visits, user.id)} in this bucket</div>
+                <div className="mt-1 text-xs text-muted-foreground">{bucketCountFor(b, visits, user.id) === 0 ? "Nothing rated this way yet" : `${bucketCountFor(b, visits, user.id)} places rated this way`}</div>
               </button>
             ))}
           </div>
@@ -338,6 +340,7 @@ export default function LogVisit() {
                 place_name: place.name,
                 place_category: place.category,
                 place_neighborhood: place.neighborhood,
+                place_hero_image_url: place.official_photos?.[0],
                 photos: form.photos,
               }}
               onComplete={handleCompareComplete}
@@ -349,14 +352,14 @@ export default function LogVisit() {
       {step === "result" && result && place && (
         <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
           <Trophy className="h-10 w-10 text-secondary" />
-          <p className="mt-3 text-sm text-muted-foreground">{place.name} landed at</p>
+          <p className="mt-3 text-sm text-muted-foreground">You rated {place.name}</p>
           <div className="my-2"><ScoreBadge score={result.score} size="lg" /></div>
           <p className="text-sm text-muted-foreground">
-            #{result.index + 1} of {result.total} in your "{BUCKETS[result.bucket].label}" bucket
+            #{result.index + 1} of {result.total} in {BUCKETS[result.bucket].label}
           </p>
           <div className="mt-8 flex w-full max-w-xs flex-col gap-2">
-            <button onClick={() => navigate("/list")} className="tap-highlight w-full rounded-full bg-primary py-3.5 text-sm font-semibold text-primary-foreground active:scale-95">See my ranked list</button>
-            <button onClick={() => navigate(`/place/${place.id}`)} className="tap-highlight w-full rounded-full py-3.5 text-sm font-medium text-stone-600">View place</button>
+            <button onClick={() => navigate("/list")} className="tap-highlight w-full rounded-full bg-primary py-3.5 text-sm font-semibold text-primary-foreground active:scale-95">See my list</button>
+            <button onClick={() => navigate(`/place/${place.id}`)} className="tap-highlight w-full rounded-full py-3.5 text-sm font-medium text-stone-600">Open {place.name}</button>
           </div>
         </div>
       )}
@@ -367,11 +370,12 @@ export default function LogVisit() {
 function FirstInBucket({ onComplete, place }) {
   return (
     <div className="flex flex-1 flex-col items-center justify-center px-6 text-center">
-      <p className="text-sm text-muted-foreground">
-        This is your first "{place.name}" rating in this bucket.
+      <p className="max-w-xs text-sm text-muted-foreground">
+        Nothing to compare it against yet — {place.name} is the first place you
+        have rated this way. It sets the bar; later places get ranked against it.
       </p>
       <button onClick={onComplete} className="tap-highlight mt-6 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground active:scale-95">
-        Reveal my score
+        Give it a score
       </button>
     </div>
   );
@@ -399,10 +403,13 @@ function PlaceHeader({ place, compact }) {
   );
 }
 
-function Field({ label, children }) {
+function Field({ label, hint, children }) {
   return (
     <div>
-      <div className="mb-1.5 text-xs font-medium text-muted-foreground">{label}</div>
+      <div className="mb-1.5 flex items-baseline gap-2">
+        <span className="text-xs font-medium text-foreground">{label}</span>
+        {hint && <span className="text-[11px] text-muted-foreground">{hint}</span>}
+      </div>
       {children}
     </div>
   );

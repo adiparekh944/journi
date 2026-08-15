@@ -56,7 +56,12 @@ export default function CompareFlow({ existingSorted, newVisit, onComplete }) {
   return (
     <div className="flex min-h-[60vh] flex-col">
       <div className="flex-1 px-4 pt-2">
-        <p className="text-center text-sm text-muted-foreground">Which did you like more?</p>
+        <p className="text-center text-sm text-muted-foreground">
+          Which of these did you like more?
+        </p>
+        <p className="mt-1 text-center text-xs text-muted-foreground">
+          Scores come from comparing, never from typing a number.
+        </p>
         <div className="mt-4 grid grid-cols-2 gap-3">
           <CompareCard visit={newVisit} isNew />
           <CompareCard visit={other} />
@@ -90,7 +95,9 @@ export default function CompareFlow({ existingSorted, newVisit, onComplete }) {
 }
 
 function CompareCard({ visit, isNew }) {
-  const photo = visit.photos?.[0];
+  // Part 5.3 wants a hero image on every comparison card. Most visits have no
+  // user photo, so fall back to the place's own before the category icon.
+  const photo = visit.photos?.[0] || visit.place_hero_image_url;
   return (
     <div className="overflow-hidden rounded-3xl border border-border bg-card shadow-sm">
       <div className="relative h-32 w-full bg-muted">

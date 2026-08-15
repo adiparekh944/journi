@@ -7,9 +7,21 @@
 // authority for the stored score, so any other range here would render a score
 // that disagrees with the one on the server.
 export const BUCKETS = {
-  loved: { label: "Loved it", range: [6.7, 10.0], blurb: "You'd go back in a heartbeat." },
-  fine: { label: "It was fine", range: [3.4, 6.6], blurb: "Good, not great." },
-  no: { label: "Not for me", range: [0.0, 3.3], blurb: "Skip it next time." },
+  loved: {
+    label: "Loved it",
+    range: [6.7, 10.0],
+    blurb: "You would go back without thinking twice.",
+  },
+  fine: {
+    label: "It was fine",
+    range: [3.4, 6.6],
+    blurb: "Glad you went. No strong feelings either way.",
+  },
+  no: {
+    label: "Not for me",
+    range: [0.0, 3.3],
+    blurb: "You would tell a friend to skip it.",
+  },
 };
 
 // Part 5.3 caps the comparison ladder; the user is never asked more than this.
