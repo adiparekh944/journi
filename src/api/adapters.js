@@ -14,7 +14,7 @@ export const PLACE_COLUMNS =
   "id, slug, name, category, borough, neighborhood, address, lat, lng, " +
   "short_description, hero_image_url, crowd_level, price_tier, " +
   "typical_price_usd, typical_duration_minutes, best_time, indoor_outdoor, " +
-  "is_free, popularity_seed, taste_vector, created_at";
+  "is_free, popularity_seed, taste_vector, ticket_url, created_at";
 
 /**
  * The schema stores boroughs as enum keys; the screens compare against the
@@ -69,6 +69,7 @@ export function toPlace(row) {
     best_time_to_go: row.best_time,
     avg_duration: row.typical_duration_minutes,
     official_photos: row.hero_image_url ? [row.hero_image_url] : [],
+    ticket_url: row.ticket_url ?? null,
     created_date: row.created_at,
   };
 }

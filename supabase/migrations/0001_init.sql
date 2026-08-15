@@ -118,6 +118,9 @@ create table public.places (
   is_free boolean generated always as (price_tier = 0) stored,
   popularity_seed int not null default 50
     check (popularity_seed between 0 and 100),
+  -- Where to buy admission. Only set where a real booking page is known; the
+  -- ticket button stays hidden rather than sending people to a guess.
+  ticket_url text check (ticket_url is null or ticket_url like 'https://%'),
   created_at timestamptz not null default now(),
   check (array_length(taste_vector, 1) = 10)
 );

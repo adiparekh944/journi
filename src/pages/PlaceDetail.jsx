@@ -4,15 +4,17 @@ import { base44 } from "@/api/base44Client";
 import { useJourni } from "@/lib/JourniDataContext";
 import { Image } from "@/components/ui/image";
 import ScoreBadge from "@/components/ScoreBadge";
+import InAppBrowser from "@/components/InAppBrowser";
 import CategoryIcon, { CATEGORY_LABELS } from "@/components/CategoryIcon";
 import PlaceCard from "@/components/PlaceCard";
-import { ArrowLeft, Clock, Calendar, Wallet, Building, Bookmark, Check } from "lucide-react";
+import { ArrowLeft, Clock, Calendar, Wallet, Building, Bookmark, Check, Ticket } from "lucide-react";
 
 export default function PlaceDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { visits, wantToGo, toggleWantToGo } = useJourni();
   const [place, setPlace] = useState(null);
+  const [ticketsOpen, setTicketsOpen] = useState(false);
   const [allVisits, setAllVisits] = useState([]);
   const [allPlaces, setAllPlaces] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -101,6 +103,17 @@ export default function PlaceDetail() {
 
         {place.description && <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{place.description}</p>}
 
+        {place.ticket_url && (
+          <button
+            type="button"
+            onClick={() => setTicketsOpen(true)}
+            className="tap-highlight mt-4 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-3.5 text-sm font-semibold text-primary-foreground active:scale-[0.98]"
+          >
+            <Ticket className="h-4 w-4" />
+            Buy tickets
+          </button>
+        )}
+
         <div className="mt-4 space-y-2">
           {/* price_level is 0 for free places. `0 && ...` renders a bare "0",
               so every condition here tests for null explicitly. */}
@@ -183,6 +196,12 @@ export default function PlaceDetail() {
           {myVisit ? "Re-rank visit" : "Log a visit"}
         </button>
       </div>
+      <InAppBrowser
+        open={ticketsOpen}
+        url={place.ticket_url}
+        title={`${place.name} tickets`}
+        onClose={() => setTicketsOpen(false)}
+      />
     </div>
   );
 }

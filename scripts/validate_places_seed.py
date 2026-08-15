@@ -87,6 +87,7 @@ EXPECTED_COLUMNS = (
     "best_time",
     "indoor_outdoor",
     "popularity_seed",
+    "ticket_url",
 )
 
 

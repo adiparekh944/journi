@@ -12,6 +12,7 @@ from place_expansion import EXPANSION_PLACES
 from place_facts import PLACE_FACTS
 from place_images import PLACE_IMAGES
 from place_niche import NICHE_PLACES
+from place_tickets import TICKET_URLS
 from validate_places_seed import EXPECTED_COLUMNS, read_places, validate_dataset
 
 POPULAR_PLACE_END_INDEX = 25
@@ -336,6 +337,7 @@ def generate_places() -> list[GeneratedPlace]:
                     "indoor" if category in INDOOR_CATEGORIES else "outdoor"
                 ),
                 "popularity_seed": str(popularity_seed),
+                "ticket_url": TICKET_URLS.get(slug, ""),
             }
             generated.append(GeneratedPlace(values))
             global_index += 1
@@ -373,6 +375,7 @@ def generate_places() -> list[GeneratedPlace]:
                         "indoor" if category in INDOOR_CATEGORIES else "outdoor"
                     ),
                     "popularity_seed": str(popularity_seed),
+                    "ticket_url": TICKET_URLS.get(slug, ""),
                 }
             )
         )
@@ -426,7 +429,8 @@ def write_sql(output_path: Path, places: list[GeneratedPlace]) -> None:
             f"{values['typical_duration_minutes']}, "
             f"{sql_literal(values['best_time'])}, "
             f"{sql_literal(values['indoor_outdoor'])}, "
-            f"{values['popularity_seed']}"
+            f"{values['popularity_seed']}, "
+            f"{sql_literal(values['ticket_url']) if values['ticket_url'] else 'null'}"
             ")"
         )
 
@@ -434,7 +438,7 @@ def write_sql(output_path: Path, places: list[GeneratedPlace]) -> None:
         "slug, name, category, borough, neighborhood, address, lat, lng, "
         "short_description, hero_image_url, taste_vector, crowd_level, "
         "price_tier, typical_price_usd, typical_duration_minutes, best_time, "
-        "indoor_outdoor, popularity_seed"
+        "indoor_outdoor, popularity_seed, ticket_url"
     )
     update_columns = [
         column.strip() for column in columns.split(",") if column.strip() != "slug"
