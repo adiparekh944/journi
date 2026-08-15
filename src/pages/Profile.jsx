@@ -99,7 +99,7 @@ export default function Profile() {
           ) : followStatus === "pending" ? (
             <button disabled className="w-full rounded-full border border-stone-200 py-2.5 text-sm font-medium text-stone-400">Requested</button>
           ) : (
-            <button onClick={follow} className="tap-highlight flex w-full items-center justify-center gap-1.5 rounded-full bg-stone-900 py-2.5 text-sm font-semibold text-white"><UserPlus className="h-4 w-4" /> Follow</button>
+            <button onClick={follow} className="tap-highlight flex w-full items-center justify-center gap-1.5 rounded-full bg-primary py-2.5 text-sm font-semibold text-white"><UserPlus className="h-4 w-4" /> Follow</button>
           )}
         </div>
       )}
@@ -111,7 +111,7 @@ export default function Profile() {
         ) : (
           <div className="space-y-2">
             {topPicks.map((v, i) => (
-              <button key={v.id} onClick={() => navigate(`/place/${v.place_id}`)} className="tap-highlight flex w-full items-center gap-3 rounded-2xl border border-stone-200 bg-white p-2.5 text-left">
+              <button key={v.id} onClick={() => navigate(`/place/${v.place_id}`)} className="tap-highlight flex w-full items-center gap-3 rounded-2xl border border-stone-200 bg-card p-2.5 text-left">
                 <span className="w-4 text-center text-xs font-semibold text-stone-400">{i + 1}</span>
                 <div className="h-11 w-11 overflow-hidden rounded-xl bg-stone-100">
                   {v.photos?.[0] ? <Image src={v.photos[0]} alt="" fittingType="fill" className="h-full w-full" /> : null}
@@ -148,7 +148,7 @@ function EditProfileModal({ profile, onSave, onClose }) {
   });
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40" onClick={onClose}>
-      <div className="w-full max-w-md rounded-t-3xl bg-white p-5 pb-safe" onClick={(e) => e.stopPropagation()}>
+      <div className="w-full max-w-md rounded-t-3xl bg-card p-5 pb-safe" onClick={(e) => e.stopPropagation()}>
         <div className="mb-3 flex items-center justify-between">
           <h2 className="text-lg font-semibold">Edit profile</h2>
           <button onClick={onClose} className="text-sm text-stone-500">Cancel</button>
@@ -159,9 +159,9 @@ function EditProfileModal({ profile, onSave, onClose }) {
           <Input label="Bio" value={form.bio} onChange={(v) => setForm({ ...form, bio: v })} />
           <button onClick={() => setForm({ ...form, is_private: !form.is_private })} className="tap-highlight flex w-full items-center justify-between rounded-2xl border border-stone-200 p-3">
             <span className="text-sm font-medium text-stone-700">Private account</span>
-            <span className={`flex h-6 w-11 items-center rounded-full p-0.5 ${form.is_private ? "bg-stone-900" : "bg-stone-200"}`}><span className={`h-5 w-5 rounded-full bg-white ${form.is_private ? "translate-x-5" : ""}`} /></span>
+            <span className={`flex h-6 w-11 items-center rounded-full p-0.5 ${form.is_private ? "bg-primary" : "bg-stone-200"}`}><span className={`h-5 w-5 rounded-full bg-foreground transition ${form.is_private ? "translate-x-5" : ""}`} /></span>
           </button>
-          <button onClick={() => onSave(form)} className="tap-highlight w-full rounded-full bg-stone-900 py-3 text-sm font-semibold text-white">Save</button>
+          <button onClick={() => onSave(form)} className="tap-highlight w-full rounded-full bg-primary py-3 text-sm font-semibold text-white">Save</button>
         </div>
       </div>
     </div>

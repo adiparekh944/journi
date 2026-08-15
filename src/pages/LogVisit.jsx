@@ -10,6 +10,7 @@ import { Image } from "@/components/ui/image";
 import CategoryIcon, { CATEGORY_LABELS } from "@/components/CategoryIcon";
 import SearchBar from "@/components/SearchBar";
 import CompareFlow from "@/components/CompareFlow";
+import FriendTagger from "@/components/FriendTagger";
 import { ArrowLeft, ArrowRight, Trophy } from "lucide-react";
 
 const CROWD = ["Empty", "Calm", "Moderate", "Busy", "Packed"];
@@ -37,6 +38,7 @@ export default function LogVisit() {
     crowd_level: "Moderate",
     duration: "",
     companions: "",
+    tagged_user_ids: [],
     would_return: true,
   });
   const [bucket, setBucket] = useState(null);
@@ -72,6 +74,7 @@ export default function LogVisit() {
           crowd_level: existing.crowd_level || "Moderate",
           duration: existing.duration || "",
           companions: existing.companions || "",
+          tagged_user_ids: existing.tagged_user_ids || [],
           would_return: existing.would_return ?? true,
         });
         setBucket(existing.sentiment_bucket);
@@ -137,6 +140,7 @@ export default function LogVisit() {
       crowd_level: form.crowd_level,
       duration: form.duration,
       companions: form.companions,
+      tagged_user_ids: form.tagged_user_ids,
       would_return: form.would_return,
       sentiment_bucket: bucket,
       score: newScore,
@@ -195,7 +199,7 @@ export default function LogVisit() {
               <button
                 key={p.id}
                 onClick={() => { setPlace(p); setStep("details"); }}
-                className="tap-highlight flex w-full items-center gap-3 rounded-2xl border border-stone-200 bg-white p-2.5 text-left active:scale-[0.99]"
+                className="tap-highlight flex w-full items-center gap-3 rounded-2xl border border-stone-200 bg-card p-2.5 text-left active:scale-[0.99]"
               >
                 <div className="h-12 w-12 overflow-hidden rounded-xl bg-stone-100">
                   {p.official_photos?.[0] ? (
@@ -227,7 +231,7 @@ export default function LogVisit() {
                 onChange={(e) => setForm({ ...form, note: e.target.value })}
                 rows={3}
                 placeholder="What stood out?"
-                className="w-full rounded-2xl border border-stone-200 bg-stone-50 p-3 text-sm focus:border-stone-400 focus:bg-white focus:outline-none"
+                className="w-full rounded-2xl border border-stone-200 bg-stone-50 p-3 text-sm focus:border-stone-400 focus:bg-card focus:outline-none"
               />
             </Field>
             <div className="grid grid-cols-2 gap-3">
@@ -241,24 +245,25 @@ export default function LogVisit() {
             <Field label="Worth it? (1–5)">
               <div className="flex gap-2">
                 {[1, 2, 3, 4, 5].map((n) => (
-                  <button key={n} onClick={() => setForm({ ...form, worth_it_rating: n })} className={`tap-highlight h-10 flex-1 rounded-xl text-sm font-semibold ${form.worth_it_rating >= n ? "bg-amber-400 text-stone-900" : "bg-stone-100 text-stone-400"}`}>{n}</button>
+                  <button key={n} onClick={() => setForm({ ...form, worth_it_rating: n })} className={`tap-highlight h-10 flex-1 rounded-xl text-sm font-semibold ${form.worth_it_rating >= n ? "bg-amber-400 text-amber-950" : "bg-stone-100 text-stone-400"}`}>{n}</button>
                 ))}
               </div>
             </Field>
             <Field label="Crowd level">
               <div className="flex gap-2">
                 {CROWD.map((c) => (
-                  <button key={c} onClick={() => setForm({ ...form, crowd_level: c })} className={`tap-highlight h-9 flex-1 rounded-xl text-[11px] font-medium ${form.crowd_level === c ? "bg-stone-900 text-white" : "bg-stone-100 text-stone-500"}`}>{c}</button>
+                  <button key={c} onClick={() => setForm({ ...form, crowd_level: c })} className={`tap-highlight h-9 flex-1 rounded-xl text-[11px] font-medium ${form.crowd_level === c ? "bg-primary text-white" : "bg-stone-100 text-stone-500"}`}>{c}</button>
                 ))}
               </div>
             </Field>
             <Field label="Who did you go with?">
-              <input value={form.companions} onChange={(e) => setForm({ ...form, companions: e.target.value })} placeholder="Solo, partner, friends…" className="h-11 w-full rounded-2xl border border-stone-200 bg-stone-50 px-3 text-sm focus:outline-none" />
+              <FriendTagger taggedIds={form.tagged_user_ids} onChange={(ids) => setForm({ ...form, tagged_user_ids: ids })} />
+              <input value={form.companions} onChange={(e) => setForm({ ...form, companions: e.target.value })} placeholder="Or type names (solo, partner, etc.)" className="mt-2 h-11 w-full rounded-2xl border border-stone-200 bg-stone-50 px-3 text-sm focus:outline-none" />
             </Field>
-            <button onClick={() => setForm({ ...form, paid: !form.paid })} className="tap-highlight flex w-full items-center justify-between rounded-2xl border border-stone-200 bg-white p-3">
+            <button onClick={() => setForm({ ...form, paid: !form.paid })} className="tap-highlight flex w-full items-center justify-between rounded-2xl border border-stone-200 bg-card p-3">
               <span className="text-sm font-medium text-stone-700">Did you pay?</span>
-              <span className={`flex h-6 w-11 items-center rounded-full p-0.5 transition ${form.paid ? "bg-stone-900" : "bg-stone-200"}`}>
-                <span className={`h-5 w-5 rounded-full bg-white transition ${form.paid ? "translate-x-5" : ""}`} />
+              <span className={`flex h-6 w-11 items-center rounded-full p-0.5 transition ${form.paid ? "bg-primary" : "bg-stone-200"}`}>
+                <span className={`h-5 w-5 rounded-full bg-foreground transition ${form.paid ? "translate-x-5" : ""}`} />
               </span>
             </button>
             {form.paid && (
@@ -266,15 +271,15 @@ export default function LogVisit() {
                 <input type="number" value={form.amount_paid} onChange={(e) => setForm({ ...form, amount_paid: e.target.value })} className="h-11 w-full rounded-2xl border border-stone-200 bg-stone-50 px-3 text-sm focus:outline-none" />
               </Field>
             )}
-            <button onClick={() => setForm({ ...form, would_return: !form.would_return })} className="tap-highlight flex w-full items-center justify-between rounded-2xl border border-stone-200 bg-white p-3">
+            <button onClick={() => setForm({ ...form, would_return: !form.would_return })} className="tap-highlight flex w-full items-center justify-between rounded-2xl border border-stone-200 bg-card p-3">
               <span className="text-sm font-medium text-stone-700">Would you return?</span>
-              <span className={`flex h-6 w-11 items-center rounded-full p-0.5 transition ${form.would_return ? "bg-stone-900" : "bg-stone-200"}`}>
-                <span className={`h-5 w-5 rounded-full bg-white transition ${form.would_return ? "translate-x-5" : ""}`} />
+              <span className={`flex h-6 w-11 items-center rounded-full p-0.5 transition ${form.would_return ? "bg-primary" : "bg-stone-200"}`}>
+                <span className={`h-5 w-5 rounded-full bg-foreground transition ${form.would_return ? "translate-x-5" : ""}`} />
               </span>
             </button>
           </div>
           <div className="pb-28 pt-6 space-y-2">
-            <button onClick={() => setStep("bucket")} className="tap-highlight flex w-full items-center justify-center gap-2 rounded-full bg-stone-900 py-4 text-sm font-semibold text-white active:scale-95">
+            <button onClick={() => setStep("bucket")} className="tap-highlight flex w-full items-center justify-center gap-2 rounded-full bg-primary py-4 text-sm font-semibold text-white active:scale-95">
               Continue <ArrowRight className="h-4 w-4" />
             </button>
             {isRerank && (
@@ -306,7 +311,7 @@ export default function LogVisit() {
               <button
                 key={b}
                 onClick={() => { setBucket(b); setStep("compare"); }}
-                className="tap-highlight w-full rounded-3xl border border-stone-200 bg-white p-4 text-left active:scale-[0.99]"
+                className="tap-highlight w-full rounded-3xl border border-stone-200 bg-card p-4 text-left active:scale-[0.99]"
               >
                 <div className="text-base font-semibold text-stone-900">{BUCKETS[b].label}</div>
                 <div className="text-sm text-stone-500">{BUCKETS[b].blurb}</div>
@@ -350,7 +355,7 @@ export default function LogVisit() {
             #{result.index + 1} of {result.total} in your "{BUCKETS[result.bucket].label}" bucket
           </p>
           <div className="mt-8 flex w-full max-w-xs flex-col gap-2">
-            <button onClick={() => navigate("/list")} className="tap-highlight w-full rounded-full bg-stone-900 py-3.5 text-sm font-semibold text-white active:scale-95">See my ranked list</button>
+            <button onClick={() => navigate("/list")} className="tap-highlight w-full rounded-full bg-primary py-3.5 text-sm font-semibold text-white active:scale-95">See my ranked list</button>
             <button onClick={() => navigate(`/place/${place.id}`)} className="tap-highlight w-full rounded-full py-3.5 text-sm font-medium text-stone-600">View place</button>
           </div>
         </div>
@@ -365,7 +370,7 @@ function FirstInBucket({ onComplete, place }) {
       <p className="text-sm text-stone-500">
         This is your first "{place.name}" rating in this bucket.
       </p>
-      <button onClick={onComplete} className="tap-highlight mt-6 rounded-full bg-stone-900 px-6 py-3 text-sm font-semibold text-white active:scale-95">
+      <button onClick={onComplete} className="tap-highlight mt-6 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white active:scale-95">
         Reveal my score
       </button>
     </div>
@@ -409,7 +414,7 @@ function StepDots({ step }) {
   return (
     <div className="mt-2 flex gap-1">
       {order.map((_, i) => (
-        <div key={i} className={`h-1 flex-1 rounded-full ${i <= active ? "bg-stone-900" : "bg-stone-200"}`} />
+        <div key={i} className={`h-1 flex-1 rounded-full ${i <= active ? "bg-primary" : "bg-stone-200"}`} />
       ))}
     </div>
   );

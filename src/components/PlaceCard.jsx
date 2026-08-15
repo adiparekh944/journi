@@ -11,7 +11,7 @@ export default function PlaceCard({ place, score, footer }) {
   return (
     <button
       onClick={() => navigate(`/place/${place.id}`)}
-      className="tap-highlight group w-full overflow-hidden rounded-3xl border border-stone-200/80 bg-white text-left shadow-sm transition active:scale-[0.99]"
+      className="tap-highlight group w-full overflow-hidden rounded-3xl border border-stone-200/80 bg-card text-left shadow-sm transition active:scale-[0.99]"
     >
       <div className="relative h-40 w-full overflow-hidden bg-stone-100">
         {photo ? (

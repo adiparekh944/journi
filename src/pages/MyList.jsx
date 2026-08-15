@@ -44,7 +44,7 @@ export default function MyList() {
           <button
             key={s.key}
             onClick={() => setSort(s.key)}
-            className={`tap-highlight shrink-0 rounded-full border px-3 py-1.5 text-xs font-medium ${sort === s.key ? "border-stone-900 bg-stone-900 text-white" : "border-stone-200 bg-white text-stone-600"}`}
+            className={`tap-highlight shrink-0 rounded-full border px-3 py-1.5 text-xs font-medium ${sort === s.key ? "border-primary bg-primary text-white" : "border-stone-200 bg-card text-stone-600"}`}
           >
             {s.label}
           </button>
@@ -60,7 +60,7 @@ export default function MyList() {
       ) : (
         <div className="space-y-2">
           {sorted.map((v, i) => (
-            <div key={v.id} className="overflow-hidden rounded-2xl border border-stone-200 bg-white">
+            <div key={v.id} className="overflow-hidden rounded-2xl border border-stone-200 bg-card">
               <div className="flex items-center gap-3 p-2.5">
                 {sort === "score" && <span className="w-5 text-center text-xs font-semibold text-stone-400">{i + 1}</span>}
                 <button onClick={() => navigate(`/place/${v.place_id}`)} className="flex flex-1 items-center gap-3 text-left">
@@ -85,7 +85,7 @@ export default function MyList() {
                 <div className="border-t border-stone-100 bg-stone-50 px-3 py-2">
                   {v.note && <p className="mb-2 text-sm text-stone-600">{v.note}</p>}
                   <div className="flex gap-2">
-                    <button onClick={() => navigate(`/log/${v.place_id}?rerank=1`)} className="tap-highlight flex flex-1 items-center justify-center gap-1.5 rounded-full bg-stone-900 py-2 text-xs font-medium text-white">
+                    <button onClick={() => navigate(`/log/${v.place_id}?rerank=1`)} className="tap-highlight flex flex-1 items-center justify-center gap-1.5 rounded-full bg-primary py-2 text-xs font-medium text-white">
                       <RotateCw className="h-3.5 w-3.5" /> Re-rank
                     </button>
                     <button

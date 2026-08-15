@@ -42,8 +42,8 @@ export default function WantToGo() {
         </button>
         <h1 className="flex-1 text-xl font-semibold text-stone-900">Want to go</h1>
         <div className="flex rounded-full border border-stone-200 p-0.5">
-          <button onClick={() => setView("list")} className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-xs ${view === "list" ? "bg-stone-900 text-white" : "text-stone-500"}`}><List className="h-3.5 w-3.5" /> List</button>
-          <button onClick={() => setView("map")} className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-xs ${view === "map" ? "bg-stone-900 text-white" : "text-stone-500"}`}><MapIcon className="h-3.5 w-3.5" /> Map</button>
+          <button onClick={() => setView("list")} className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-xs ${view === "list" ? "bg-primary text-white" : "text-stone-500"}`}><List className="h-3.5 w-3.5" /> List</button>
+          <button onClick={() => setView("map")} className={`flex items-center gap-1 rounded-full px-2.5 py-1 text-xs ${view === "map" ? "bg-primary text-white" : "text-stone-500"}`}><MapIcon className="h-3.5 w-3.5" /> Map</button>
         </div>
       </header>
 
@@ -60,7 +60,7 @@ export default function WantToGo() {
               key={p.id}
               place={p}
               footer={
-                <button onClick={(e) => { e.stopPropagation(); toggleWantToGo(p); }} className="w-full rounded-full bg-purple-100 py-1.5 text-xs font-medium text-purple-700">
+                <button onClick={(e) => { e.stopPropagation(); toggleWantToGo(p); }} className="w-full rounded-full bg-purple-500/20 py-1.5 text-xs font-medium text-purple-300">
                   Remove
                 </button>
               }
@@ -70,7 +70,7 @@ export default function WantToGo() {
       ) : (
         <div className="h-[70vh] overflow-hidden rounded-3xl border border-stone-200">
           <MapContainer center={[40.7128, -74.006]} zoom={12} className="h-full w-full">
-            <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" attribution="&copy; OpenStreetMap" />
+            <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" attribution="&copy; OpenStreetMap" />
             {savedPlaces.map((p) => (
               <Marker key={p.id} position={[p.latitude, p.longitude]} icon={purpleIcon("★")}>
                 <Popup>

@@ -68,7 +68,7 @@ export default function PlaceDetail() {
         )}
         <button
           onClick={() => navigate(-1)}
-          className="absolute left-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 backdrop-blur tap-highlight"
+          className="absolute left-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-card/90 backdrop-blur tap-highlight"
         >
           <ArrowLeft className="h-5 w-5 text-stone-800" />
         </button>
@@ -143,16 +143,16 @@ export default function PlaceDetail() {
         )}
       </div>
 
-      <div className="pb-safe fixed bottom-0 left-0 right-0 z-30 mx-auto flex max-w-md gap-2 border-t border-stone-200 bg-white/95 px-4 p-3 backdrop-blur">
+      <div className="pb-safe fixed bottom-0 left-0 right-0 z-30 mx-auto flex max-w-md gap-2 border-t border-stone-200 bg-card/95 px-4 p-3 backdrop-blur">
         <button
           onClick={() => toggleWantToGo(place)}
-          className={`flex items-center justify-center gap-1.5 rounded-full px-4 py-3 text-sm font-medium active:scale-95 ${saved ? "bg-purple-100 text-purple-700" : "border border-stone-200 text-stone-700"}`}
+          className={`flex items-center justify-center gap-1.5 rounded-full px-4 py-3 text-sm font-medium active:scale-95 ${saved ? "bg-purple-500/20 text-purple-300" : "border border-stone-200 text-stone-700"}`}
         >
           {saved ? <><Check className="h-4 w-4" /> Saved</> : <><Bookmark className="h-4 w-4" /> Save</>}
         </button>
         <button
           onClick={() => navigate(`/log/${place.id}`)}
-          className="flex-1 rounded-full bg-stone-900 py-3 text-sm font-semibold text-white active:scale-95"
+          className="flex-1 rounded-full bg-primary py-3 text-sm font-semibold text-white active:scale-95"
         >
           {myVisit ? "Re-rank visit" : "Log a visit"}
         </button>

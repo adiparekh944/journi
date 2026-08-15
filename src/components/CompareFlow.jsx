@@ -63,13 +63,13 @@ export default function CompareFlow({ existingSorted, newVisit, onComplete }) {
         <div className="grid grid-cols-2 gap-3">
           <button
             onClick={() => handle("win")}
-            className="tap-highlight rounded-2xl bg-stone-900 py-4 text-sm font-semibold text-white active:scale-95"
+            className="tap-highlight rounded-2xl bg-primary py-4 text-sm font-semibold text-white active:scale-95"
           >
             {newVisit.place_name}
           </button>
           <button
             onClick={() => handle("lose")}
-            className="tap-highlight rounded-2xl border border-stone-300 bg-white py-4 text-sm font-semibold text-stone-800 active:scale-95"
+            className="tap-highlight rounded-2xl border border-stone-300 bg-card py-4 text-sm font-semibold text-stone-800 active:scale-95"
           >
             {other.place_name}
           </button>
@@ -88,7 +88,7 @@ export default function CompareFlow({ existingSorted, newVisit, onComplete }) {
 function CompareCard({ visit, isNew }) {
   const photo = visit.photos?.[0];
   return (
-    <div className="overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm">
+    <div className="overflow-hidden rounded-3xl border border-stone-200 bg-card shadow-sm">
       <div className="relative h-32 w-full bg-stone-100">
         {photo ? (
           <Image src={photo} alt={visit.place_name} fittingType="fill" className="h-full w-full" />
@@ -98,7 +98,7 @@ function CompareCard({ visit, isNew }) {
           </div>
         )}
         {isNew && (
-          <span className="absolute left-2 top-2 rounded-full bg-stone-900 px-2 py-0.5 text-[10px] font-semibold text-white">
+          <span className="absolute left-2 top-2 rounded-full bg-primary px-2 py-0.5 text-[10px] font-semibold text-white">
             New
           </span>
         )}

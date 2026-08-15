@@ -59,6 +59,18 @@ module.exports = {
   				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
   				border: 'hsl(var(--sidebar-border))',
   				ring: 'hsl(var(--sidebar-ring))'
+  			},
+  			stone: {
+  				50: '#111113',
+  				100: '#1a1a1d',
+  				200: '#27272a',
+  				300: '#3f3f46',
+  				400: '#71717a',
+  				500: '#a1a1aa',
+  				600: '#c4c4c8',
+  				700: '#e4e4e7',
+  				800: '#f0f0f1',
+  				900: '#fafafa'
   			}
   		},
   		fontFamily: {
@@ -69,20 +81,12 @@ module.exports = {
   		},
   		keyframes: {
   			'accordion-down': {
-  				from: {
-  					height: '0'
-  				},
-  				to: {
-  					height: 'var(--radix-accordion-content-height)'
-  				}
+  				from: { height: '0' },
+  				to: { height: 'var(--radix-accordion-content-height)' }
   			},
   			'accordion-up': {
-  				from: {
-  					height: 'var(--radix-accordion-content-height)'
-  				},
-  				to: {
-  					height: '0'
-  				}
+  				from: { height: 'var(--radix-accordion-content-height)' },
+  				to: { height: '0' }
   			}
   		},
   		animation: {

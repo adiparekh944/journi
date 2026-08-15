@@ -98,7 +98,7 @@ export default function Feed() {
             const visitComments = comments[v.id] || [];
             const liked = visitLikes.some((l) => l.user_id === user.id);
             return (
-              <div key={v.id} className="overflow-hidden rounded-3xl border border-stone-200 bg-white">
+              <div key={v.id} className="overflow-hidden rounded-3xl border border-stone-200 bg-card">
                 <div className="flex items-center gap-2 p-3">
                   <ScoreBadge score={v.score} size="sm" />
                   <div className="flex-1">
@@ -141,7 +141,7 @@ export default function Feed() {
                           placeholder="Add a comment…"
                           className="h-9 flex-1 rounded-full border border-stone-200 px-3 text-sm focus:outline-none"
                         />
-                        <button onClick={() => postComment(v)} className="tap-highlight flex h-9 w-9 items-center justify-center rounded-full bg-stone-900 text-white">
+                        <button onClick={() => postComment(v)} className="tap-highlight flex h-9 w-9 items-center justify-center rounded-full bg-primary text-white">
                           <Send className="h-4 w-4" />
                         </button>
                       </div>

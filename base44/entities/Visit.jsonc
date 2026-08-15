@@ -67,6 +67,12 @@
     "companions": {
       "type": "string"
     },
+    "tagged_user_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
     "would_return": {
       "type": "boolean"
     },

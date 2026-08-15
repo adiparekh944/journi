@@ -141,13 +141,13 @@ export default function Home() {
                     <div className="flex gap-2">
                       <button
                         onClick={(e) => { e.stopPropagation(); navigate(`/log/${p.id}`); }}
-                        className="flex-1 rounded-full bg-stone-900 py-1.5 text-xs font-medium text-white active:scale-95"
+                        className="flex-1 rounded-full bg-primary py-1.5 text-xs font-medium text-white active:scale-95"
                       >
                         {visit ? "Re-log" : "Log"}
                       </button>
                       <button
                         onClick={(e) => { e.stopPropagation(); toggleWantToGo(p); }}
-                        className={`flex-1 rounded-full py-1.5 text-xs font-medium active:scale-95 ${saved ? "bg-purple-100 text-purple-700" : "border border-stone-200 text-stone-600"}`}
+                        className={`flex-1 rounded-full py-1.5 text-xs font-medium active:scale-95 ${saved ? "bg-purple-500/20 text-purple-300" : "border border-stone-200 text-stone-600"}`}
                       >
                         {saved ? "Saved" : "Save"}
                       </button>
@@ -168,7 +168,7 @@ function Chip({ active, onClick, children }) {
     <button
       onClick={onClick}
       className={`tap-highlight shrink-0 rounded-full border px-3 py-1.5 text-xs font-medium transition ${
-        active ? "border-stone-900 bg-stone-900 text-white" : "border-stone-200 bg-white text-stone-600"
+        active ? "border-primary bg-primary text-white" : "border-stone-200 bg-card text-stone-600"
       }`}
     >
       {children}

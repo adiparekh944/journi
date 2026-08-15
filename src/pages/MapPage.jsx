@@ -76,13 +76,13 @@ export default function MapPage() {
         <h1 className="text-xl font-semibold text-stone-900">Map</h1>
         <div className="mt-2 flex gap-2">
           {FILTERS.map((f) => (
-            <button key={f} onClick={() => setFilter(f)} className={`tap-highlight rounded-full px-3 py-1.5 text-xs font-medium ${filter === f ? "bg-stone-900 text-white" : "border border-stone-200 bg-white text-stone-600"}`}>{f}</button>
+            <button key={f} onClick={() => setFilter(f)} className={`tap-highlight rounded-full px-3 py-1.5 text-xs font-medium ${filter === f ? "bg-primary text-white" : "border border-stone-200 bg-card text-stone-600"}`}>{f}</button>
           ))}
         </div>
         <div className="mt-2 flex gap-2 overflow-x-auto no-scrollbar">
-          <button onClick={() => setCategory("all")} className={`tap-highlight shrink-0 rounded-full px-3 py-1 text-xs ${category === "all" ? "bg-stone-900 text-white" : "border border-stone-200 text-stone-500"}`}>All</button>
+          <button onClick={() => setCategory("all")} className={`tap-highlight shrink-0 rounded-full px-3 py-1 text-xs ${category === "all" ? "bg-primary text-white" : "border border-stone-200 text-stone-500"}`}>All</button>
           {Object.keys(CATEGORY_LABELS).map((c) => (
-            <button key={c} onClick={() => setCategory(c)} className={`tap-highlight shrink-0 rounded-full px-3 py-1 text-xs ${category === c ? "bg-stone-900 text-white" : "border border-stone-200 text-stone-500"}`}>{CATEGORY_LABELS[c]}</button>
+            <button key={c} onClick={() => setCategory(c)} className={`tap-highlight shrink-0 rounded-full px-3 py-1 text-xs ${category === c ? "bg-primary text-white" : "border border-stone-200 text-stone-500"}`}>{CATEGORY_LABELS[c]}</button>
           ))}
         </div>
       </div>
@@ -90,7 +90,7 @@ export default function MapPage() {
       <div className="mt-3 flex-1 px-4">
         <div className="relative h-full overflow-hidden rounded-3xl border border-stone-200">
           <MapContainer center={[40.7128, -74.006]} zoom={12} className="h-full w-full">
-            <TileLayer url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" attribution="&copy; OpenStreetMap" />
+            <TileLayer url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png" attribution="&copy; OpenStreetMap" />
             {pins.map((p) => (
               <Marker key={`${p.id}-${p.want}`} position={[p.lat, p.lng]} icon={pinIcon(p.score, p.want)}>
                 <Popup>
@@ -103,7 +103,7 @@ export default function MapPage() {
           </MapContainer>
           <button
             onClick={() => setFitTrigger((t) => t + 1)}
-            className="absolute right-3 top-3 z-[500] flex h-9 w-9 items-center justify-center rounded-full bg-white pin-shadow"
+            className="absolute right-3 top-3 z-[500] flex h-9 w-9 items-center justify-center rounded-full bg-card pin-shadow"
             title="Zoom to fit"
           >
             <Maximize2 className="h-4 w-4 text-stone-700" />
@@ -116,7 +116,7 @@ export default function MapPage() {
           {boroughProgress.map((b) => (
             <div key={b.borough} className="text-center">
               <div className="mx-auto h-1.5 w-full overflow-hidden rounded-full bg-stone-200">
-                <div className="h-full rounded-full bg-stone-900" style={{ width: `${b.pct}%` }} />
+                <div className="h-full rounded-full bg-primary" style={{ width: `${b.pct}%` }} />
               </div>
               <div className="mt-1 truncate text-[9px] text-stone-500">{b.borough.replace("The ", "")}</div>
               <div className="text-[9px] font-medium text-stone-400">{b.done}/{b.total}</div>
