@@ -102,10 +102,36 @@ export default function PlaceDetail() {
         {place.description && <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{place.description}</p>}
 
         <div className="mt-4 space-y-2">
-          {place.price_level && <InfoRow icon={<Wallet className="h-4 w-4" />} label="Price" value={place.price_level} />}
-          {place.avg_duration && <InfoRow icon={<Clock className="h-4 w-4" />} label="Typical visit" value={place.avg_duration} />}
-          {place.best_time_to_go && <InfoRow icon={<Calendar className="h-4 w-4" />} label="Best time" value={place.best_time_to_go} />}
-          {place.indoor_or_outdoor && <InfoRow icon={<Building className="h-4 w-4" />} label="Setting" value={place.indoor_or_outdoor} />}
+          {/* price_level is 0 for free places. `0 && ...` renders a bare "0",
+              so every condition here tests for null explicitly. */}
+          {place.price_level != null && (
+            <InfoRow
+              icon={<Wallet className="h-4 w-4" />}
+              label="Price"
+              value={formatPrice(place)}
+            />
+          )}
+          {place.avg_duration != null && (
+            <InfoRow
+              icon={<Clock className="h-4 w-4" />}
+              label="Typical visit"
+              value={formatDuration(place.avg_duration)}
+            />
+          )}
+          {place.best_time_to_go && (
+            <InfoRow
+              icon={<Calendar className="h-4 w-4" />}
+              label="Best time"
+              value={TIME_LABELS[place.best_time_to_go] ?? place.best_time_to_go}
+            />
+          )}
+          {place.indoor_or_outdoor && (
+            <InfoRow
+              icon={<Building className="h-4 w-4" />}
+              label="Setting"
+              value={SETTING_LABELS[place.indoor_or_outdoor] ?? place.indoor_or_outdoor}
+            />
+          )}
         </div>
 
         {allVisits.length > 0 && (
@@ -159,6 +185,36 @@ export default function PlaceDetail() {
       </div>
     </div>
   );
+}
+
+const TIME_LABELS = {
+  early_morning: "Early morning",
+  morning: "Morning",
+  afternoon: "Afternoon",
+  sunset: "Sunset",
+  evening: "Evening",
+  night: "Night",
+  anytime: "Any time",
+};
+
+const SETTING_LABELS = { indoor: "Indoor", outdoor: "Outdoor", both: "Indoor and outdoor" };
+
+/** Free places say so; paid ones show the real ticket price. */
+function formatPrice(place) {
+  if (!place.price_level) return "Free";
+  if (place.typical_price_usd) {
+    return `About $${Math.round(Number(place.typical_price_usd))} per person`;
+  }
+  return "$".repeat(Math.min(4, place.price_level));
+}
+
+function formatDuration(minutes) {
+  const total = Number(minutes);
+  if (!Number.isFinite(total)) return String(minutes);
+  if (total < 60) return `${total} min`;
+  const hours = Math.floor(total / 60);
+  const rest = total % 60;
+  return rest ? `${hours} hr ${rest} min` : `${hours} hr`;
 }
 
 function InfoRow({ icon, label, value }) {

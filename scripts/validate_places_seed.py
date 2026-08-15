@@ -236,11 +236,24 @@ def validate_dataset(places: Sequence[PlaceSeedRow]) -> list[str]:
 
     if len(places) < MINIMUM_PLACE_COUNT:
         errors.append(f"Expected at least 150 places; found {len(places)}.")
-    if borough_counts != Counter(EXPECTED_BOROUGH_COUNTS):
+    thin_boroughs = sorted(
+        borough
+        for borough, minimum in EXPECTED_BOROUGH_COUNTS.items()
+        if borough_counts[borough] < minimum
+    )
+    if thin_boroughs:
         errors.append(
-            "Borough distribution must be exactly "
-            f"{EXPECTED_BOROUGH_COUNTS}; found {dict(borough_counts)}.",
+            "These boroughs fall below the distribution floor in Part 15.1: "
+            + ", ".join(
+                f"{borough} {borough_counts[borough]}/"
+                f"{EXPECTED_BOROUGH_COUNTS[borough]}"
+                for borough in thin_boroughs
+            )
+            + ".",
         )
+    unexpected = sorted(set(borough_counts) - set(EXPECTED_BOROUGH_COUNTS))
+    if unexpected:
+        errors.append("Unknown boroughs: " + ", ".join(unexpected) + ".")
     if len(slugs) != len(set(slugs)):
         errors.append("Every place slug must be unique.")
 

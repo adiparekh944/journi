@@ -8,11 +8,17 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
+from place_expansion import EXPANSION_PLACES
 from place_facts import PLACE_FACTS
 from place_images import PLACE_IMAGES
 from validate_places_seed import EXPECTED_COLUMNS, read_places, validate_dataset
 
 POPULAR_PLACE_END_INDEX = 25
+
+# Upper bound of each admission price tier, in US dollars.
+TIER_1_MAX = 12
+TIER_2_MAX = 25
+TIER_3_MAX = 45
 OFFBEAT_PLACE_START_INDEX = 120
 
 FREE_CATEGORIES = frozenset(
@@ -270,6 +276,20 @@ def hero_image(slug: str) -> str:
         ) from None
 
 
+def tier_from_price(price: float | None) -> int:
+    """Map a real admission price onto the 0-4 tier the schema stores."""
+
+    if not price:
+        return 0
+    if price < TIER_1_MAX:
+        return 1
+    if price < TIER_2_MAX:
+        return 2
+    if price < TIER_3_MAX:
+        return 3
+    return 4
+
+
 def price_tier(category: str, index: int) -> int:
     """Return a plausible tier while preserving abundant free exploration."""
 
@@ -318,6 +338,45 @@ def generate_places() -> list[GeneratedPlace]:
             }
             generated.append(GeneratedPlace(values))
             global_index += 1
+
+    for slug, entry in EXPANSION_PLACES.items():
+        name, category, borough, neighborhood, lat, lng, price, description = entry
+        popularity_seed = popularity(global_index)
+        tier = tier_from_price(price)
+        vector = taste_vector(category, popularity_seed)
+        generated.append(
+            GeneratedPlace(
+                {
+                    "slug": slug,
+                    "name": name,
+                    "category": category,
+                    "borough": borough,
+                    "neighborhood": neighborhood,
+                    "address": f"{neighborhood}, New York, NY",
+                    "lat": str(lat),
+                    "lng": str(lng),
+                    "short_description": description,
+                    "hero_image_url": hero_image(slug),
+                    **{
+                        f"tv{index}": f"{value:.1f}"
+                        for index, value in enumerate(vector)
+                    },
+                    "crowd_level": str(max(1, min(5, popularity_seed // 20 + 1))),
+                    "price_tier": str(tier),
+                    "typical_price_usd": "" if price is None else f"{price:.2f}",
+                    "typical_duration_minutes": str(45 + global_index % 6 * 30),
+                    "best_time": (
+                        "morning" if category in FREE_CATEGORIES else "afternoon"
+                    ),
+                    "indoor_outdoor": (
+                        "indoor" if category in INDOOR_CATEGORIES else "outdoor"
+                    ),
+                    "popularity_seed": str(popularity_seed),
+                }
+            )
+        )
+        global_index += 1
+
     return generated
 
 

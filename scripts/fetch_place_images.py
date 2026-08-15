@@ -13,6 +13,7 @@ the specification treats a broken hero image as a demo-breaking defect.
 from __future__ import annotations
 
 import json
+import re
 import sys
 import time
 import urllib.error
@@ -20,6 +21,7 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+from place_expansion import EXPANSION_PLACES
 from place_facts import PLACE_FACTS
 
 HTTP_OK = 200
@@ -27,7 +29,36 @@ HTTP_REDIRECT = 300
 
 USER_AGENT = "JourniSeed/1.0 (https://github.com/journi; seed data build)"
 SEARCH_ENDPOINT = "https://en.wikipedia.org/w/api.php"
+OPENVERSE_ENDPOINT = "https://api.openverse.org/v1/images/"
+
+# Words that mark a result as a diagram, map, logo or portrait rather than a
+# photograph of the place.
+REJECT_TOKENS = (
+    "map",
+    "logo",
+    "seal",
+    "diagram",
+    "plan ",
+    "chart",
+    "coat of arms",
+    "portrait",
+    "postage",
+    "stamp",
+    "poster",
+    "sign",
+    "plaque",
+    "graph",
+)
 TARGET_WIDTH = 1600
+MIN_TOKEN_LENGTH = 3
+
+# Both curated sets need a photograph.
+ALL_SLUGS = tuple(PLACE_FACTS) + tuple(EXPANSION_PLACES)
+
+# Neighbourhood per slug, used to disambiguate image search results.
+NEIGHBOURHOODS: dict[str, str] = {
+    slug: entry[3] for slug, entry in EXPANSION_PLACES.items()
+}
 
 # Where the place name does not match the Wikipedia article title, or matches an
 # article about something else entirely, name the article explicitly.
@@ -259,6 +290,81 @@ def search_article(name: str) -> str | None:
     return str(results[0]["title"])
 
 
+def distinctive_tokens(name: str) -> list[str]:
+    """Words specific enough to confirm a search result is the right place."""
+
+    ignore = {
+        "the",
+        "of",
+        "and",
+        "new",
+        "york",
+        "city",
+        "nyc",
+        "park",
+        "museum",
+        "center",
+        "centre",
+        "national",
+        "at",
+        "in",
+        "for",
+        "a",
+        "de",
+        "st",
+    }
+    return [
+        token
+        for token in re.findall(r"[a-z']+", name.lower())
+        if len(token) > MIN_TOKEN_LENGTH and token not in ignore
+    ]
+
+
+def openverse_image(name: str, neighborhood: str) -> str | None:
+    """Find a wide, large, correctly-subject photograph on Openverse.
+
+    Openverse aggregates Flickr and Wikimedia and generally returns far more
+    attractive photography than a Wikipedia lead image, which is often an
+    aerial or an awkward crop. The trade-off is relevance, so a result is only
+    accepted when its title carries a distinctive word from the place name.
+    """
+
+    tokens = distinctive_tokens(name)
+    query = urllib.parse.urlencode(
+        {
+            "q": f"{name} New York",
+            "page_size": "8",
+            "aspect_ratio": "wide",
+            "size": "large",
+            "mature": "false",
+            "license_type": "all",
+        }
+    )
+    try:
+        payload = request_json(f"{OPENVERSE_ENDPOINT}?{query}")
+    except (urllib.error.URLError, TimeoutError, json.JSONDecodeError):
+        return None
+
+    results = payload.get("results")
+    if not isinstance(results, list):
+        return None
+
+    for result in results:
+        title = str(result.get("title") or "").lower()
+        url = result.get("url")
+        if not url:
+            continue
+        if any(token in title for token in REJECT_TOKENS):
+            continue
+        # Require the subject to be named, or the neighbourhood to match.
+        named = any(token in title for token in tokens) if tokens else True
+        if not named and neighborhood.lower() not in title:
+            continue
+        if resolves(str(url)):
+            return str(url)
+    return None
+
+
 def normalize(url: str) -> str:
     """Strip the analytics parameters the API appends.
 
@@ -300,7 +406,7 @@ def main() -> int:
     """Resolve every place image and write the checked-in module."""
 
     names = place_names()
-    slugs = list(PLACE_FACTS)
+    slugs = list(ALL_SLUGS)
 
     # Preferred article per slug, then the display name as a second attempt.
     primary = {slug: ARTICLE_OVERRIDES.get(slug, names.get(slug, "")) for slug in slugs}
@@ -326,12 +432,21 @@ def main() -> int:
             if searched:
                 url = article_images([searched]).get(searched)
             time.sleep(0.3)
-        if url and resolves(url):
-            resolved[slug] = url
-            print(f"[{index:3}/150] ok      {slug}", flush=True)
+        wiki_url = url if url and resolves(url) else None
+
+        display = names.get(slug, slug.replace("-", " "))
+        neighborhood = NEIGHBOURHOODS.get(slug, "")
+        pretty = openverse_image(display, neighborhood)
+        time.sleep(0.25)
+
+        chosen = pretty or wiki_url
+        if chosen:
+            resolved[slug] = chosen
+            source = "openverse" if pretty else "wikimedia"
+            print(f"[{index:3}/{len(slugs)}] ok  {source:9} {slug}", flush=True)
         else:
             missing.append(slug)
-            print(f"[{index:3}/150] MISSING {slug}", flush=True)
+            print(f"[{index:3}/{len(slugs)}] MISSING       {slug}", flush=True)
         time.sleep(0.15)
 
     write_module(resolved)
@@ -347,8 +462,14 @@ def place_names() -> dict[str, str]:
     import csv
 
     csv_path = Path(__file__).resolve().parents[1] / "supabase" / "seed" / "places.csv"
-    with csv_path.open(encoding="utf-8", newline="") as handle:
-        return {row["slug"]: row["name"] for row in csv.DictReader(handle)}
+    names: dict[str, str] = {}
+    if csv_path.exists():
+        with csv_path.open(encoding="utf-8", newline="") as handle:
+            names = {row["slug"]: row["name"] for row in csv.DictReader(handle)}
+    # The expansion set is not in the CSV until the seed is rebuilt.
+    for slug, entry in EXPANSION_PLACES.items():
+        names.setdefault(slug, entry[0])
+    return names
 
 
 def write_module(resolved: dict[str, str]) -> None:

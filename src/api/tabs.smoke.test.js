@@ -40,7 +40,7 @@ describe.skipIf(!process.env.VITE_SUPABASE_URL && !stackAvailable)("tab data con
 
   it("Search tab: places carry every field the cards read", async () => {
     const places = await base44.entities.Place.list("-created_date", 500);
-    expect(places.length).toBe(150);
+    expect(places.length).toBeGreaterThanOrEqual(150);
 
     for (const place of places) {
       expect(place.id).toBeTruthy();
@@ -89,10 +89,18 @@ describe.skipIf(!process.env.VITE_SUPABASE_URL && !stackAvailable)("tab data con
 
   it("Map tab: borough progress matches on label, not enum key", async () => {
     const places = await base44.entities.Place.list("-created_date", 500);
-    const counts = ["Manhattan", "Brooklyn", "Queens", "The Bronx", "Staten Island"].map(
-      (borough) => places.filter((place) => place.borough === borough).length,
-    );
-    expect(counts).toEqual([60, 40, 25, 15, 10]);
+    // Part 15.1 fixes a floor per borough; the set may grow past it.
+    const floors = {
+      Manhattan: 60, Brooklyn: 40, Queens: 25, "The Bronx": 15, "Staten Island": 10,
+    };
+    for (const [borough, floor] of Object.entries(floors)) {
+      const count = places.filter((place) => place.borough === borough).length;
+      expect(count).toBeGreaterThanOrEqual(floor);
+    }
+    // Every place must land in a known borough.
+    expect(
+      places.filter((place) => !(place.borough in floors)),
+    ).toHaveLength(0);
   });
 
   it("Feed tab: follows, posts, likes and comments resolve", async () => {

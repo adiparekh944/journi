@@ -639,10 +639,13 @@ describe.skipIf(!localRuntimeAvailable)("Journi local backend API contract", () 
       p_payload: { visited_on: "2026-08-15", was_paid: false },
     });
     expect(secondVisit.error).toBeNull();
+    // Scope to this user: RLS also exposes want-to-go rows belonging to the
+    // public demo personas, which share the same places.
     const wantedAfterVisit = await primaryClient
       .from("want_to_go")
       .select("id")
-      .eq("place_id", secondaryPlace.id);
+      .eq("place_id", secondaryPlace.id)
+      .eq("user_id", primaryUser.id);
     expect(wantedAfterVisit.data).toEqual([]);
 
     const deleteResult = (await primaryClient.functions.invoke("delete-visit", {
